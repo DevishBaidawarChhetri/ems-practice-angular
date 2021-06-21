@@ -1,0 +1,29 @@
+#container {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#container .content img {
+  width: 55%;
+  margin-bottom: 2rem;
+  animation: animation404 3s infinite ease-in-out;
+}
+#container .content h4 {
+  font-size: 1.5em;
+}
+#container .content a {
+  background: #3f51b5;
+}
+
+@keyframes animation404 {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}

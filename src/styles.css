@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #3f51b5;
+  border: transparent;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.icon-text {
+  vertical-align: 6px;
+}
+
+.mat-h3,
+.mat-subheading-2,
+.mat-typography h3 {
+  margin: 0;
+  font: 200 !important;
+}
+
+.confirm-btns {
+  text-align: center !important;
+  margin-top: -12px;
+}
+
+.popover-arrow.arrow {
+  transform: translateX(-50%) !important;
+}
+
+.corner-button {
+  position: absolute !important;
+  top: -20px !important;
+  right: -20px !important;
+  background: rgba(63, 81, 181, 0.6);
+}

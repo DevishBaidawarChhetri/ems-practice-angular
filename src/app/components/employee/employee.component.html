@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="text-center mt-3">Employee Lists</h1>
+  <div class="my-2 text-end">
+    <button mat-raised-button (click)="openModal(addEmployeeModal)">
+      <mat-icon>business</mat-icon> Add Employee
+    </button>
+  </div>
+  <app-employee-list
+    [employeeList]="employees$"
+    (remove)="employeeDelete($event)"
+  ></app-employee-list>
+</div>
+
+<ng-template #addEmployeeModal>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left">Add Employee</h2>
+    <button
+      class="close pull-right corner-button"
+      mat-icon-button
+      color="warn"
+      (click)="modalRef.hide()"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">This is a modal.</div>
+</ng-template>

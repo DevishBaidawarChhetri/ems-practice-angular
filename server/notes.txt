@@ -1,0 +1,7 @@
+id
+username
+email
+dob
+date
+
+areas (js, node, react, angular)
