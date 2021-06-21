@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class EmployeeListComponent implements OnInit {
 
   @Input('employeeList') employeesListProps: [];
-  @Output() remove = new EventEmitter<any>();
+  @Output('removeEmployee') removeEmployeeEvent = new EventEmitter<any>();
 
   constructor(
   ) { }
@@ -17,6 +17,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(id): void {
-    this.remove.emit(id);
+    this.removeEmployeeEvent.emit(id);
   }
 }

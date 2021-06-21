@@ -24,7 +24,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     GenderPipe,
     components.FooterComponent,
     components.HeaderComponent,
-    components.EmployeeListComponent
+    components.EmployeeListComponent,
+    components.DepartmentListComponent,
   ],
   imports: [
     BrowserModule,

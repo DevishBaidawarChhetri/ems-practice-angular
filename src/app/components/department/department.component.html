@@ -1,42 +1,27 @@
 <div class="container">
   <h1 class="text-center mt-3">Department Lists</h1>
   <div class="my-2 text-end">
-    <button mat-raised-button>
+    <button mat-raised-button (click)="openModal(addDepartmentModal)">
       <mat-icon>business</mat-icon> Add Department
     </button>
   </div>
-
-  <table class="table table-striped text-center align-middle">
-    <thead>
-      <tr>
-        <th scope="col">Department ID</th>
-        <th scope="col">Department Name</th>
-        <th scope="col">Options</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let department of departments; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>{{ department.name }}</td>
-        <td>
-          <button
-            mat-icon-button
-            aria-label="edit icon button"
-            color="primary"
-            (click)="openUpdateForm(department)"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            color="warn"
-            aria-label="delete icon button"
-            (click)="onDelete(department)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <app-department-list
+    [departmentLists]="departments"
+    (removeDepartment)="removeDepartment($event)"
+  ></app-department-list>
 </div>
+
+<ng-template #addDepartmentModal>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left">Add Department</h2>
+    <button
+      class="close pull-right corner-button"
+      mat-icon-button
+      color="warn"
+      (click)="modalRef.hide()"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">This is a modal.</div>
+</ng-template>

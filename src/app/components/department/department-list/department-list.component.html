@@ -1,0 +1,31 @@
+<table class="table table-striped text-center align-middle">
+  <thead>
+    <tr>
+      <th scope="col">Department ID</th>
+      <th scope="col">Department Name</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let department of departmentListsProps; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ department.name }}</td>
+      <td>
+        <button mat-icon-button aria-label="edit icon button" color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          mwlConfirmationPopover
+          [popoverTitle]="'Are you sure you want to delete this department?'"
+          placement="top"
+          (confirm)="deleteDepartment(department._id)"
+          (cancel)="cancelClicked = true"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
