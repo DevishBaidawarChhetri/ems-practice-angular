@@ -13,7 +13,7 @@
 
 <ng-template #addDepartmentModal>
   <div class="modal-header">
-    <h2 class="modal-title pull-left">Add Department</h2>
+    <h2 class="modal-title pull-left margin-zero">Add Department</h2>
     <button
       class="close pull-right corner-button"
       mat-icon-button
@@ -23,5 +23,24 @@
       <mat-icon>highlight_off</mat-icon>
     </button>
   </div>
-  <div class="modal-body">This is a modal.</div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field class="example-full-width w-100">
+        <mat-label>Department Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Engneering"
+          formControlName="name"
+        />
+        <mat-error> Please enter department name. </mat-error>
+      </mat-form-field>
+      <div class="example-button-row float-end">
+        <button mat-raised-button color="primary" [disabled]="form.invalid">
+          Add
+          <mat-icon class="button-icon-size">add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
 </ng-template>

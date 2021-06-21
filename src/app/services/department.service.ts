@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class DepartmentService {
   baseURL: string = 'http://localhost:3000';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<Department[]> {
     const departmentUrl: string = `${this.baseURL}/api/departments`;
@@ -25,8 +25,8 @@ export class DepartmentService {
       .pipe(catchError(this.errorHandler));
   }
 
-  deleteDepartment(departmentData: Department): Observable<Department> {
-    const deleteUrl = `${this.baseURL}/api/department/` + departmentData;
+  deleteDepartment(id: string): Observable<Department> {
+    const deleteUrl = `${this.baseURL}/api/department/` + id;
     return this.http
       .delete<Department>(deleteUrl)
       .pipe(catchError(this.errorHandler));

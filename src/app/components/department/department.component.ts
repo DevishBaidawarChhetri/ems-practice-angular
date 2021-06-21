@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DepartmentService } from '../../services/department.service';
 import { Department } from '../../interfaces/department';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-department',
@@ -12,15 +13,18 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class DepartmentComponent implements OnInit {
   departments: Department[];
   modalRef: BsModalRef;
+  form: FormGroup;
 
   constructor(
     public dialog: MatDialog,
     private departmentService: DepartmentService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.getDepartments();
+    this.initializeForm();
   }
 
   openModal(template: TemplateRef<any>) {
@@ -39,6 +43,22 @@ export class DepartmentComponent implements OnInit {
         this.getDepartments();
       }
     )
+  }
+
+  initializeForm() {
+    this.form = this.fb.group({
+      name: ['', [Validators.required]],
+    });
+  }
+
+  onSubmit() {
+    this.departmentService.addDepartment(this.form.value).subscribe(
+      dept => {
+        this.getDepartments();
+      }
+    );
+    this.modalRef.hide();
+    this.form.reset();
   }
 
 }

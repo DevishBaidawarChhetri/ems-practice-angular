@@ -13,6 +13,7 @@ import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -37,9 +38,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HttpClientModule,
     ReactiveFormsModule,
     ConfirmationPopoverModule.forRoot({
-      cancelButtonType: 'danger'
+      cancelButtonType: 'danger',
     }),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MatInputModule
   ],
   providers: [],
   bootstrap: [components.AppComponent],

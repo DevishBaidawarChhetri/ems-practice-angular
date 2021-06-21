@@ -50,3 +50,12 @@ body {
   right: -20px !important;
   background: rgba(63, 81, 181, 0.6);
 }
+
+.margin-zero {
+  margin: 0 !important;
+}
+
+.button-icon-size {
+  font-size: 18px !important;
+  line-height: 130% !important;
+}
