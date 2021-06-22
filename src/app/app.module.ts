@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NumberOnlyDirective } from './directives/number-only.directive';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     components.DepartmentListComponent,
     components.LoginComponent,
     components.SignupComponent,
+    NumberOnlyDirective,
   ],
   imports: [
     BrowserModule,
