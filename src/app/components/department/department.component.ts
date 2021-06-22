@@ -52,6 +52,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.form.invalid) { return }
     this.departmentService.addDepartment(this.form.value).subscribe(
       dept => {
         this.getDepartments();
@@ -60,5 +61,4 @@ export class DepartmentComponent implements OnInit {
     this.modalRef.hide();
     this.form.reset();
   }
-
 }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Department } from 'src/app/interfaces/department';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-employee',
@@ -19,19 +19,21 @@ export class EmployeeComponent implements OnInit {
   employees$: Observable<Employee[]>;
   departments: Department[];
   modalRef: BsModalRef;
-  form: FormBuilder;
+  form: FormGroup;
 
 
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.getEmployees();
     this.getDepartments();
+    this.initializeForm();
   }
 
   openModal(template: TemplateRef<any>) {
@@ -42,6 +44,15 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.getEmployees().subscribe((emp) => {
       this.employees$ = emp;
     });
+  }
+
+  initializeForm() {
+    this.form = this.fb.group({
+      fullName: ['', [Validators.required,]],
+      email: ['', [Validators.required,]],
+      gender: ['', [Validators.required,]],
+      department: ['', [Validators.required,]],
+    })
   }
 
   getDepartments() {
@@ -58,5 +69,16 @@ export class EmployeeComponent implements OnInit {
         this.getEmployees();
       }
     );
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) { return }
+    this.employeeService.addEmployee(this.form.value).subscribe(
+      employee => {
+        this.getEmployees();
+      }
+    );
+    this.modalRef.hide();
+    this.form.reset();
   }
 }
