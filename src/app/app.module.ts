@@ -14,6 +14,9 @@ import { GenderPipe } from './pipes/gender.pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 @NgModule({
@@ -41,7 +44,9 @@ import { MatInputModule } from '@angular/material/input';
       cancelButtonType: 'danger',
     }),
     ModalModule.forRoot(),
-    MatInputModule
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [components.AppComponent],

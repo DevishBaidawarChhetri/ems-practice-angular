@@ -13,7 +13,7 @@
 
 <ng-template #addEmployeeModal>
   <div class="modal-header">
-    <h2 class="modal-title pull-left">Add Employee</h2>
+    <h2 class="modal-title pull-left margin-zero">Add Employee</h2>
     <button
       class="close pull-right corner-button"
       mat-icon-button
@@ -23,5 +23,42 @@
       <mat-icon>highlight_off</mat-icon>
     </button>
   </div>
-  <div class="modal-body">This is a modal.</div>
+  <div class="modal-body">
+    <form class="example-form">
+      <mat-form-field class="example-full-width w-100">
+        <mat-label>First name</mat-label>
+        <input type="text" matInput />
+      </mat-form-field>
+      <mat-form-field class="example-full-width w-100">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput />
+      </mat-form-field>
+
+      <label class="example-margin">Gender: </label>
+      <mat-radio-group aria-label="Select an option">
+        &nbsp;<mat-radio-button value="male">Male</mat-radio-button>
+        &nbsp;<mat-radio-button value="female">Female</mat-radio-button>
+        &nbsp;<mat-radio-button value="other">Other</mat-radio-button>
+      </mat-radio-group>
+
+      <div class="w-100 mt-4">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Department</mat-label>
+          <select matNativeControl>
+            <option value="" selected></option>
+            <option *ngFor="let dept of departments">
+              {{ dept.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <div class="example-button-row float-end">
+        <button mat-raised-button color="primary">
+          Add
+          <mat-icon class="button-icon-size">add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
 </ng-template>
