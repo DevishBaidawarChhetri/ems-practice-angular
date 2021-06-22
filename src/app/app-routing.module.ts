@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/departments', pathMatch: 'full' },
   { path: 'employees', component: components.EmployeeComponent },
   { path: 'departments', component: components.DepartmentComponent },
+  { path: 'login', component: components.LoginComponent },
+  { path: 'signup', component: components.SignupComponent },
   { path: '**', component: components.PageNotFoundComponent },
 ];
 

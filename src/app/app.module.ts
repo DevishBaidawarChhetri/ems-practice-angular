@@ -16,8 +16,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -30,6 +29,8 @@ import { MatSelectModule } from '@angular/material/select';
     components.HeaderComponent,
     components.EmployeeListComponent,
     components.DepartmentListComponent,
+    components.LoginComponent,
+    components.SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
     ModalModule.forRoot(),
     MatInputModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [components.AppComponent],

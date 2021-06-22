@@ -1,6 +1,8 @@
 export * from '../app.component';
 
 // Components
+export * from './auth/login/login.component';
+export * from './auth/signup/signup.component';
 export * from './employee/employee.component';
 export * from './employee/employee-list/employee-list.component';
 export * from './page-not-found/page-not-found.component';

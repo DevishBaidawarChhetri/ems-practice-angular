@@ -1,0 +1,67 @@
+<div class="split-screen">
+  <div class="left">
+    <div class="form-container">
+      <form>
+        <div class="copy">
+          <h2>Signup</h2>
+          <p>Already have an account? <a routerLink="/login">Login</a></p>
+        </div>
+        <mat-form-field>
+          <mat-label>Full Name</mat-label>
+          <input matInput type="text" placeholder="Full Name" required />
+          <mat-error>Please enter valid full name.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="Email" email required />
+          <mat-error>Please enter valid email.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Phone</mat-label>
+          <input matInput type="number" placeholder="Phone" required />
+          <mat-error>Please enter valid phone.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Select gender</mat-label>
+          <mat-select required>
+            <mat-option>--</mat-option>
+            <mat-option value="male"> Male </mat-option>
+            <mat-option value="female"> Female </mat-option>
+            <mat-option value="other"> Other </mat-option>
+          </mat-select>
+          <mat-error>Please choose an animal</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Password" required />
+          <mat-error>Please enter valid password.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="Confirm Password"
+            required
+          />
+          <mat-error>Please enter valid password.</mat-error>
+        </mat-form-field>
+
+        <div class="button-div">
+          <button mat-raised-button color="accent" type="submit">Signup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="right">
+    <div class="copy">
+      <h1>EMS Project</h1>
+      <p>Self practise.</p>
+    </div>
+  </div>
+</div>
