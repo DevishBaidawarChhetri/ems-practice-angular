@@ -3,37 +3,38 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Department } from '../interfaces/department';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartmentService {
-  baseURL: string = 'http://localhost:3000';
+  baseURL: string = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<Department[]> {
-    const departmentUrl: string = `${this.baseURL}/api/departments`;
+    const departmentUrl: string = `${this.baseURL}/departments`;
     return this.http
       .get<Department[]>(departmentUrl)
       .pipe(catchError(this.errorHandler));
   }
 
   addDepartment(departmentData: Department): Observable<Department> {
-    const addDepartmentUrl: string = `${this.baseURL}/api/department`;
+    const addDepartmentUrl: string = `${this.baseURL}/department`;
     return this.http
       .post<Department>(addDepartmentUrl, departmentData)
       .pipe(catchError(this.errorHandler));
   }
 
   deleteDepartment(id: string): Observable<Department> {
-    const deleteUrl = `${this.baseURL}/api/department/` + id;
+    const deleteUrl = `${this.baseURL}/department/` + id;
     return this.http
       .delete<Department>(deleteUrl)
       .pipe(catchError(this.errorHandler));
   }
 
   updateDepartment(departmentData) {
-    const updateUrl: string = `${this.baseURL}/api/department/${departmentData._id}`;
+    const updateUrl: string = `${this.baseURL}/department/${departmentData._id}`;
     console.log(updateUrl);
     return this.http
       .put(updateUrl, departmentData)
