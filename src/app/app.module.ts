@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import * as components from './components/index';
@@ -18,6 +18,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NumberOnlyDirective } from './directives/number-only.directive';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,11 @@ import { NumberOnlyDirective } from './directives/number-only.directive';
     MatSelectModule,
     MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [components.AppComponent],
 })
 export class AppModule { }
