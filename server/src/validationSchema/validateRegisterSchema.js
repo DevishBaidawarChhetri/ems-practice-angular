@@ -14,8 +14,8 @@ const validateRegisterSchema = [
     .withMessage("Gender must me valid."),
   body("phone")
     .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage("Username must be at least 4 characters long."),
+    .isNumeric()
+    .withMessage("Phone must contain numbers only."),
   body("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 5 })

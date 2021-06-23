@@ -31,10 +31,10 @@ export class AuthService {
 
   registerUser(data: SignupRequestInterface): Observable<any> {
     return this.http
-      .post<SignupRequestInterface>(this.baseUrl + '/register', data)
+      .post<SignupRequestInterface>(this.baseUrl + '/signup', data)
       .pipe(
         map((response: any) => {
-          return response;
+          return response.message;
         })
       )
   }

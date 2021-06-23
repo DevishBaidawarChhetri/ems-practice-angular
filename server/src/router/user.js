@@ -14,7 +14,7 @@ const validateLoginSchema = require("../validationSchema/validateLoginSchema");
  * @access Public
  */
 
-router.post("/api/register", validateRegisterSchema, async (req, res) => {
+router.post("/api/signup", validateRegisterSchema, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

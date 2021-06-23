@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { PasswordValidator } from 'src/app/utils/password.validators';
 
@@ -17,6 +18,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +38,9 @@ export class SignupComponent implements OnInit {
 
   onSignup() {
     if (this.form.invalid) { return; }
-    // console.log(this.form.value);
+    console.log(this.form.value);
     this.authService.registerUser(this.form.value).subscribe((response) => {
-      console.log(response);
+      this.router.navigate(['/login']);
     })
   }
 
