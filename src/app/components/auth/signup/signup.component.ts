@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { PasswordValidator } from 'src/app/utils/password.validators';
 
 @Component({
@@ -15,6 +16,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,10 @@ export class SignupComponent implements OnInit {
 
   onSignup() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
+    // console.log(this.form.value);
+    this.authService.registerUser(this.form.value).subscribe((response) => {
+      console.log(response);
+    })
   }
 
 }
