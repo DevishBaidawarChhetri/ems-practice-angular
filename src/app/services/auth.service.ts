@@ -58,7 +58,7 @@ export class AuthService {
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
-            this.saveAuthData(token, expirationDate); // save to local storage
+            this.saveAuthData(token, expirationDate, this.userId); // save to local storage
             this.router.navigate(['/departments']);
             this.autoAuthUser();
           }
@@ -66,10 +66,16 @@ export class AuthService {
       )
   }
 
+  // Getting profile info
+  loggedInUserInfo(id: string): Observable<any> {
+    return this.http
+      .get(environment.apiUrl + `/user/${id}`);
+  }
 
-  // loggedInUserInfo(): Observable<any> {
-
-  // }
+  // Update profile
+  updateProfile(id: string, data): Observable<any> {
+    return this.http.put(environment.apiUrl + `/user/${id}`, data);
+  }
 
   // Logout
   logoutUser() {
@@ -89,9 +95,10 @@ export class AuthService {
   }
 
   // Save auth data in local storage
-  private saveAuthData(token: string, expirationDate) {
+  private saveAuthData(token: string, expirationDate, userId: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate);
+    localStorage.setItem('userId', userId);
   }
 
   // clearAuth data from local storage

@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/userSchema");
 const validateRegisterSchema = require("../validationSchema/validateRegisterSchema");
 const validateLoginSchema = require("../validationSchema/validateLoginSchema");
+const validateProfileUpdateSchema = require("../validationSchema/validateProfileUpdateSchema");
+const checkAuth = require("../middleware/auth");
 
 /**
  * @route POST /api/register
@@ -104,18 +106,18 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
 
 /**
  * @route GET /api/user
- * @desc User Login
+ * @desc Get user profile
  * @access Private
  */
 
-router.get("/api/user/:id", async (req, res) => {
+router.get("/api/user/:id", checkAuth, async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
       return res.status(404).json({ message: "User not found!" });
     }
     const user = await User.findById({ _id: id });
-    res.status(401).json({ message: "User found!", user });
+    res.status(200).json({ message: "User found!", user });
   } catch (error) {
     res.status(500).json({
       message: "Server Error!",
@@ -123,4 +125,54 @@ router.get("/api/user/:id", async (req, res) => {
   }
 });
 
+/**
+ * @route GET /api/user
+ * @desc Update user profile
+ * @access Private
+ */
+
+router.put(
+  "/api/user/:id",
+  checkAuth,
+  validateRegisterSchema,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { id } = req.params;
+    if (!id) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    try {
+      const { fullName, gender, email, phone, password, confirmPassword } =
+        req.body;
+      if (password !== confirmPassword) {
+        return res
+          .status(422)
+          .json({ error: `Password and confirm password not matched.` });
+      }
+      const hashPassword = await bcrypt.hash(password, 10);
+      const user = new User({
+        _id: id,
+        fullName,
+        email,
+        gender,
+        phone,
+        password: hashPassword,
+        confirmPassword: hashPassword,
+      });
+      const result = await User.updateOne({ _id: id }, user);
+      if (result.n > 0) {
+        return res
+          .status(200)
+          .json({ message: "User profile updated successfully." });
+      } else {
+        return res.status(401).json({ message: "Not authorized!" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 module.exports = router;

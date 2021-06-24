@@ -10,8 +10,7 @@ import { PasswordValidator } from 'src/app/utils/password.validators';
 })
 export class ProfileComponent implements OnInit {
   form: FormGroup;
-  // get email() { return this.form.get('email'); }
-  // get phone() { return this.form.get('phone'); }
+  userId: string = localStorage.getItem('userId');
 
   constructor(
     private fb: FormBuilder,
@@ -21,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.getProfileDetails(this.userId);
   }
 
   initializeForm(): void {
@@ -29,13 +29,30 @@ export class ProfileComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]],
       phone: ['', [Validators.required, Validators.minLength(10)]],
       gender: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.minLength(6)]],
     }, { validator: PasswordValidator })
   }
 
   onProfileUpdate() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
+    this.authService.updateProfile(this.userId, this.form.value).subscribe((response) => {
+      if (response) {
+        this.bsModalRef.hide();
+      }
+    });
+  }
+
+  getProfileDetails(userId: string) {
+    this.authService.loggedInUserInfo(userId).subscribe(({ user }) => {
+      this.form.setValue({
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+        gender: user.gender,
+        password: '',
+        confirmPassword: ''
+      })
+    })
   }
 }
