@@ -13,61 +13,54 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto text-center">
-        <ng-template *ngIf="isAuth; else notIsAuthBlock">
-          <li class="nav-item">
-            <a
-              class="nav-link text-white"
-              routerLinkActive="active"
-              routerLink="employees"
-            >
-              <mat-icon>manage_accounts</mat-icon>
-              <span class="icon-text"> Employees</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link text-white"
-              routerLinkActive="active"
-              routerLink="departments"
-            >
-              <mat-icon>business</mat-icon>
-              <span class="icon-text"> Department</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <button
-              type="button"
-              mat-button
-              class="color-white"
-              (onclick)="userLogout()"
-            >
-              <mat-icon>logout</mat-icon> Logout
-            </button>
-          </li>
-        </ng-template>
-        <ng-template #notIsAuthBlock>
-          <li class="nav-item">
-            <a
-              class="nav-link text-white"
-              routerLink="login"
-              routerLinkActive="active"
-            >
-              <mat-icon>login</mat-icon>
-              <span class="icon-text"> Login</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link text-white"
-              routerLinkActive="active"
-              routerLink="signup"
-            >
-              <mat-icon>how_to_reg</mat-icon>
-              <span class="icon-text"> Register</span>
-            </a>
-          </li>
-        </ng-template>
+      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto text-center" *ngIf="isAuth">
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            routerLinkActive="active"
+            routerLink="employees"
+          >
+            <mat-icon>manage_accounts</mat-icon>
+            <span class="icon-text"> Employees</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            routerLinkActive="active"
+            routerLink="departments"
+          >
+            <mat-icon>business</mat-icon>
+            <span class="icon-text"> Department</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <button class="color-white" mat-button (click)="onLogout()">
+            <mat-icon>logout</mat-icon> Logout
+          </button>
+        </li>
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0 ms-auto text-center" *ngIf="!isAuth">
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            routerLink="login"
+            routerLinkActive="active"
+          >
+            <mat-icon>login</mat-icon>
+            <span class="icon-text"> Login</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            routerLinkActive="active"
+            routerLink="signup"
+          >
+            <mat-icon>how_to_reg</mat-icon>
+            <span class="icon-text"> Register</span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

@@ -91,16 +91,15 @@ export class AuthService {
 
   // clearAuth data from local storage
   private clearAuthData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
+    localStorage.clear();
   }
 
+  // Auto login if user has already logged in (conditions applied)
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) { return }
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
-    console.log(expiresIn)
     if (expiresIn > 0) {
       this.token = authInformation.token;
       this.isAuthenticated = true;
