@@ -66,6 +66,11 @@ export class AuthService {
       )
   }
 
+
+  // loggedInUserInfo(): Observable<any> {
+
+  // }
+
   // Logout
   logoutUser() {
     this.token = null;

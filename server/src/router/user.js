@@ -102,4 +102,25 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
   }
 });
 
+/**
+ * @route GET /api/user
+ * @desc User Login
+ * @access Private
+ */
+
+router.get("/api/user/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    const user = await User.findById({ _id: id });
+    res.status(401).json({ message: "User found!", user });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
 module.exports = router;
