@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="#"><strong>EMS Project</strong></a>
     <button
-      class="navbar-toggler bg-white"
+      class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent"
@@ -19,6 +19,8 @@
             class="nav-link text-white"
             routerLinkActive="active"
             routerLink="employees"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
           >
             <mat-icon>manage_accounts</mat-icon>
             <span class="icon-text"> Employees</span>
@@ -29,13 +31,21 @@
             class="nav-link text-white"
             routerLinkActive="active"
             routerLink="departments"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
           >
             <mat-icon>business</mat-icon>
             <span class="icon-text"> Department</span>
           </a>
         </li>
         <li class="nav-item">
-          <button class="color-white" mat-button (click)="onLogout()">
+          <button
+            class="color-white"
+            mat-button
+            (click)="onLogout()"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+          >
             <mat-icon>logout</mat-icon> Logout
           </button>
         </li>
@@ -46,6 +56,8 @@
             class="nav-link text-white"
             routerLink="login"
             routerLinkActive="active"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
           >
             <mat-icon>login</mat-icon>
             <span class="icon-text"> Login</span>
@@ -56,6 +68,8 @@
             class="nav-link text-white"
             routerLinkActive="active"
             routerLink="signup"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
           >
             <mat-icon>how_to_reg</mat-icon>
             <span class="icon-text"> Register</span>
