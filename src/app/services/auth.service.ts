@@ -59,6 +59,7 @@ export class AuthService {
             const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
             this.saveAuthData(token, expirationDate); // save to local storage
+            this.router.navigate(['/employees']);
           }
         })
       )
@@ -77,7 +78,7 @@ export class AuthService {
   }
 
   // Logout
-  private logoutUser() {
+  logoutUser() {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
