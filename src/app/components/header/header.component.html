@@ -14,7 +14,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mb-2 mb-lg-0 ms-auto text-center">
-        <ng-template ngIf="isAuth; else notIsAuthBlock">
+        <ng-template *ngIf="isAuth; else notIsAuthBlock">
           <li class="nav-item">
             <a
               class="nav-link text-white"
@@ -48,7 +48,11 @@
         </ng-template>
         <ng-template #notIsAuthBlock>
           <li class="nav-item">
-            <a class="nav-link text-white" routerLink="employees">
+            <a
+              class="nav-link text-white"
+              routerLink="login"
+              routerLinkActive="active"
+            >
               <mat-icon>login</mat-icon>
               <span class="icon-text"> Login</span>
             </a>
@@ -57,7 +61,7 @@
             <a
               class="nav-link text-white"
               routerLinkActive="active"
-              routerLink="departments"
+              routerLink="signup"
             >
               <mat-icon>how_to_reg</mat-icon>
               <span class="icon-text"> Register</span>

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const DepartmentProvider = require("../model/departmentSchema");
+const checkAuth = require("../middleware/auth");
 
-router.post("/api/department", async (req, res) => {
+router.post("/api/department", checkAuth, async (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res.status(422).json({ error: `Don't leave fields empty.` });
@@ -25,7 +26,7 @@ router.post("/api/department", async (req, res) => {
   }
 });
 
-router.get("/api/departments", async (req, res) => {
+router.get("/api/departments", checkAuth, async (req, res) => {
   try {
     const departments = await DepartmentProvider.find({});
     res.status(200).json(departments);
@@ -34,7 +35,7 @@ router.get("/api/departments", async (req, res) => {
   }
 });
 
-router.delete("/api/department/:id", async (req, res) => {
+router.delete("/api/department/:id", checkAuth, async (req, res) => {
   try {
     const depId = await DepartmentProvider.findOneAndDelete({
       _id: req.params.id,
@@ -49,7 +50,7 @@ router.delete("/api/department/:id", async (req, res) => {
   }
 });
 
-router.put("/api/department/:id", async (req, res) => {
+router.put("/api/department/:id", checkAuth, async (req, res) => {
   try {
     const depId = await DepartmentProvider.findByIdAndUpdate(
       { _id: req.params.id },

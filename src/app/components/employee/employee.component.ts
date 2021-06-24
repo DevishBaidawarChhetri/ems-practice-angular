@@ -32,12 +32,12 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployees();
-    this.getDepartments();
     this.initializeForm();
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+    this.getDepartments();
   }
 
   getEmployees() {
