@@ -74,6 +74,7 @@ export class AuthService {
 
   // Update profile
   updateProfile(id: string, data): Observable<any> {
+    console.log(data)
     return this.http.put(environment.apiUrl + `/user/${id}`, data);
   }
 

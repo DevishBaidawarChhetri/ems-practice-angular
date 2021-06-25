@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit {
 
   onProfileUpdate() {
     if (this.form.invalid) { return; }
+    console.log(this.form.value);
+
     this.authService.updateProfile(this.userId, this.form.value).subscribe((response) => {
       if (response) {
         this.bsModalRef.hide();

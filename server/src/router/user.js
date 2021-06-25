@@ -126,7 +126,7 @@ router.get("/api/user/:id", checkAuth, async (req, res) => {
 });
 
 /**
- * @route GET /api/user
+ * @route PUT /api/user
  * @desc Update user profile
  * @access Private
  */
@@ -134,7 +134,7 @@ router.get("/api/user/:id", checkAuth, async (req, res) => {
 router.put(
   "/api/user/:id",
   checkAuth,
-  validateRegisterSchema,
+  validateProfileUpdateSchema,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -145,24 +145,11 @@ router.put(
       return res.status(404).json({ message: "User not found!" });
     }
     try {
-      const { fullName, gender, email, phone, password, confirmPassword } =
-        req.body;
-      if (password !== confirmPassword) {
-        return res
-          .status(422)
-          .json({ error: `Password and confirm password not matched.` });
-      }
-      const hashPassword = await bcrypt.hash(password, 10);
-      const user = new User({
-        _id: id,
-        fullName,
-        email,
-        gender,
-        phone,
-        password: hashPassword,
-        confirmPassword: hashPassword,
-      });
-      const result = await User.updateOne({ _id: id }, user);
+      const { fullName, gender, email, phone } = req.body;
+      const result = await User.updateOne(
+        { _id: id },
+        { fullName, email, gender, phone }
+      );
       if (result.n > 0) {
         return res
           .status(200)
@@ -175,4 +162,34 @@ router.put(
     }
   }
 );
+
+/**
+ * @route PUT /api/user/password
+ * @desc Update user password
+ * @access Private
+ */
+
+router.put("/api/user/:id/password", checkAuth, async (req, res) => {
+  const { id } = req.params;
+  const { password, confirmPassword } = req.body;
+  if (!id) {
+    return res.status(404).json({ message: "User not found!" });
+  }
+  if (password !== confirmPassword) {
+    return res
+      .status(422)
+      .json({ message: `Password and confirm password not matched.` });
+  }
+  const hashPassword = await bcrypt.hash(password, 10);
+  const result = await User.updateOne(
+    { _id: id },
+    { password: hashPassword, confirmPassword: hashPassword }
+  );
+  if (result.n > 0) {
+    return res.status(200).json({ message: "Password updated successfully." });
+  } else {
+    return res.status(401).json({ message: "Not authorized!" });
+  }
+});
+
 module.exports = router;

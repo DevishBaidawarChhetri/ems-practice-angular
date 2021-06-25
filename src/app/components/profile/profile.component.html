@@ -60,7 +60,6 @@
         matInput
         type="password"
         placeholder="Password"
-        required
         formControlName="password"
       />
       <mat-error>Please enter valid password.</mat-error>
@@ -72,7 +71,6 @@
         matInput
         type="password"
         placeholder="Confirm Password"
-        required
         formControlName="confirmPassword"
       />
       <mat-error>Please enter valid password.</mat-error>
@@ -82,9 +80,7 @@
     </small>
     <div class="clearfix">
       <div class="button-div float-end">
-        <button mat-raised-button color="primary" [disabled]="form.invalid">
-          Update
-        </button>
+        <button mat-raised-button color="primary">Update</button>
         <button
           type="button"
           class="ms-2"
