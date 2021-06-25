@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UpdateDepartmentComponent } from '../update-department/update-department.component';
 
@@ -9,14 +8,12 @@ import { UpdateDepartmentComponent } from '../update-department/update-departmen
 })
 export class DepartmentListComponent implements OnInit {
   modalRef: BsModalRef;
-  dept: any;
 
   @Input('departmentLists') departmentListsProps;
   @Output('removeDepartment') removeDepartmentEvent = new EventEmitter<any>();
 
   constructor(
     private modalService: BsModalService,
-    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {

@@ -1,1 +1,68 @@
-<p>update-employee works!</p>
+<div class="modal-header">
+  <h2 class="modal-title pull-left margin-zero">Edit Department</h2>
+  <button
+    class="close pull-right corner-button"
+    mat-icon-button
+    color="warn"
+    (click)="bsModalRef.hide()"
+  >
+    <mat-icon>highlight_off</mat-icon>
+  </button>
+</div>
+<div class="modal-body clearfix">
+  <form [formGroup]="form" (ngSubmit)="updateEmployee()">
+    <mat-form-field class="example-full-width w-100">
+      <mat-label>Full name</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Full Name"
+        formControlName="fullName"
+      />
+      <mat-error> Please enter full name. </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width w-100 mt-3">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        placeholder="Email"
+        formControlName="email"
+      />
+      <mat-error> Email Invalid </mat-error>
+    </mat-form-field>
+
+    <label class="example-margin mt-3">Gender: </label>
+    <mat-radio-group aria-label="Select an option" formControlName="gender">
+      &nbsp;<mat-radio-button value="male">Male</mat-radio-button>
+      &nbsp;<mat-radio-button value="female">Female</mat-radio-button>
+      &nbsp;<mat-radio-button value="other">Other</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="w-100 mt-4">
+      <mat-form-field appearance="fill">
+        <mat-label>Select Department</mat-label>
+        <select matNativeControl formControlName="department">
+          <option value="emp.department">{{ emp.department }}</option>
+          <option value="" selected></option>
+          <option *ngFor="let dept of departments">
+            {{ dept.name }}
+          </option>
+        </select>
+        <mat-error> Please select department </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="example-button-row float-end">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Update
+        <mat-icon class="button-icon-size">add</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>
