@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Department } from '../interfaces/department';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,7 +10,11 @@ import { environment } from 'src/environments/environment';
 })
 export class DepartmentService {
   baseURL: string = environment.apiUrl;
+  private deptUpdateStatusListener = new Subject<boolean>();
+
   constructor(private http: HttpClient) { }
+
+  getAuthStatusListener() { return this.deptUpdateStatusListener.asObservable(); }
 
   getDepartments(): Observable<Department[]> {
     const departmentUrl: string = `${this.baseURL}/departments`;
@@ -37,7 +41,13 @@ export class DepartmentService {
     const updateUrl: string = `${this.baseURL}/department/${id}`;
     return this.http
       .put(updateUrl, data)
-      .pipe(catchError(this.errorHandler));
+      .pipe(
+        map((resp) => {
+          this.deptUpdateStatusListener.next(true);
+          return resp;
+        }),
+        catchError(this.errorHandler)
+      );
   }
 
   errorHandler(error: HttpErrorResponse) {

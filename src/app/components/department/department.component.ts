@@ -1,19 +1,21 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DepartmentService } from '../../services/department.service';
 import { Department } from '../../interfaces/department';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
 })
-export class DepartmentComponent implements OnInit {
+export class DepartmentComponent implements OnInit, OnDestroy {
   departments: Department[];
   modalRef: BsModalRef;
   form: FormGroup;
+  private deptUpdateListenerSubs: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -23,8 +25,17 @@ export class DepartmentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getDepartments();
     this.initializeForm();
+    this.getDepartments();
+    this.deptUpdateListenerSubs = this.departmentService.getAuthStatusListener().subscribe(
+      () => {
+        this.getDepartments();
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.deptUpdateListenerSubs.unsubscribe();
   }
 
   openModal(template: TemplateRef<any>) {

@@ -18,6 +18,7 @@ export class AuthService {
   private isAuthenticated: boolean = false;
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
+  private profileUpdateStatusListener = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -28,6 +29,7 @@ export class AuthService {
   getUserId() { return this.userId; }
   getIsAuth() { return this.isAuthenticated; }
   getAuthStatusListener() { return this.authStatusListener.asObservable(); }
+  getprofileUpdateStatusListener() { return this.profileUpdateStatusListener.asObservable(); }
 
   registerUser(data: SignupRequestInterface): Observable<any> {
     return this.http
@@ -74,7 +76,12 @@ export class AuthService {
 
   // Update profile
   updateProfile(id: string, data): Observable<any> {
-    return this.http.patch(environment.apiUrl + `/user/${id}`, data);
+    return this.http.patch(environment.apiUrl + `/user/${id}`, data).pipe(
+      map((response: any) => {
+        this.profileUpdateStatusListener.next(true);
+        return response;
+      })
+    );
   }
 
   // Update Password

@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { PasswordValidator } from 'src/app/utils/password.validators';
 import { UpdateProfileComponent } from '../updateProfile/updateProfile.component';
@@ -10,11 +11,12 @@ import { UpdateProfileComponent } from '../updateProfile/updateProfile.component
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef;
   userId: string = localStorage.getItem('userId');
   userInfo: any;
   passwordUpdateForm: FormGroup;
+  private userProfileListnerSubs: Subscription;
 
   constructor(
     private modalService: BsModalService,
@@ -23,11 +25,18 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getLoggedInUser();
     this.initializeForm();
+    this.userProfileListnerSubs = this.authService.getprofileUpdateStatusListener().subscribe(() => {
+      this.getLoggedInUser();
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.userProfileListnerSubs.unsubscribe();
   }
 
   initializeForm() {
+    this.getLoggedInUser();
     this.passwordUpdateForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
