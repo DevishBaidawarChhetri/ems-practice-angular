@@ -77,6 +77,11 @@ export class AuthService {
     return this.http.patch(environment.apiUrl + `/user/${id}`, data);
   }
 
+  // Update Password
+  updatePassword(id: string, data): Observable<any> {
+    return this.http.patch(environment.apiUrl + `/user/${id}/password`, data);
+  }
+
   // Logout
   logoutUser() {
     this.token = null;

@@ -39,7 +39,7 @@ export class UpdateProfileComponent implements OnInit {
     this.authService.updateProfile(this.userId, this.profileUpdateForm.value).subscribe((response) => {
       if (response) {
         this.bsModalRef.hide();
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/employees']);
       }
     });
   }

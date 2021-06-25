@@ -31,7 +31,7 @@
         mat-stroked-button
         color="primary"
         class="ms-3"
-        (click)="openProfileUpdateModalComponent()"
+        (click)="openUpdatePasswordModal(updatePassword)"
       >
         <mat-icon>password</mat-icon>
         <span class="icon-text"> Change Password</span>
@@ -39,3 +39,64 @@
     </div>
   </div>
 </div>
+
+<ng-template #updatePassword>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left margin-zero">Edit Profile</h2>
+  </div>
+  <div class="modal-body">
+    <form
+      class="example-form"
+      [formGroup]="passwordUpdateForm"
+      (ngSubmit)="onPasswordUpdate()"
+    >
+      <mat-form-field class="w-100">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          required
+          formControlName="password"
+        />
+        <mat-error>Please enter valid password.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Confirm Password"
+          required
+          formControlName="confirmPassword"
+        />
+        <mat-error>Please enter valid password.</mat-error>
+      </mat-form-field>
+      <small *ngIf="passwordUpdateForm?.errors?.misMatch" class="text-danger">
+        Confirm Password not matched.
+      </small>
+
+      <div class="button-div mt-3 float-end">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="onPasswordUpdate()"
+          [disabled]="passwordUpdateForm?.invalid"
+        >
+          Change Password
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          type="button"
+          class="ms-2"
+          (click)="bsModalRef.hide()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { UpdateProfileComponent } from '../updateProfile/updateProfile.component';
 
 @Component({
   selector: 'app-header',
