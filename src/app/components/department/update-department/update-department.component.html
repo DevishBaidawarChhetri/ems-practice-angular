@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h2 class="modal-title pull-left margin-zero">Edit Department</h2>
+  <button
+    class="close pull-right corner-button"
+    mat-icon-button
+    color="warn"
+    (click)="bsModalRef.hide()"
+  >
+    <mat-icon>highlight_off</mat-icon>
+  </button>
+</div>
+<div class="modal-body clearfix">
+  <form [formGroup]="form" (ngSubmit)="updateDepartment()">
+    <mat-form-field class="example-full-width w-100">
+      <mat-label>Department Name</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Engneering"
+        formControlName="name"
+      />
+      <mat-error> Please enter department name.</mat-error>
+    </mat-form-field>
+    <div class="example-button-row float-end">
+      <button mat-raised-button color="primary">
+        Update
+        <mat-icon class="button-icon-size">add</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

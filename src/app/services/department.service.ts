@@ -33,11 +33,10 @@ export class DepartmentService {
       .pipe(catchError(this.errorHandler));
   }
 
-  updateDepartment(departmentData) {
-    const updateUrl: string = `${this.baseURL}/department/${departmentData._id}`;
-    console.log(updateUrl);
+  updateDepartment(id: string, data): Observable<any> {
+    const updateUrl: string = `${this.baseURL}/department/${id}`;
     return this.http
-      .put(updateUrl, departmentData)
+      .put(updateUrl, data)
       .pipe(catchError(this.errorHandler));
   }
 

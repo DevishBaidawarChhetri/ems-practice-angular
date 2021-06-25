@@ -11,7 +11,12 @@
       <th scope="row">{{ i + 1 }}</th>
       <td>{{ department.name }}</td>
       <td>
-        <button mat-icon-button aria-label="edit icon button" color="primary">
+        <button
+          mat-icon-button
+          aria-label="edit icon button"
+          color="primary"
+          (click)="openModalDepartmentUpdateComponent(department)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
         <button
