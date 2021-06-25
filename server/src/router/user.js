@@ -158,7 +158,9 @@ router.patch(
         return res.status(401).json({ message: "Not authorized!" });
       }
     } catch (error) {
-      console.error(error);
+      res.status(500).json({
+        message: "Server Error!",
+      });
     }
   }
 );
@@ -170,25 +172,33 @@ router.patch(
  */
 
 router.patch("/api/user/:id/password", checkAuth, async (req, res) => {
-  const { id } = req.params;
-  const { password, confirmPassword } = req.body;
-  if (!id) {
-    return res.status(404).json({ message: "User not found!" });
-  }
-  if (password !== confirmPassword) {
-    return res
-      .status(422)
-      .json({ message: `Password and confirm password not matched.` });
-  }
-  const hashPassword = await bcrypt.hash(password, 10);
-  const result = await User.updateOne(
-    { _id: id },
-    { password: hashPassword, confirmPassword: hashPassword }
-  );
-  if (result.n > 0) {
-    return res.status(200).json({ message: "Password updated successfully." });
-  } else {
-    return res.status(401).json({ message: "Not authorized!" });
+  try {
+    const { id } = req.params;
+    const { password, confirmPassword } = req.body;
+    if (!id) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    if (password !== confirmPassword) {
+      return res
+        .status(422)
+        .json({ message: `Password and confirm password not matched.` });
+    }
+    const hashPassword = await bcrypt.hash(password, 10);
+    const result = await User.updateOne(
+      { _id: id },
+      { password: hashPassword, confirmPassword: hashPassword }
+    );
+    if (result.n > 0) {
+      return res
+        .status(200)
+        .json({ message: "Password updated successfully." });
+    } else {
+      return res.status(401).json({ message: "Not authorized!" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 });
 

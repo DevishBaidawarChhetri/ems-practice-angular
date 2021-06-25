@@ -1,6 +1,6 @@
 export * from '../app.component';
 
-// Components
+/*** Components ***/
 export * from './auth/login/login.component';
 export * from './auth/signup/signup.component';
 export * from './employee/employee.component';
@@ -12,3 +12,5 @@ export * from './header/header.component';
 export * from './footer/footer.component';
 export * from './updateProfile/updateProfile.component';
 export * from './user-profile/user-profile.component';
+export * from './department/update-department/update-department.component';
+export * from './employee/update-employee/update-employee.component';

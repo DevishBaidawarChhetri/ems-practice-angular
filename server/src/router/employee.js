@@ -1,19 +1,27 @@
 const express = require("express");
-const { findByIdAndUpdate } = require("../model/employeeSchema");
 const router = express.Router();
 
 const EmployeeProvider = require("../model/employeeSchema");
+const checkAuth = require("../middleware/auth");
 
-router.post("/api/employee", async (req, res) => {
+/**
+ * @route POST /api/employee
+ * @desc Add Employee
+ * @access Private
+ */
+
+router.post("/api/employee", checkAuth, async (req, res) => {
   const { fullName, email, department, gender } = req.body;
   if (!fullName || !email || !department || !gender) {
-    return res.status(422).json({ error: `Don't leave fields empty.` });
+    return res.status(422).json({ message: `Don't leave fields empty.` });
   }
 
   try {
     const employeeExists = await EmployeeProvider.findOne({ email });
     if (employeeExists) {
-      return res.status(422).json({ error: `Employee's email already exist.` });
+      return res
+        .status(422)
+        .json({ message: `Employee's email already exist.` });
     } else {
       const employee = new EmployeeProvider({
         fullName,
@@ -27,20 +35,36 @@ router.post("/api/employee", async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 });
 
-router.get("/api/employees", async (req, res) => {
+/**
+ * @route GET /api/employees
+ * @desc Get all employees
+ * @access Private
+ */
+
+router.get("/api/employees", checkAuth, async (req, res) => {
   try {
     const departments = await EmployeeProvider.find({});
     res.status(200).json(departments);
   } catch (err) {
-    console.error(err);
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 });
 
-router.delete("/api/employee/:id", async (req, res) => {
+/**
+ * @route Delete /api/employee/:id
+ * @desc Delete Employee
+ * @access Private
+ */
+
+router.delete("/api/employee/:id", checkAuth, async (req, res) => {
   try {
     const empId = await EmployeeProvider.findOneAndDelete({
       _id: req.params.id,
@@ -48,12 +72,20 @@ router.delete("/api/employee/:id", async (req, res) => {
     if (empId) {
       return res.status(201).json({ message: `Employee deleted.` });
     } else {
-      return res.status(422).json({ error: `Employee id not found.` });
+      return res.status(422).json({ message: `Employee id not found.` });
     }
   } catch (error) {
-    console.error(error);
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 });
+
+/**
+ * @route PUT /api/employee/:id
+ * @desc Update employee details
+ * @access Private
+ */
 
 router.put("/api/employee/:id", async (req, res) => {
   try {
@@ -64,10 +96,12 @@ router.put("/api/employee/:id", async (req, res) => {
     if (empId) {
       return res.status(201).json({ message: `Employee updated.` });
     } else {
-      return res.status(422).json({ error: `Employee id not found.` });
+      return res.status(422).json({ message: `Employee id not found.` });
     }
   } catch (error) {
-    console.error(error);
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 });
 
