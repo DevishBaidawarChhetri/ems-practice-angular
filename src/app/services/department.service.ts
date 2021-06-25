@@ -14,7 +14,7 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
-  getAuthStatusListener() { return this.deptUpdateStatusListener.asObservable(); }
+  getDeptUpdateStatusListener() { return this.deptUpdateStatusListener.asObservable(); }
 
   getDepartments(): Observable<Department[]> {
     const departmentUrl: string = `${this.baseURL}/departments`;

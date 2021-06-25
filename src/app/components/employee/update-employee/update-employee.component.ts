@@ -43,7 +43,12 @@ export class UpdateEmployeeComponent implements OnInit {
   }
   updateEmployee() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
+    this.employeeService.updateDepartment(this.emp._id, this.form.value).subscribe((res) => {
+      if (res) {
+        this.bsModalRef.hide();
+        this.form.reset();
+      }
+    })
 
   }
 

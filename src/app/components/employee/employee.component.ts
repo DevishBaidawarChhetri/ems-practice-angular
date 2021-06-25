@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../interfaces/employee';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Department } from 'src/app/interfaces/department';
@@ -20,7 +20,7 @@ export class EmployeeComponent implements OnInit {
   departments: Department[];
   modalRef: BsModalRef;
   form: FormGroup;
-
+  private empUpdateListenerSubs: Subscription;
 
   constructor(
     public dialog: MatDialog,
@@ -53,6 +53,11 @@ export class EmployeeComponent implements OnInit {
       gender: ['', [Validators.required,]],
       department: ['', [Validators.required,]],
     })
+    this.empUpdateListenerSubs = this.employeeService.getEmpUpdateStatusListener().subscribe(
+      () => {
+        this.getEmployees();
+      }
+    )
   }
 
   getDepartments() {
