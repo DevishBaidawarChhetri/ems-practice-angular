@@ -126,12 +126,12 @@ router.get("/api/user/:id", checkAuth, async (req, res) => {
 });
 
 /**
- * @route PUT /api/user
+ * @route Patch /api/user
  * @desc Update user profile
  * @access Private
  */
 
-router.put(
+router.patch(
   "/api/user/:id",
   checkAuth,
   validateProfileUpdateSchema,
@@ -164,12 +164,12 @@ router.put(
 );
 
 /**
- * @route PUT /api/user/password
+ * @route Patch /api/user/password
  * @desc Update user password
  * @access Private
  */
 
-router.put("/api/user/:id/password", checkAuth, async (req, res) => {
+router.patch("/api/user/:id/password", checkAuth, async (req, res) => {
   const { id } = req.params;
   const { password, confirmPassword } = req.body;
   if (!id) {

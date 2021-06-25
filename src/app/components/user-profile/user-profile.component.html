@@ -1,0 +1,41 @@
+<div class="containe">
+  <div class="mx-auto card text-center my-5 col-md-6">
+    <img
+      src="/assets/user.png"
+      class="card-img-top mx-auto mt-3"
+      alt="{{ userInfo?.fullName }}"
+    />
+    <div class="card-body">
+      <h2 class="card-title text-decoration-underline">
+        {{ userInfo?.fullName }}
+      </h2>
+      <h3 class="card-text">
+        {{ userInfo?.email }}
+      </h3>
+      <h3 class="card-text">
+        {{ userInfo?.phone }}
+      </h3>
+      <h3 class="card-text text-capitalize">
+        {{ userInfo?.gender }}
+      </h3>
+      <hr />
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openProfileUpdateModalComponent()"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span class="icon-text"> Update Profile</span>
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="ms-3"
+        (click)="openProfileUpdateModalComponent()"
+      >
+        <mat-icon>password</mat-icon>
+        <span class="icon-text"> Change Password</span>
+      </button>
+    </div>
+  </div>
+</div>

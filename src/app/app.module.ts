@@ -19,7 +19,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     components.LoginComponent,
     components.SignupComponent,
     NumberOnlyDirective,
-    ProfileComponent,
+    components.UserProfileComponent,
+    components.UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

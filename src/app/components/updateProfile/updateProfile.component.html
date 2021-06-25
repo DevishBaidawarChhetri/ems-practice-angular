@@ -2,7 +2,11 @@
   <h2 class="modal-title pull-left margin-zero">Edit Profile</h2>
 </div>
 <div class="modal-body">
-  <form class="example-form" [formGroup]="form" (ngSubmit)="onProfileUpdate()">
+  <form
+    class="example-form"
+    [formGroup]="profileUpdateForm"
+    (ngSubmit)="onProfileUpdate()"
+  >
     <mat-form-field class="w-100">
       <mat-label>Full Name</mat-label>
       <input
@@ -50,34 +54,6 @@
       </select>
       <mat-error>Please choose your gender.</mat-error>
     </mat-form-field>
-
-    <hr />
-    <h3>Change Password</h3>
-
-    <mat-form-field class="w-100">
-      <mat-label>Password</mat-label>
-      <input
-        matInput
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-      />
-      <mat-error>Please enter valid password.</mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="w-100">
-      <mat-label>Confirm Password</mat-label>
-      <input
-        matInput
-        type="password"
-        placeholder="Confirm Password"
-        formControlName="confirmPassword"
-      />
-      <mat-error>Please enter valid password.</mat-error>
-    </mat-form-field>
-    <small *ngIf="form.errors?.misMatch" class="text-danger">
-      Confirm Password not matched.
-    </small>
     <div class="clearfix">
       <div class="button-div float-end">
         <button mat-raised-button color="primary">Update</button>

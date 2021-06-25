@@ -10,3 +10,5 @@ export * from './department/department.component';
 export * from './department/department-list/department-list.component';
 export * from './header/header.component';
 export * from './footer/footer.component';
+export * from './updateProfile/updateProfile.component';
+export * from './user-profile/user-profile.component';
