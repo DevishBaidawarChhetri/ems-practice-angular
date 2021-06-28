@@ -16,21 +16,21 @@ export class DepartmentService {
 
   getDeptUpdateStatusListener() { return this.deptUpdateStatusListener.asObservable(); }
 
-  getDepartments(): Observable<Department[]> {
+  getDepartments(): Observable<any> {
     const departmentUrl: string = `${this.baseURL}/departments`;
     return this.http
       .get<Department[]>(departmentUrl)
       .pipe(catchError(this.errorHandler));
   }
 
-  addDepartment(departmentData: Department): Observable<Department> {
+  addDepartment(departmentData: Department): Observable<any> {
     const addDepartmentUrl: string = `${this.baseURL}/department`;
     return this.http
       .post<Department>(addDepartmentUrl, departmentData)
       .pipe(catchError(this.errorHandler));
   }
 
-  deleteDepartment(id: string): Observable<Department> {
+  deleteDepartment(id: string): Observable<any> {
     const deleteUrl = `${this.baseURL}/department/` + id;
     return this.http
       .delete<Department>(deleteUrl)

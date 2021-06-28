@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { PasswordValidator } from 'src/app/utils/password.validators';
@@ -22,6 +23,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private authService: AuthService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -63,6 +65,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       (res) => {
         this.passwordUpdateForm.reset();
         this.bsModalRef.hide();
+        this.toastr.success(res.message, "Success");
       }
     );
   }

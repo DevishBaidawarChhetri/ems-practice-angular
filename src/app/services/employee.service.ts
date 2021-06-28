@@ -23,14 +23,14 @@ export class EmployeeService {
       .pipe(catchError(this.errorHandler));
   }
 
-  deleteEmployee(id: Employee): Observable<Employee> {
+  deleteEmployee(id: Employee): Observable<any> {
     const deleteUrl = `${this.baseURL}/employee/` + id;
     return this.http
       .delete<Employee>(deleteUrl)
       .pipe(catchError(this.errorHandler));
   }
 
-  addEmployee(employeeData: Employee): Observable<Employee> {
+  addEmployee(employeeData: Employee): Observable<any> {
     const addEmployeeUrl = `${this.baseURL}/employee`;
     return this.http
       .post<Employee>(addEmployeeUrl, employeeData)

@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
@@ -23,6 +24,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private toastr: ToastrService
   ) { }
 
   getToken() { return this.token; }
@@ -36,7 +38,7 @@ export class AuthService {
       .post<SignupRequestInterface>(this.baseUrl + '/signup', data)
       .pipe(
         map((response: any) => {
-          return response.message;
+          return response;
         })
       )
   }
@@ -63,6 +65,7 @@ export class AuthService {
             this.saveAuthData(token, expirationDate, this.userId); // save to local storage
             this.router.navigate(['/departments']);
             this.autoAuthUser();
+            return response;
           }
         })
       )
@@ -97,6 +100,7 @@ export class AuthService {
     this.router.navigate(['/login']);
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
+    this.toastr.success("Logged out successfully.", 'Success');
   }
 
   // Auth timer

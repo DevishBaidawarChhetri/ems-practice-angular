@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +29,12 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.form.invalid) { return; }
-    this.authService.loginUser(this.form.value).subscribe();
+    this.authService.loginUser(this.form.value).subscribe(
+      (resp) => {
+        this.toastr.success(resp.message, 'Success');
+      }, (error) => {
+        this.toastr.error(error.error.message, 'Failed');
+        console.log(error);
+      });
   }
 }

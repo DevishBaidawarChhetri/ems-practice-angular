@@ -72,3 +72,12 @@ a {
 .logout-btn {
   margin-top: 3px !important;
 }
+
+.toast-title {
+  font-weight: normal !important;
+  font-size: 18px !important;
+}
+
+.toast-container .ngx-toastr {
+  box-shadow: 0 0 12px #000 !important;
+}

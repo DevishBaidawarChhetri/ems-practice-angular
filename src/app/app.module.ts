@@ -8,18 +8,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { TextMaskModule } from 'angular2-text-mask';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,14 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatRadioModule,
     MatSelectModule,
     MatFormFieldModule,
-    TextMaskModule
+    TextMaskModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      preventDuplicates: true,
+      closeButton: true
+    })
   ],
   providers: [
     {

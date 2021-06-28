@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/services/department.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class UpdateDepartmentComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +40,9 @@ export class UpdateDepartmentComponent implements OnInit {
         this.bsModalRef.hide();
         this.form.reset();
       }
+      this.toastr.success(res.message, 'Success')
+    }, (error) => {
+      this.toastr.error(error.error.message, 'Failed')
     });
   }
 }

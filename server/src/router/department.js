@@ -82,6 +82,12 @@ router.delete("/api/department/:id", checkAuth, async (req, res) => {
 
 router.put("/api/department/:id", checkAuth, async (req, res) => {
   try {
+    const departmentExists = await DepartmentProvider.findById({
+      _id: req.params.id,
+    });
+    if (departmentExists) {
+      return res.status(422).json({ message: "Department already exist." });
+    }
     const depId = await DepartmentProvider.findByIdAndUpdate(
       { _id: req.params.id },
       req.body

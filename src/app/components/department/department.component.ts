@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { DepartmentService } from '../../services/department.service';
 import { Department } from '../../interfaces/department';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-department',
@@ -22,6 +23,7 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     private departmentService: DepartmentService,
     private modalService: BsModalService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.departmentService.deleteDepartment(e).subscribe(
       dept => {
         this.getDepartments();
+        this.toastr.success(dept.message, "Success");
       }
     )
   }
@@ -67,6 +70,9 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.departmentService.addDepartment(this.form.value).subscribe(
       dept => {
         this.getDepartments();
+        this.toastr.success(dept.message, "Success");
+      }, (error) => {
+        this.toastr.error(error.error.message, "Failed");
       }
     );
     this.modalRef.hide();

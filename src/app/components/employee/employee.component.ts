@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Department } from 'src/app/interfaces/department';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee',
@@ -28,6 +29,7 @@ export class EmployeeComponent implements OnInit {
     private departmentService: DepartmentService,
     private modalService: BsModalService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -72,6 +74,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.deleteEmployee(employeeId).subscribe(
       employee => {
         this.getEmployees();
+        this.toastr.success(employee.message, 'Success');
       }
     );
   }
@@ -81,6 +84,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.addEmployee(this.form.value).subscribe(
       employee => {
         this.getEmployees();
+        this.toastr.success(employee.message, 'Success');
       }
     );
     this.modalRef.hide();
