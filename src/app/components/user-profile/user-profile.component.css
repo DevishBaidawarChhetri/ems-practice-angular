@@ -1,7 +1,9 @@
 img {
-  width: 15%;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 4px solid #ff4081;
+  object-fit: cover;
 }
 
 h2,

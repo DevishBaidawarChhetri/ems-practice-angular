@@ -25,6 +25,7 @@ export class UpdateProfileComponent implements OnInit {
 
   initializeForm(): void {
     this.profileUpdateForm = this.fb.group({
+      image: [''],
       fullName: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]],
       phone: ['', [Validators.required, Validators.minLength(10)]],
@@ -46,6 +47,7 @@ export class UpdateProfileComponent implements OnInit {
   getProfileDetails(userId: string) {
     this.authService.loggedInUserInfo(userId).subscribe(({ user }) => {
       this.profileUpdateForm.patchValue({
+        image: user.image,
         fullName: user.fullName,
         email: user.email,
         phone: user.phone,

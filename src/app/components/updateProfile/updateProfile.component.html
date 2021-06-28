@@ -8,6 +8,16 @@
     (ngSubmit)="onProfileUpdate()"
   >
     <mat-form-field class="w-100">
+      <mat-label>Link to profile image...</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Eg: https://wallpaperaccess.com/full/783866.png"
+        formControlName="image"
+      />
+      <mat-error>Please enter valid full name.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100">
       <mat-label>Full Name</mat-label>
       <input
         matInput

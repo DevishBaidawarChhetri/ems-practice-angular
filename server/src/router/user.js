@@ -22,7 +22,7 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { fullName, gender, email, phone, password, confirmPassword } =
+  const { fullName, gender, email, phone, password, confirmPassword, image } =
     req.body;
 
   try {
@@ -47,6 +47,7 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
       phone,
       password: hashPassword,
       confirmPassword: hashPassword,
+      image,
     });
     await user.save();
     res.status(201).json({ message: "User registered successfully." });
@@ -145,10 +146,10 @@ router.patch(
       return res.status(404).json({ message: "User not found!" });
     }
     try {
-      const { fullName, gender, email, phone } = req.body;
+      const { fullName, gender, email, phone, image } = req.body;
       const result = await User.updateOne(
         { _id: id },
-        { fullName, email, gender, phone }
+        { fullName, email, gender, phone, image }
       );
       if (result.n > 0) {
         return res

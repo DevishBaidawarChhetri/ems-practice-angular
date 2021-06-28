@@ -1,21 +1,33 @@
 <div class="containe">
   <div class="mx-auto card text-center my-5 col-md-6">
     <img
-      src="/assets/user.png"
+      [src]="userInfo?.image || '/assets/user.png'"
       class="card-img-top mx-auto mt-3"
       alt="{{ userInfo?.fullName }}"
     />
     <div class="card-body">
-      <h2 class="card-title text-decoration-underline">
+      <h2 class="card-title">
+        <mat-icon>badge</mat-icon>
         {{ userInfo?.fullName }}
       </h2>
       <h3 class="card-text">
+        <mat-icon>alternate_email</mat-icon>
         {{ userInfo?.email }}
       </h3>
       <h3 class="card-text">
+        <mat-icon>phone</mat-icon>
         {{ userInfo?.phone }}
       </h3>
       <h3 class="card-text text-capitalize">
+        <mat-icon>
+          {{
+            userInfo?.gender == "male"
+              ? "male"
+              : userInfo?.gender == "female"
+              ? "female"
+              : "transgender"
+          }}
+        </mat-icon>
         {{ userInfo?.gender }}
       </h3>
       <hr />
