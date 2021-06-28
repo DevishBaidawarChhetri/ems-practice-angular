@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    TextMaskModule
   ],
   providers: [
     {

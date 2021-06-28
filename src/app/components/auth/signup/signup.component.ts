@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MaskConstant } from 'src/app/constants/mask.constant';
 import { AuthService } from 'src/app/services/auth.service';
 import { PasswordValidator } from 'src/app/utils/password.validators';
 
@@ -11,6 +12,7 @@ import { PasswordValidator } from 'src/app/utils/password.validators';
 })
 export class SignupComponent implements OnInit {
   form: FormGroup;
+  phoneMask = MaskConstant.PHONE;
 
   get email() { return this.form.get('email'); }
   get phone() { return this.form.get('phone'); }
