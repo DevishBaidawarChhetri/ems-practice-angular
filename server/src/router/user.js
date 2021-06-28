@@ -4,6 +4,14 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const mailgun = require("mailgun-js");
+const DOMAIN = "sandboxda700bbe2400498aa2a57df518c7edfe.mailgun.org";
+const mg = mailgun({
+  apiKey: "05ba591affee72d43523c46bd9e50071-aff8aa95-faf83779",
+  // apiKey: process.env.MAILGUN_API_KEY,
+  domain: DOMAIN,
+});
+
 const User = require("../model/userSchema");
 const validateRegisterSchema = require("../validationSchema/validateRegisterSchema");
 const validateLoginSchema = require("../validationSchema/validateLoginSchema");
@@ -12,7 +20,7 @@ const checkAuth = require("../middleware/auth");
 
 /**
  * @route POST /api/register
- * @desc Registration
+ * @desc Registration for email signup
  * @access Public
  */
 
@@ -40,17 +48,74 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
         .json({ error: `Password and confirm password not matched.` });
     }
     const hashPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      fullName,
-      email,
-      gender,
-      phone,
-      password: hashPassword,
-      confirmPassword: hashPassword,
-      image,
+    const token = jwt.sign(
+      {
+        fullName,
+        email,
+        phone,
+        gender,
+        password: hashPassword,
+        confirmPassword: hashPassword,
+        image,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    const data = {
+      from: "noreply@emsDevish.com",
+      to: email,
+      subject: "Account Activation Link",
+      html: `
+        <h2>Please click on given link to activate your account.</h2>
+        <p>${process.env.CLIENT_URL}/auth/activate/${token}</p>
+      `,
+    };
+    mg.messages().send(data, function (error, body) {
+      if (error) {
+        return res.json({ message: error.message });
+      }
+      return res.json({
+        message: "Email has been sent to your email, activate it.",
+      });
     });
-    await user.save();
-    res.status(201).json({ message: "User registered successfully." });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
+/**
+ * @route POST /api/email-activate
+ * @desc Activate Account through provided link in email
+ * @access Public
+ */
+
+router.post("/api/email-activate", async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (token) {
+      const validToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+      if (!validToken) {
+        return res.status(400).json({ message: "Incorrect or expired link" });
+      }
+      const { fullName, email, phone, gender, password, confirmPassword } =
+        validToken;
+      const userExists = await User.findOne({ email: email });
+      if (userExists) {
+        return res.status(422).json({ error: `Email already exist.` });
+      }
+      const user = new User({
+        fullName,
+        email,
+        gender,
+        phone,
+        password,
+        confirmPassword: password,
+      });
+      await user.save();
+      return res.status(201).json({ message: "User registered successfully." });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Server Error!",

@@ -5,3 +5,32 @@ dob
 date
 
 areas (js, node, react, angular)
+
+
+// Reset password
+
+/**
+ * @route PUT /api/user/password
+ * @desc Forgot password
+ * @access Public
+ */
+
+router.put("/api/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  const userExists = await User.findOne({ email: email });
+  if (!userExists) {
+    return res.status(400).json({ error: `Email doesnot exist.` });
+  }
+  const token = jwt.sign({ _id: user._id }, process.env.RESET_PASSWORD_KEY, {
+    expiresIn: "10m",
+  });
+  const data = {
+    from: "noreply@hello.com",
+    to: email,
+    subject: "Password Reset Link",
+    html: `
+      <h2>Please click on given link to reset your password</h2>
+      <p>${process.env.CLIENT_URL}/resetPassword/${token}</p>
+    `,
+  };
+});
