@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
         this.toastr.success(resp.message, 'Success');
       }, (error) => {
         this.toastr.error(error.error.message, 'Failed');
-        console.log(error);
       });
   }
 
@@ -58,5 +57,14 @@ export class LoginComponent implements OnInit {
   onResetPassword() {
     if (this.resetPasswordForm.invalid) { return; }
     console.log(this.resetPasswordForm.value)
+    this.authService.resetPassword(this.resetPasswordForm.value).subscribe(
+      (resp) => {
+        this.toastr.success(resp.message, "Success");
+        this.modalRef.hide();
+        this.resetPasswordForm.reset();
+      }, (error) => {
+        this.toastr.error(error.error.message, 'Failed');
+      }
+    )
   }
 }

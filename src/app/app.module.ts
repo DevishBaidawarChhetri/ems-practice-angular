@@ -15,10 +15,10 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
-import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 
@@ -40,7 +40,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     components.UpdateProfileComponent,
     components.UpdateDepartmentComponent,
     components.UpdateEmployeeComponent,
-    components.AccountActivateComponent
+    components.AccountActivateComponent,
+    components.ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

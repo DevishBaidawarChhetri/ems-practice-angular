@@ -102,6 +102,15 @@ export class AuthService {
     return this.http.patch(environment.apiUrl + `/user/${id}/password`, data);
   }
 
+  // Reset Password (Email Link)
+  resetPassword(email: string): Observable<any> {
+    return this.http.put(environment.apiUrl + "/user/forgot-password", email).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    )
+  }
+
   // Logout
   logoutUser() {
     this.token = null;
@@ -157,4 +166,5 @@ export class AuthService {
       expirationDate: new Date(expirationDate)
     }
   }
+
 }
