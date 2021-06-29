@@ -14,3 +14,4 @@ export * from './updateProfile/updateProfile.component';
 export * from './user-profile/user-profile.component';
 export * from './department/update-department/update-department.component';
 export * from './employee/update-employee/update-employee.component';
+export * from './auth/account-activate/account-activate.component';
