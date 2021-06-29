@@ -116,7 +116,7 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
         return res.json({ message: error.message });
       }
       return res.json({
-        message: "Email has been sent to your email, activate it.",
+        message: "Activation link has been sent to your email, activate it.",
       });
     });
   } catch (error) {
@@ -127,12 +127,12 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
 });
 
 /**
- * @route POST /api/email-activate
+ * @route POST /api/account-activate
  * @desc Activate Account through provided link in email
  * @access Public
  */
 
-router.post("/api/email-activate", async (req, res) => {
+router.post("/api/account-activate", async (req, res) => {
   try {
     const { token } = req.body;
     if (token) {
