@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
+require("dotenv").config();
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const mailgun = require("mailgun-js");
-const DOMAIN = "sandboxda700bbe2400498aa2a57df518c7edfe.mailgun.org";
+const DOMAIN = `${process.env.MAILGUN_DOMAIN}`;
 const mg = mailgun({
-  apiKey: "05ba591affee72d43523c46bd9e50071-aff8aa95-faf83779",
-  // apiKey: process.env.MAILGUN_API_KEY,
+  apiKey: `${process.env.MAILGUN_API_KEY}`,
   domain: DOMAIN,
 });
 
@@ -66,8 +66,49 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
       to: email,
       subject: "Account Activation Link",
       html: `
-        <h2>Please click on given link to activate your account.</h2>
-        <p>${process.env.CLIENT_URL}/auth/activate/${token}</p>
+        <div
+          style="
+            width: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: center;
+            background-color: #ffffff;
+            padding: 10px 30px 30px;
+            border-radius: 5px;
+            border: 2px solid #3f51b5;
+            word-wrap: break-word;
+          "
+      >
+      <h2
+        style="
+          background-color: #3f51b5;
+          padding: 10px 5px;
+          border-radius: 5px;
+          color: #fff;
+        "
+      >
+        Please click on given link to activate your account.
+      </h2>
+      <p>
+        Click
+        <a
+          style="
+            color: #fff;
+            background-color: #3f51b5;
+            padding: 5px;
+            border-radius: 5px;
+          "
+          href="${process.env.CLIENT_URL}/auth/activate/${token}"
+        >
+          here
+        </a>
+        to activate your account or go to this link.
+      </p>
+      <p>or click the link below:</p>
+      <a href="${process.env.CLIENT_URL}/auth/activate/${token}">
+        ${process.env.CLIENT_URL}/auth/activate/${token}
+      </a>
+    </div>
       `,
     };
     mg.messages().send(data, function (error, body) {
