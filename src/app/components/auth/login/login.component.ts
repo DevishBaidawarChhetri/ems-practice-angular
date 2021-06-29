@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  resetPasswordForm: FormGroup;
+  forgotPasswordForm: FormGroup;
 
   modalRef: BsModalRef;
   constructor(
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   initializePasswordResetForm() {
-    this.resetPasswordForm = this.fb.group({
+    this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]],
     })
   }
@@ -49,19 +49,19 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  openPasswordResetModal(templateForm: TemplateRef<any>) {
+  openForgotPasswordModal(templateForm: TemplateRef<any>) {
     this.modalRef = this.modalService.show(templateForm);
     this.initializePasswordResetForm();
   }
 
-  onResetPassword() {
-    if (this.resetPasswordForm.invalid) { return; }
-    console.log(this.resetPasswordForm.value)
-    this.authService.resetPassword(this.resetPasswordForm.value).subscribe(
+  onForgotPassword() {
+    if (this.forgotPasswordForm.invalid) { return; }
+    console.log(this.forgotPasswordForm.value)
+    this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe(
       (resp) => {
         this.toastr.success(resp.message, "Success");
         this.modalRef.hide();
-        this.resetPasswordForm.reset();
+        this.forgotPasswordForm.reset();
       }, (error) => {
         this.toastr.error(error.error.message, 'Failed');
       }

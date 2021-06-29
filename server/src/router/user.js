@@ -424,8 +424,13 @@ router.put("/api/user/forgot-password", async (req, res) => {
 
 router.put("/api/user/reset-password", async (req, res) => {
   try {
-    const { resetLink, password } = req.body;
+    const { resetLink, password, confirmPassword } = req.body;
     if (resetLink) {
+      if (password !== confirmPassword) {
+        return res
+          .status(422)
+          .json({ error: `Password and confirm password not matched.` });
+      }
       jwt.verify(
         resetLink,
         process.env.RESET_PASSWORD_KEY,
@@ -439,7 +444,7 @@ router.put("/api/user/reset-password", async (req, res) => {
           if (!userExists) {
             return res
               .status(400)
-              .json({ message: "User with this token doesnot exist." });
+              .json({ message: "You have already reset your password." });
           } else {
             const hashPassword = await bcrypt.hash(password, 10);
             const resetPassword = await User.findByIdAndUpdate(userExists._id, {

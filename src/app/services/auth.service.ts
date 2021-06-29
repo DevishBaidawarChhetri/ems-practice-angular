@@ -102,9 +102,18 @@ export class AuthService {
     return this.http.patch(environment.apiUrl + `/user/${id}/password`, data);
   }
 
-  // Reset Password (Email Link)
-  resetPassword(email: string): Observable<any> {
+  // Forgot Password (Email Link)
+  forgotPassword(email: string): Observable<any> {
     return this.http.put(environment.apiUrl + "/user/forgot-password", email).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    )
+  }
+
+  // Reset Password (Change value to db)
+  resetPassword(data: any): Observable<any> {
+    return this.http.put(environment.apiUrl + "/user/reset-password", data).pipe(
       map((resp: any) => {
         return resp;
       })
