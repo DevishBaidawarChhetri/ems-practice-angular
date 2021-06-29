@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'profile', component: components.UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'login', component: components.LoginComponent },
   { path: 'signup', component: components.SignupComponent },
-  { path: 'account-activate', component: components.AccountActivateComponent },
+  { path: 'auth/activate/:token', component: components.AccountActivateComponent },
   { path: '**', component: components.PageNotFoundComponent },
 ];
 

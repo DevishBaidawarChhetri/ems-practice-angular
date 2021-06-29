@@ -43,6 +43,16 @@ export class AuthService {
       )
   }
 
+  confirmAccount(token: string): Observable<any> {
+    return this.http
+      .post<any>(this.baseUrl + '/account-activate', { token })
+      .pipe(
+        map((resp) => {
+          return resp;
+        })
+      )
+  }
+
   loginUser(data: LoginRequestInterface): Observable<any> {
     return this.http
       .post<LoginRequestInterface>(this.baseUrl + '/login', data)
@@ -134,6 +144,7 @@ export class AuthService {
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
+    this.router.navigate(['departments']);
   }
 
   // Get Auth Data from local storage

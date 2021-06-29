@@ -144,7 +144,9 @@ router.post("/api/account-activate", async (req, res) => {
         validToken;
       const userExists = await User.findOne({ email: email });
       if (userExists) {
-        return res.status(422).json({ error: `Email already exist.` });
+        return res
+          .status(422)
+          .json({ message: `You have already confirmed your account.` });
       }
       const user = new User({
         fullName,
