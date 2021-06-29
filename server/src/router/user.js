@@ -20,7 +20,7 @@ const checkAuth = require("../middleware/auth");
 
 /**
  * @route POST /api/register
- * @desc Registration for email signup
+ * @desc Registration for email link activation
  * @access Public
  */
 
@@ -59,7 +59,7 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
         image,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "10m" }
     );
     const data = {
       from: "noreply@emsDevish.com",
@@ -87,7 +87,7 @@ router.post("/api/signup", validateRegisterSchema, async (req, res) => {
           color: #fff;
         "
       >
-        Please click on given link to activate your account.
+        Activate your EMS account.
       </h2>
       <p>
         Click
@@ -136,28 +136,41 @@ router.post("/api/account-activate", async (req, res) => {
   try {
     const { token } = req.body;
     if (token) {
-      const validToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-      if (!validToken) {
-        return res.status(400).json({ message: "Incorrect or expired link" });
-      }
-      const { fullName, email, phone, gender, password, confirmPassword } =
-        validToken;
-      const userExists = await User.findOne({ email: email });
-      if (userExists) {
-        return res
-          .status(422)
-          .json({ message: `You have already confirmed your account.` });
-      }
-      const user = new User({
-        fullName,
-        email,
-        gender,
-        phone,
-        password,
-        confirmPassword: password,
-      });
-      await user.save();
-      return res.status(201).json({ message: "User registered successfully." });
+      jwt.verify(
+        token,
+        process.env.JWT_SECRET_KEY,
+        async (err, decodedData) => {
+          if (err) {
+            return res
+              .status(400)
+              .json({ message: "Incorrect or expired link" });
+          }
+          const { fullName, email, phone, gender, password, confirmPassword } =
+            decodedData;
+          const userExists = await User.findOne({ email: email });
+          if (userExists) {
+            return res
+              .status(422)
+              .json({ message: `You have already confirmed your account.` });
+          }
+          const user = new User({
+            fullName,
+            email,
+            gender,
+            phone,
+            password,
+            confirmPassword,
+          });
+          const registerUser = await user.save();
+          if (registerUser) {
+            return res
+              .status(201)
+              .json({ message: "User registered successfully." });
+          } else {
+            return res.status(400).json({ message: "Something went wrong." });
+          }
+        }
+      );
     }
   } catch (error) {
     res.status(500).json({
@@ -303,6 +316,151 @@ router.patch("/api/user/:id/password", checkAuth, async (req, res) => {
         .json({ message: "Password updated successfully." });
     } else {
       return res.status(401).json({ message: "Not authorized!" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
+/**
+ * @route PUT /api/user/forgot-password
+ * @desc Forgot Password
+ * @access Public
+ */
+
+router.put("/api/user/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const userExists = await User.findOne({ email: email });
+    if (!userExists) {
+      return res.status(400).json({ message: `Email doesnot exist.` });
+    }
+    const token = jwt.sign(
+      { _id: userExists._id },
+      process.env.RESET_PASSWORD_KEY,
+      {
+        expiresIn: "10m",
+      }
+    );
+    const data = {
+      from: "noreply@emsDevish.com",
+      to: email,
+      subject: "Password Reset Link",
+      html: `
+        <div
+          style="
+            width: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: center;
+            background-color: #ffffff;
+            padding: 10px 30px 30px;
+            border-radius: 5px;
+            border: 2px solid #3f51b5;
+            word-wrap: break-word;
+          "
+      >
+      <h2
+        style="
+          background-color: #3f51b5;
+          padding: 10px 5px;
+          border-radius: 5px;
+          color: #fff;
+        "
+      >
+        Reset password of EMS.
+      </h2>
+      <p>
+        Click
+        <a
+          style="
+            color: #fff;
+            background-color: #3f51b5;
+            padding: 5px;
+            border-radius: 5px;
+          "
+          href="${process.env.CLIENT_URL}/reset-password/${token}"
+        >
+          here
+        </a>
+        to activate your account or go to this link.
+      </p>
+      <p>or click the link below:</p>
+      <a href="${process.env.CLIENT_URL}/reset-password/${token}">
+        ${process.env.CLIENT_URL}/reset-password/${token}
+      </a>
+    </div>
+    `,
+    };
+    const updateUser = await User.findByIdAndUpdate(userExists._id, {
+      resetLink: token,
+    });
+    if (!updateUser) {
+      return res.status(400).json({ message: "Reset password link error." });
+    } else {
+      mg.messages().send(data, function (error, body) {
+        if (error) {
+          return res.json({ message: error.message });
+        }
+        return res.status(201).json({
+          message: "Password reset link has been sent to your email.",
+        });
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
+/**
+ * @route PUT /api/user/reset-password
+ * @desc Reset Password
+ * @access Public
+ */
+
+router.put("/api/user/reset-password", async (req, res) => {
+  try {
+    const { resetLink, password } = req.body;
+    if (resetLink) {
+      jwt.verify(
+        resetLink,
+        process.env.RESET_PASSWORD_KEY,
+        async (err, decodedData) => {
+          if (err) {
+            return res
+              .status(401)
+              .json({ message: "Incorrect Token or expired token." });
+          }
+          const userExists = await User.findOne({ resetLink });
+          if (!userExists) {
+            return res
+              .status(400)
+              .json({ message: "User with this token doesnot exist." });
+          } else {
+            const hashPassword = await bcrypt.hash(password, 10);
+            const resetPassword = await User.findByIdAndUpdate(userExists._id, {
+              password: hashPassword,
+              confirmPassword: hashPassword,
+              resetLink: "",
+            });
+            if (resetPassword) {
+              return res.status(201).json({
+                message: "Password reset successful.",
+              });
+            } else {
+              return res.status(400).json({
+                message: "Something went wrong while resetting password.",
+              });
+            }
+          }
+        }
+      );
+    } else {
+      return res.status(401).json({ message: "Authentication error!" });
     }
   } catch (error) {
     res.status(500).json({

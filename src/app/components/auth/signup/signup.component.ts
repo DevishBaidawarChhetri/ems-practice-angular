@@ -42,7 +42,6 @@ export class SignupComponent implements OnInit {
 
   onSignup() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
     this.authService.registerUser(this.form.value).subscribe((response) => {
       this.router.navigate(['/login']);
       this.toastr.success(response.message, "Success");

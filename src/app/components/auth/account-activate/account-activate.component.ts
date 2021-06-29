@@ -23,13 +23,11 @@ export class AccountActivateComponent implements OnInit {
   confirmAccount() {
     this.authService.confirmAccount(this.token).subscribe(
       resp => {
-        this.toastr.success(resp.message, "Success");
+        this.toastr.success(resp.message + " Please Login to continue.", "Success");
         this.router.navigate(['/login']);
-        this.toastr.success("Please Login to continue", "Success");
       }, (error) => {
-        this.toastr.error(error.error.message, "Error");
+        this.toastr.error(error.error.message + " Please Login to continue.", "Error");
         this.router.navigate(['/login']);
-        this.toastr.error("Please Login to continue", "Success");
       }
     )
   }
