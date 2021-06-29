@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,10 +12,14 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  resetPasswordForm: FormGroup;
+
+  modalRef: BsModalRef;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +33,12 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  initializePasswordResetForm() {
+    this.resetPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")]],
+    })
+  }
+
   onLogin() {
     if (this.form.invalid) { return; }
     this.authService.loginUser(this.form.value).subscribe(
@@ -36,5 +48,15 @@ export class LoginComponent implements OnInit {
         this.toastr.error(error.error.message, 'Failed');
         console.log(error);
       });
+  }
+
+  openPasswordResetModal(templateForm: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(templateForm);
+    this.initializePasswordResetForm();
+  }
+
+  onResetPassword() {
+    if (this.resetPasswordForm.invalid) { return; }
+    console.log(this.resetPasswordForm.value)
   }
 }

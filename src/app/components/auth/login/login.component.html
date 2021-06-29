@@ -38,6 +38,15 @@
 
         <div class="button-div">
           <button
+            class="me-3"
+            mat-button
+            color="primary"
+            type="button"
+            (click)="openPasswordResetModal(templateForm)"
+          >
+            Forgot Password?
+          </button>
+          <button
             mat-raised-button
             color="accent"
             type="submit"
@@ -50,3 +59,49 @@
     </div>
   </div>
 </div>
+
+<!-- Password Reset Form -->
+<ng-template #templateForm>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left margin-zero">Reset Password</h2>
+  </div>
+  <div class="modal-body">
+    <form
+      class="example-form"
+      [formGroup]="resetPasswordForm"
+      (ngSubmit)="onResetPassword()"
+    >
+      <mat-form-field class="w-100">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="email"
+          required
+          formControlName="email"
+        />
+        <mat-error>Please enter valid email.</mat-error>
+      </mat-form-field>
+
+      <div class="button-div float-end">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="resetPasswordForm?.invalid"
+        >
+          Submit
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          type="button"
+          class="ms-2"
+          (click)="modalRef.hide()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
