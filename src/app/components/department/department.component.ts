@@ -19,7 +19,7 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   form: FormGroup;
   private deptUpdateListenerSubs: Subscription;
   currentPage: number = 1;
-  postsPerPage: number = 5;
+  postsPerPage: number = 10;
   totalPosts: number = 0;
   pageSizeOptions = [2, 5, 10, 25];
 
@@ -34,8 +34,6 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeForm();
     this.getDepartments();
-    console.log(this.currentPage, this.postsPerPage, this.totalPosts);
-
   }
 
   ngOnDestroy(): void {
@@ -91,7 +89,5 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.getDepartments();
-    console.log(pageData);
-
   }
 }

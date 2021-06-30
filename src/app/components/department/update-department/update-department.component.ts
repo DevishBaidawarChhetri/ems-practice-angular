@@ -35,6 +35,8 @@ export class UpdateDepartmentComponent implements OnInit {
 
   updateDepartment() {
     if (this.form.invalid) { return; }
+    console.log(this.form.value);
+
     this.departmentService.updateDepartment(this.dept._id, this.form.value).subscribe((res) => {
       if (res) {
         this.bsModalRef.hide();
