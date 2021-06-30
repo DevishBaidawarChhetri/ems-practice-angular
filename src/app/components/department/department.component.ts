@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { DepartmentService } from '../../services/department.service';
 import { Department } from '../../interfaces/department';
 import { ToastrService } from 'ngx-toastr';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-department',
@@ -17,6 +18,10 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   form: FormGroup;
   private deptUpdateListenerSubs: Subscription;
+  currentPage: number = 1;
+  postsPerPage: number = 5;
+  totalPosts: number = 0;
+  pageSizeOptions = [2, 5, 10, 25];
 
   constructor(
     public dialog: MatDialog,
@@ -29,6 +34,8 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeForm();
     this.getDepartments();
+    console.log(this.currentPage, this.postsPerPage, this.totalPosts);
+
   }
 
   ngOnDestroy(): void {
@@ -40,8 +47,9 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   }
 
   getDepartments() {
-    this.departmentService.getDepartments().subscribe((dept) => {
-      this.departments = dept;
+    this.departmentService.getDepartmentWithPagination(this.currentPage, this.postsPerPage).subscribe((dept) => {
+      this.departments = dept.departments;
+      this.totalPosts = dept.maxPosts;
     });
   }
 
@@ -77,5 +85,13 @@ export class DepartmentComponent implements OnInit, OnDestroy {
     );
     this.modalRef.hide();
     this.form.reset();
+  }
+
+  onPageChange(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.getDepartments();
+    console.log(pageData);
+
   }
 }

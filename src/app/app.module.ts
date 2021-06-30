@@ -16,6 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
@@ -67,7 +69,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
       progressAnimation: 'decreasing',
       preventDuplicates: true,
       closeButton: true
-    })
+    }),
+    MatPaginatorModule
   ],
   providers: [
     {

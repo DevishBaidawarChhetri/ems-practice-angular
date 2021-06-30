@@ -23,6 +23,15 @@ export class DepartmentService {
       .pipe(catchError(this.errorHandler));
   }
 
+  // get department with pagination
+  getDepartmentWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
+    const departmentUrl: string = `${this.baseURL}/departments`;
+    const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
+    return this.http
+      .get<any>(departmentUrl + queryParams)
+      .pipe(catchError(this.errorHandler));
+  }
+
   addDepartment(departmentData: Department): Observable<any> {
     const addDepartmentUrl: string = `${this.baseURL}/department`;
     return this.http

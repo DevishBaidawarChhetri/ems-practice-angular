@@ -9,6 +9,13 @@
     [departmentLists]="departments"
     (removeDepartment)="removeDepartment($event)"
   ></app-department-list>
+  <mat-paginator
+    [length]="totalPosts"
+    [pageSize]="postsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>
 
 <ng-template #addDepartmentModal>

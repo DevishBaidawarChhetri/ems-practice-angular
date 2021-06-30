@@ -40,14 +40,22 @@ router.post("/api/department", checkAuth, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/departments", checkAuth, async (req, res) => {
-  try {
+router.get("/api/departments", async (req, res) => {
+  const currentPage = +req.query.currentPage;
+  const pageSize = +req.query.pageSize;
+  if (currentPage && pageSize) {
+    const fetchedDepartments = await DepartmentProvider.find()
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+    const count = await DepartmentProvider.countDocuments();
+    res.status(200).json({
+      departments: fetchedDepartments,
+      maxPosts: count,
+      message: "Fetched Successfully.",
+    });
+  } else {
     const departments = await DepartmentProvider.find({});
     res.status(200).json(departments);
-  } catch (err) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
   }
 });
 
