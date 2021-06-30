@@ -87,6 +87,16 @@ export class AuthService {
       .get(environment.apiUrl + `/user/${id}`);
   }
 
+  // Getting all users
+  getAllRegisteredUsers(): Observable<any> {
+    return this.http
+      .get(environment.apiUrl + "/users").pipe(
+        map((resp: any) => {
+          return resp;
+        })
+      )
+  }
+
   // Update profile
   updateProfile(id: string, data): Observable<any> {
     return this.http.patch(environment.apiUrl + `/user/${id}`, data).pipe(

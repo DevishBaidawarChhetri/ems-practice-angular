@@ -1,99 +1,22 @@
 <div class="container py-5 px-5 mat-background-accent">
   <div class="row mt-4">
     <h1 class="text-center">Registered Users</h1>
-    <div class="col-md-4 my-3">
+    <div class="col-md-4 my-3" *ngFor="let user of users">
       <div class="card-container">
         <div class="top">
           <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
+            [src]="
+              user.image ||
+              'https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg'
+            "
+            [alt]="user.fullName"
           />
         </div>
         <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-3">
-      <div class="card-container">
-        <div class="top">
-          <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
-          />
-        </div>
-        <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-3">
-      <div class="card-container">
-        <div class="top">
-          <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
-          />
-        </div>
-        <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-3">
-      <div class="card-container">
-        <div class="top">
-          <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
-          />
-        </div>
-        <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-3">
-      <div class="card-container">
-        <div class="top">
-          <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
-          />
-        </div>
-        <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 my-3">
-      <div class="card-container">
-        <div class="top">
-          <img
-            src="https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/10/5-Charactees-Stronger-Than-Itachi-Uchiha.jpg"
-            alt="title"
-          />
-        </div>
-        <div class="bottom">
-          <h2 class="text-center">Devish Baidawar Chhetri</h2>
-          <h3 class="text-center">Software Engineer</h3>
-          <p class="text-center">9843324021</p>
-          <p class="text-center">devish@gmail.com</p>
+          <h2 class="text-center">{{ user.fullName }}</h2>
+          <h3 class="text-center">{{ user.email }}</h3>
+          <p class="text-center">{{ user.phone }}</p>
+          <p class="text-center text-capitalize">{{ user.gender }}</p>
         </div>
       </div>
     </div>

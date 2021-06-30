@@ -232,7 +232,7 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/users", async (req, res) => {
+router.get("/api/users", checkAuth, async (req, res) => {
   try {
     const currentPage = +req.query.currentPage;
     const pageSize = +req.query.pageSize;
@@ -250,6 +250,7 @@ router.get("/api/users", async (req, res) => {
           phone: user.phone,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
+          image: user.image,
         });
       });
       res.status(200).json({
@@ -268,6 +269,7 @@ router.get("/api/users", async (req, res) => {
           phone: user.phone,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
+          image: user.image,
         });
       });
       res.status(200).json({
