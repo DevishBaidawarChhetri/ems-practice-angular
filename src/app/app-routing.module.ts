@@ -7,11 +7,12 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/departments', pathMatch: 'full' },
+  { path: 'login', component: components.LoginComponent },
+  { path: 'signup', component: components.SignupComponent },
   { path: 'employees', component: components.EmployeeComponent, canActivate: [AuthGuard] },
   { path: 'departments', component: components.DepartmentComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: components.UserProfileComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: components.LoginComponent },
-  { path: 'signup', component: components.SignupComponent },
+  { path: 'registered-users', component: components.RegisteredUsersComponent, canActivate: [AuthGuard] },
   { path: 'auth/activate/:token', component: components.AccountActivateComponent },
   { path: 'reset-password/:token', component: components.ResetPasswordComponent },
   { path: '**', component: components.PageNotFoundComponent },

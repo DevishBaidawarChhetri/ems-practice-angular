@@ -43,7 +43,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     components.UpdateDepartmentComponent,
     components.UpdateEmployeeComponent,
     components.AccountActivateComponent,
-    components.ResetPasswordComponent
+    components.ResetPasswordComponent,
+    components.RegisteredUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -162,7 +162,7 @@ export class AuthService {
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
-    this.router.navigate(['departments']);
+    // this.router.navigate(['departments']);
   }
 
   // Get Auth Data from local storage
