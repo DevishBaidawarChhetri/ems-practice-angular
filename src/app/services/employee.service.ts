@@ -23,6 +23,15 @@ export class EmployeeService {
       .pipe(catchError(this.errorHandler));
   }
 
+  // get employees with pagination
+  getEmployeesWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
+    const employeesUrl: string = `${this.baseURL}/employees`;
+    const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
+    return this.http
+      .get<any>(employeesUrl + queryParams)
+      .pipe(catchError(this.errorHandler));
+  }
+
   deleteEmployee(id: Employee): Observable<any> {
     const deleteUrl = `${this.baseURL}/employee/` + id;
     return this.http

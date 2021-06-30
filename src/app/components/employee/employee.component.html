@@ -9,6 +9,13 @@
     [employeeList]="employees$"
     (removeEmployee)="employeeDelete($event)"
   ></app-employee-list>
+  <mat-paginator
+    [length]="totalPosts"
+    [pageSize]="postsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>
 
 <ng-template #addEmployeeModal>

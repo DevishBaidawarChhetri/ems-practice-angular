@@ -49,8 +49,22 @@ router.post("/api/employee", checkAuth, async (req, res) => {
 
 router.get("/api/employees", checkAuth, async (req, res) => {
   try {
-    const departments = await EmployeeProvider.find({});
-    res.status(200).json(departments);
+    const currentPage = +req.query.currentPage;
+    const pageSize = +req.query.pageSize;
+    if (currentPage && pageSize) {
+      const fetchedEmployees = await EmployeeProvider.find()
+        .skip(pageSize * (currentPage - 1))
+        .limit(pageSize);
+      const count = await EmployeeProvider.countDocuments();
+      res.status(200).json({
+        employees: fetchedEmployees,
+        maxPosts: count,
+        message: "Fetched Successfully",
+      });
+    } else {
+      const employees = await EmployeeProvider.find({});
+      res.status(200).json(employees);
+    }
   } catch (err) {
     res.status(500).json({
       message: "Server Error!",

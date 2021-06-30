@@ -9,6 +9,7 @@ import { DepartmentService } from 'src/app/services/department.service';
 import { Department } from 'src/app/interfaces/department';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee',
@@ -22,6 +23,10 @@ export class EmployeeComponent implements OnInit {
   modalRef: BsModalRef;
   form: FormGroup;
   private empUpdateListenerSubs: Subscription;
+  currentPage: number = 1;
+  postsPerPage: number = 10;
+  totalPosts: number = 0;
+  pageSizeOptions = [2, 5, 10, 25];
 
   constructor(
     public dialog: MatDialog,
@@ -43,8 +48,9 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployees() {
-    this.employeeService.getEmployees().subscribe((emp) => {
-      this.employees$ = emp;
+    this.employeeService.getEmployeesWithPagination(this.currentPage, this.postsPerPage).subscribe((emp) => {
+      this.employees$ = emp.employees;
+      this.totalPosts = emp.maxPosts;
     });
   }
 
@@ -89,5 +95,11 @@ export class EmployeeComponent implements OnInit {
     );
     this.modalRef.hide();
     this.form.reset();
+  }
+
+  onPageChange(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.getEmployees();
   }
 }
