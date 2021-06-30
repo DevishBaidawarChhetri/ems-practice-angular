@@ -227,6 +227,62 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
 });
 
 /**
+ * @route GET /api/users
+ * @desc Get all users profile
+ * @access Private
+ */
+
+router.get("/api/users", async (req, res) => {
+  try {
+    const currentPage = +req.query.currentPage;
+    const pageSize = +req.query.pageSize;
+    if (currentPage && pageSize) {
+      const foundUsers = await User.find({})
+        .skip(pageSize * (currentPage - 1))
+        .limit(pageSize);
+      const count = await User.countDocuments();
+      const users = foundUsers.map((user) => {
+        return (data = {
+          _id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          gender: user.gender,
+          phone: user.phone,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        });
+      });
+      res.status(200).json({
+        users: users,
+        count,
+        message: "Fetched Successfully!",
+      });
+    } else {
+      const foundUsers = await User.find({});
+      const users = foundUsers.map((user) => {
+        return (data = {
+          _id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          gender: user.gender,
+          phone: user.phone,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        });
+      });
+      res.status(200).json({
+        users: users,
+        message: "Fetched Successfully!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
+/**
  * @route GET /api/user
  * @desc Get user profile
  * @access Private
