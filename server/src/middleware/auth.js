@@ -9,9 +9,25 @@ module.exports.checkAuth = (req, res, next) => {
         .json({ message: " No token, authorization denied!" });
     }
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.userData = { email: decodedToken.email, userId: decodedToken.userId };
+    req.userData = {
+      userId: decodedToken.userId,
+      fullName: decodedToken.fullName,
+      email: decodedToken.email,
+      phone: decodedToken.phone,
+      admin: decodedToken.admin,
+    };
     next();
   } catch (error) {
     res.status(401).json({ message: "Not Authenticated!" });
   }
+};
+
+module.exports.verifyAdmin = (req, res, next) => {
+  if (!req.userData) {
+    return res.status(401).json({ message: "Unauthorized!" });
+  }
+  if (req.userData.admin !== true) {
+    return res.status(403).json({ message: "Forbidden!" });
+  }
+  next();
 };

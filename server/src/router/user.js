@@ -207,8 +207,11 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
     }
     const token = jwt.sign(
       {
-        email: user.email,
         userId: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+        admin: user.admin,
       },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
@@ -232,7 +235,7 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/users", auth.checkAuth, async (req, res) => {
+router.get("/api/users", auth.checkAuth, auth.verifyAdmin, async (req, res) => {
   try {
     const currentPage = +req.query.currentPage;
     const pageSize = +req.query.pageSize;
