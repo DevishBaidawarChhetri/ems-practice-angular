@@ -69,7 +69,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
       progressBar: true,
       progressAnimation: 'decreasing',
       preventDuplicates: true,
-      closeButton: true
+      closeButton: true,
+      positionClass: 'toast-bottom-right',
     }),
     MatPaginatorModule
   ],
