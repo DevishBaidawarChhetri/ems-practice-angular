@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const EmployeeProvider = require("../model/employeeSchema");
-const checkAuth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 /**
  * @route POST /api/employee
@@ -10,7 +10,7 @@ const checkAuth = require("../middleware/auth");
  * @access Private
  */
 
-router.post("/api/employee", checkAuth, async (req, res) => {
+router.post("/api/employee", auth.checkAuth, async (req, res) => {
   const { fullName, email, department, gender } = req.body;
   if (!fullName || !email || !department || !gender) {
     return res.status(422).json({ message: `Don't leave fields empty.` });
@@ -47,7 +47,7 @@ router.post("/api/employee", checkAuth, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/employees", checkAuth, async (req, res) => {
+router.get("/api/employees", auth.checkAuth, async (req, res) => {
   try {
     const currentPage = +req.query.currentPage;
     const pageSize = +req.query.pageSize;
@@ -78,7 +78,7 @@ router.get("/api/employees", checkAuth, async (req, res) => {
  * @access Private
  */
 
-router.delete("/api/employee/:id", checkAuth, async (req, res) => {
+router.delete("/api/employee/:id", auth.checkAuth, async (req, res) => {
   try {
     const empId = await EmployeeProvider.findOneAndDelete({
       _id: req.params.id,

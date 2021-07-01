@@ -16,7 +16,7 @@ const User = require("../model/userSchema");
 const validateRegisterSchema = require("../validationSchema/validateRegisterSchema");
 const validateLoginSchema = require("../validationSchema/validateLoginSchema");
 const validateProfileUpdateSchema = require("../validationSchema/validateProfileUpdateSchema");
-const checkAuth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 /**
  * @route POST /api/register
@@ -232,7 +232,7 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/users", checkAuth, async (req, res) => {
+router.get("/api/users", auth.checkAuth, async (req, res) => {
   try {
     const currentPage = +req.query.currentPage;
     const pageSize = +req.query.pageSize;
@@ -290,7 +290,7 @@ router.get("/api/users", checkAuth, async (req, res) => {
  * @access Private
  */
 
-router.get("/api/user/:id", checkAuth, async (req, res) => {
+router.get("/api/user/:id", auth.checkAuth, async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -313,7 +313,7 @@ router.get("/api/user/:id", checkAuth, async (req, res) => {
 
 router.patch(
   "/api/user/:id",
-  checkAuth,
+  auth.checkAuth,
   validateProfileUpdateSchema,
   async (req, res) => {
     const errors = validationResult(req);
@@ -351,7 +351,7 @@ router.patch(
  * @access Private
  */
 
-router.patch("/api/user/:id/password", checkAuth, async (req, res) => {
+router.patch("/api/user/:id/password", auth.checkAuth, async (req, res) => {
   try {
     const { id } = req.params;
     const { password, confirmPassword } = req.body;
