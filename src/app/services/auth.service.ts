@@ -73,7 +73,7 @@ export class AuthService {
             const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
             this.saveAuthData(token, expirationDate, this.userId); // save to local storage
-            this.router.navigate(['/departments']);
+            this.router.navigate(['/registered-users']);
             this.autoAuthUser();
             return response;
           }
@@ -91,6 +91,18 @@ export class AuthService {
   getAllRegisteredUsers(): Observable<any> {
     return this.http
       .get(environment.apiUrl + "/users").pipe(
+        map((resp: any) => {
+          return resp;
+        })
+      )
+  }
+
+  // get all registered users with pagination
+  getEmployeesWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
+    const usersUrl: string = `${environment.apiUrl}/users`;
+    const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
+    return this.http
+      .get<any>(usersUrl + queryParams).pipe(
         map((resp: any) => {
           return resp;
         })

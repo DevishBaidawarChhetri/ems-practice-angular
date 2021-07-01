@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,6 +9,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisteredUsersComponent implements OnInit {
   users: [];
+  currentPage: number = 1;
+  postsPerPage: number = 5;
+  totalUsers: number = 0;
+  pageSizeOptions = [2, 5, 10];
 
   constructor(
     private authService: AuthService,
@@ -16,12 +21,19 @@ export class RegisteredUsersComponent implements OnInit {
   ngOnInit(): void {
     this.getAllRegisteredUsers();
   }
+
   getAllRegisteredUsers() {
-    this.authService.getAllRegisteredUsers().subscribe(
+    this.authService.getEmployeesWithPagination(this.currentPage, this.postsPerPage).subscribe(
       (resp) => {
         this.users = resp.users;
-        console.log(this.users);
+        this.totalUsers = resp.count;
       }
     )
+  }
+
+  onPageChange(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.getAllRegisteredUsers();
   }
 }
