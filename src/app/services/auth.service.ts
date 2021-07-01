@@ -65,6 +65,12 @@ export class AuthService {
             this.isAuthenticated = true;
             this.authStatusListener.next(true);
 
+            this.loggedInUserInfo(this.userId).subscribe(
+              (resp) => {
+                localStorage.setItem('isAdmin', resp.user.admin);
+              }
+            )
+
             const expiresInDuration = response.expiresIn;
             this.setAuthTimer(expiresInDuration);
 

@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuth: boolean = false;
+  isAdmin: boolean = Boolean(localStorage.getItem('isAdmin'));
   private authListenerSubs: Subscription;
 
 
