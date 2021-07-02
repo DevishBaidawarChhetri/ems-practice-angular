@@ -31,3 +31,13 @@ module.exports.verifyAdmin = (req, res, next) => {
   }
   next();
 };
+
+module.exports.verifyUser = (req, res, next) => {
+  if (!req.userData) {
+    return res.status(401).json({ message: "Unauthorized!" });
+  }
+  if (req.userData.admin !== false) {
+    return res.status(403).json({ message: "Forbidden!" });
+  }
+  next();
+};
