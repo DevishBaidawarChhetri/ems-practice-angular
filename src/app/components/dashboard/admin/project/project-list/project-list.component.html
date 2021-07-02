@@ -1,0 +1,36 @@
+<table class="table table-striped text-center align-middle">
+  <thead>
+    <tr>
+      <th scope="col">Project ID (S.N)</th>
+      <th scope="col">Project Name</th>
+      <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of projectListsProps; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ project.projectName }}</td>
+      <td>
+        <button
+          mat-icon-button
+          aria-label="edit icon button"
+          color="primary"
+          (click)="openModalProjectUpdateComponent(project)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          mwlConfirmationPopover
+          [popoverTitle]="'Are you sure you want to delete this department?'"
+          placement="top"
+          (confirm)="deleteProject(project._id)"
+          (cancel)="cancelClicked = true"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

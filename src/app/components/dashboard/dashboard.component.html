@@ -1,14 +1,19 @@
 <div class="container">
-  <mat-tab-group>
-    <mat-tab label="First"> Content 1 </mat-tab>
-    <mat-tab label="Employees" *ngIf="isAdmin">
-      <app-employee></app-employee>
-    </mat-tab>
-    <mat-tab label="Departments" *ngIf="isAdmin">
-      <app-department></app-department>
-    </mat-tab>
-    <mat-tab label="Registered Users" *ngIf="isAdmin">
+  <mat-tab-group *ngIf="isAdmin">
+    <mat-tab label="Registered Users">
       <app-registered-users></app-registered-users>
     </mat-tab>
+    <mat-tab label="Projects">
+      <app-project></app-project>
+    </mat-tab>
+    <mat-tab label="Employees">
+      <app-employee></app-employee>
+    </mat-tab>
+    <mat-tab label="Departments">
+      <app-department></app-department>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-tab-group *ngIf="!isAdmin">
+    <mat-tab label="Dashboard"> User Tab </mat-tab>
   </mat-tab-group>
 </div>

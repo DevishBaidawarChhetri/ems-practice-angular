@@ -47,7 +47,10 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     components.RegisteredUsersComponent,
     components.DashboardComponent,
     components.UserComponent,
-    components.AdminComponent
+    components.AdminComponent,
+    components.ProjectComponent,
+    components.ProjectListComponent,
+    components.UpdateProjectComponent,
   ],
   imports: [
     BrowserModule,

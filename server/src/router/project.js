@@ -52,16 +52,29 @@ router.get(
   auth.verifyAdmin,
   async (req, res) => {
     try {
-      const projects = await ProjectProvider.find({});
-      const count = await ProjectProvider.countDocuments();
-      if (projects) {
+      const currentPage = +req.query.currentPage;
+      const pageSize = +req.query.pageSize;
+
+      if (currentPage && pageSize) {
+        const fetchedProjects = await ProjectProvider.find({})
+          .skip(pageSize * (currentPage - 1))
+          .limit(pageSize);
+        const count = await ProjectProvider.countDocuments();
         return res.status(200).json({
-          message: "Fetched Successfully",
-          projects,
+          projects: fetchedProjects,
           totalProjects: count,
+          message: "Fetched Successfully",
         });
       } else {
-        return res.status(400).json({ message: "Something went wrong." });
+        const projects = await ProjectProvider.find({});
+        if (projects) {
+          return res.status(200).json({
+            message: "Fetched Successfully",
+            projects,
+          });
+        } else {
+          return res.status(400).json({ message: "Something went wrong." });
+        }
       }
     } catch (error) {
       return res.status(500).json({

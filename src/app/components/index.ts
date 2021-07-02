@@ -29,6 +29,12 @@ export * from './updateProfile/updateProfile.component';
 export * from './user-profile/user-profile.component';
 
 // Dashboard
-export * from './dashboard/dashboard.component'
-export * from './dashboard/admin/admin.component'
-export * from './dashboard/user/user.component'
+export * from './dashboard/dashboard.component';
+export * from './dashboard/admin/admin.component';
+export * from './dashboard/user/user.component';
+
+
+// Project Name
+export * from './dashboard/admin/project/project.component'
+export * from './dashboard/admin/project/project-list/project-list.component';
+export * from './dashboard/admin/project/update-project/update-project.component';

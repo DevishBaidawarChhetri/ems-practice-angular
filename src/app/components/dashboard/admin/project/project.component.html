@@ -1,0 +1,53 @@
+<div class="container">
+  <h1 class="text-center mt-3">Project Lists</h1>
+  <div class="my-2 text-end">
+    <button mat-raised-button (click)="openModal(addProjectModal)">
+      <mat-icon>business</mat-icon> Add Project
+    </button>
+  </div>
+  <app-project-list
+    [projectLists]="projects"
+    (removeProject)="removeProject($event)"
+  ></app-project-list>
+  <mat-paginator
+    [length]="totalPosts"
+    [pageSize]="postsPerPage"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>
+
+<ng-template #addProjectModal>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left margin-zero">Add Project</h2>
+    <button
+      class="close pull-right corner-button"
+      mat-icon-button
+      color="warn"
+      (click)="modalRef.hide()"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field class="example-full-width w-100">
+        <mat-label>Project Name</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Facebook"
+          formControlName="projectName"
+        />
+        <mat-error> Please enter project name. </mat-error>
+      </mat-form-field>
+      <div class="example-button-row float-end">
+        <button mat-raised-button color="primary" [disabled]="form.invalid">
+          Add
+          <mat-icon class="button-icon-size">add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

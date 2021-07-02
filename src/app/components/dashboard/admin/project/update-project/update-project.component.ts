@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { DepartmentService } from 'src/app/services/department.service';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
-  selector: 'app-update-department',
-  templateUrl: './update-department.component.html',
+  selector: 'app-update-project',
+  templateUrl: './update-project.component.html',
 })
-export class UpdateDepartmentComponent implements OnInit {
-  dept: any;
+export class UpdateProjectComponent implements OnInit {
+  project: any;
   form: FormGroup;
 
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
-    private departmentService: DepartmentService,
+    private projectService: ProjectService,
     private toastr: ToastrService
   ) { }
 
@@ -25,18 +25,18 @@ export class UpdateDepartmentComponent implements OnInit {
 
   initializeForm() {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      projectName: ['', [Validators.required]],
     })
 
     this.form.setValue({
-      name: this.dept.name
+      projectName: this.project.projectName
     })
   }
 
-  updateDepartment() {
+  updateProject() {
     if (this.form.invalid) { return; }
 
-    this.departmentService.updateDepartment(this.dept._id, this.form.value).subscribe((res) => {
+    this.projectService.updateProject(this.project._id, this.form.value).subscribe((res) => {
       if (res) {
         this.bsModalRef.hide();
         this.form.reset();
