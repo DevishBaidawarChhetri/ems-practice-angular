@@ -221,6 +221,7 @@ router.post("/api/login", validateLoginSchema, async (req, res) => {
       token,
       expiresIn: 3600,
       userId: user._id,
+      isAdmin: user.admin,
     });
   } catch (error) {
     res.status(500).json({

@@ -9,8 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuth: boolean = false;
-  isAdmin = localStorage.getItem('isAdmin');
+  isAdmin: boolean = false;
   private authListenerSubs: Subscription;
+  private isAdminListenerSubs: Subscription;
 
 
   constructor(
@@ -19,9 +20,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isAuth = this.authService.getIsAuth();
+    this.isAdmin = this.authService.getIsAdmin();
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(
       (isAuthenticated) => {
         this.isAuth = isAuthenticated;
+      }
+    )
+    this.isAdminListenerSubs = this.authService.getIsAdminStatusListener().subscribe(
+      (isAdmin) => {
+        this.isAdmin = isAdmin;
       }
     )
   }
