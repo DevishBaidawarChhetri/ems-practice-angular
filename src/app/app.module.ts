@@ -17,7 +17,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatTabsModule } from '@angular/material/tabs';
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
@@ -44,7 +44,10 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     components.UpdateEmployeeComponent,
     components.AccountActivateComponent,
     components.ResetPasswordComponent,
-    components.RegisteredUsersComponent
+    components.RegisteredUsersComponent,
+    components.DashboardComponent,
+    components.UserComponent,
+    components.AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
       closeButton: true,
       positionClass: 'toast-bottom-right',
     }),
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
   ],
   providers: [
     {

@@ -18,30 +18,6 @@
           <a
             class="nav-link text-white"
             routerLinkActive="active"
-            routerLink="employees"
-            data-bs-toggle="collapse"
-            data-bs-target=".navbar-collapse.show"
-          >
-            <mat-icon>group_add</mat-icon>
-            <span class="icon-text"> Employees</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-white"
-            routerLinkActive="active"
-            routerLink="departments"
-            data-bs-toggle="collapse"
-            data-bs-target=".navbar-collapse.show"
-          >
-            <mat-icon>business</mat-icon>
-            <span class="icon-text"> Department</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-white"
-            routerLinkActive="active"
             data-bs-toggle="collapse"
             data-bs-target=".navbar-collapse.show"
             routerLink="profile"
@@ -50,16 +26,16 @@
             <span class="icon-text"> Profile</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="isAdmin === true">
+        <li class="nav-item">
           <a
             class="nav-link text-white"
             routerLinkActive="active"
             data-bs-toggle="collapse"
             data-bs-target=".navbar-collapse.show"
-            routerLink="registered-users"
+            routerLink="dashboard"
           >
-            <mat-icon>groups</mat-icon>
-            <span class="icon-text"> Registered Users</span>
+            <mat-icon>dashboard</mat-icon>
+            <span class="icon-text"> Dashboard</span>
           </a>
         </li>
         <li class="nav-item">

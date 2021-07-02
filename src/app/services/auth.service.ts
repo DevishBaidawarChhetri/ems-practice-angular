@@ -85,7 +85,7 @@ export class AuthService {
             const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
             this.saveAuthData(token, expirationDate, this.userId, this.isAdmin); // save to local storage
-            this.router.navigate(['/registered-users']);
+            this.router.navigate(['/dashboard']);
             this.autoAuthUser();
             return response;
           }
