@@ -34,7 +34,10 @@
 
       <mat-form-field appearance="fill" class="w-50">
         <mat-label>Hours</mat-label>
-        <mat-select formControlName="durationInHours">
+        <mat-select
+          formControlName="durationInHours"
+          (selectionChange)="hourChange($event)"
+        >
           <mat-option *ngFor="let hour of hours" [value]="hour">
             {{ hour }}
           </mat-option>

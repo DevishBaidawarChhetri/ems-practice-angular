@@ -14,6 +14,7 @@ export class TimelogComponent implements OnInit {
   hours: number[] = [];
   minutes: number[] = [];
   form: FormGroup;
+  minutesDisabled: boolean = false;
 
   constructor(
     private projectService: ProjectService,
@@ -53,10 +54,19 @@ export class TimelogComponent implements OnInit {
     this.form = this.fb.group({
       date: [this.todayDate.value, [Validators.required]],
       projectName: ['', [Validators.required]],
-      durationInHours: [null, [Validators.required]],
-      durationInMinutes: [null, [Validators.required]],
+      durationInHours: [1, [Validators.required]],
+      durationInMinutes: [{ value: 0, disabled: false }, [Validators.required]],
       taskSummary: ['', [Validators.required, Validators.maxLength(200)]],
     })
+  }
+
+  hourChange(hour) {
+    if (hour.value === 8) {
+      this.form.controls.durationInMinutes.disable();
+      this.form.value.durationInMinutes = 0;
+    } else {
+      this.form.controls.durationInMinutes.enable();
+    }
   }
 
   onSubmit() {
