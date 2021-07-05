@@ -9,18 +9,16 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./timelog.component.css']
 })
 export class TimelogComponent implements OnInit {
+  todayDate = new FormControl(new Date());
   projects = [];
   hours: number[] = [];
   minutes: number[] = [];
-  minutesDisabled: boolean = false;
   form: FormGroup;
 
   constructor(
     private projectService: ProjectService,
     private fb: FormBuilder,
   ) { }
-
-  getMinutes() { return this.form.get('durationInHours'); }
 
   ngOnInit(): void {
     this.initializeValue();
@@ -30,7 +28,7 @@ export class TimelogComponent implements OnInit {
   }
 
   onDateChange(e: MatDatepickerInputEvent<Date>) {
-    console.log(e.value);
+    // console.log(e.value);
   }
 
   initializeValue() {
@@ -53,10 +51,10 @@ export class TimelogComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      date: ['', [Validators.required]],
+      date: [this.todayDate.value, [Validators.required]],
       projectName: ['', [Validators.required]],
-      durationInHours: [1, [Validators.required]],
-      durationInMinutes: [0, [Validators.required]],
+      durationInHours: [null, [Validators.required]],
+      durationInMinutes: [null, [Validators.required]],
       taskSummary: ['', [Validators.required, Validators.maxLength(200)]],
     })
   }
