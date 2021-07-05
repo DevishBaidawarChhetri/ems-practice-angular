@@ -38,3 +38,6 @@ export * from './dashboard/user/user.component';
 export * from './dashboard/admin/project/project.component'
 export * from './dashboard/admin/project/project-list/project-list.component';
 export * from './dashboard/admin/project/update-project/update-project.component';
+
+// Time Log
+export * from './dashboard/user/timelog/timelog.component';

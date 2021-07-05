@@ -46,43 +46,38 @@ router.post(
  * @access Private
  */
 
-router.get(
-  "/api/project",
-  auth.checkAuth,
-  auth.verifyAdmin,
-  async (req, res) => {
-    try {
-      const currentPage = +req.query.currentPage;
-      const pageSize = +req.query.pageSize;
+router.get("/api/project", auth.checkAuth, async (req, res) => {
+  try {
+    const currentPage = +req.query.currentPage;
+    const pageSize = +req.query.pageSize;
 
-      if (currentPage && pageSize) {
-        const fetchedProjects = await ProjectProvider.find({})
-          .skip(pageSize * (currentPage - 1))
-          .limit(pageSize);
-        const count = await ProjectProvider.countDocuments();
+    if (currentPage && pageSize) {
+      const fetchedProjects = await ProjectProvider.find({})
+        .skip(pageSize * (currentPage - 1))
+        .limit(pageSize);
+      const count = await ProjectProvider.countDocuments();
+      return res.status(200).json({
+        projects: fetchedProjects,
+        totalProjects: count,
+        message: "Fetched Successfully",
+      });
+    } else {
+      const projects = await ProjectProvider.find({});
+      if (projects) {
         return res.status(200).json({
-          projects: fetchedProjects,
-          totalProjects: count,
           message: "Fetched Successfully",
+          projects,
         });
       } else {
-        const projects = await ProjectProvider.find({});
-        if (projects) {
-          return res.status(200).json({
-            message: "Fetched Successfully",
-            projects,
-          });
-        } else {
-          return res.status(400).json({ message: "Something went wrong." });
-        }
+        return res.status(400).json({ message: "Something went wrong." });
       }
-    } catch (error) {
-      return res.status(500).json({
-        message: "Server Error!",
-      });
     }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server Error!",
+    });
   }
-);
+});
 
 /**
  * @route Delete /api/project/:id

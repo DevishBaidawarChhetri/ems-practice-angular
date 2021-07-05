@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="col-md-10 mx-auto">
+    <h2 class="my-2 text-center">Add Time Log</h2>
+    <form class="my-2" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="w-50">
+        <mat-label>Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          (dateChange)="onDateChange($event)"
+          formControlName="date"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        <mat-error>Please select today's date.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-50">
+        <mat-label>Choose a project.</mat-label>
+        <mat-select formControlName="projectName">
+          <mat-option
+            *ngFor="let project of projects"
+            [value]="project.projectName"
+          >
+            {{ project.projectName }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Please select your project.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-50">
+        <mat-label>Hours</mat-label>
+        <mat-select formControlName="durationInHours">
+          <mat-option *ngFor="let hour of hours" [value]="hour">
+            {{ hour }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Please select hours you worked.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-50">
+        <mat-label>Minutes</mat-label>
+        <mat-select
+          formControlName="durationInMinutes"
+          [disabled]="getMinutes().value === 8"
+        >
+          <mat-option *ngFor="let minute of minutes" [value]="minute">
+            {{ minute }}
+          </mat-option>
+        </mat-select>
+        <mat-error>Please select hours you worked or select 0.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Task Summary</mat-label>
+        <textarea
+          matInput
+          placeholder="Write a short summary about your task..."
+          formControlName="taskSummary"
+          rows="12"
+        ></textarea>
+        <mat-error
+          >Please write your short summary about your task in less than 200
+          characters.</mat-error
+        >
+      </mat-form-field>
+
+      <div class="button-div float-end">
+        <button mat-raised-button class="me-3" color="accent" type="submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

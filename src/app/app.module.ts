@@ -18,11 +18,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     components.ProjectComponent,
     components.ProjectListComponent,
     components.UpdateProjectComponent,
+    components.TimelogComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
       positionClass: 'toast-bottom-right',
     }),
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {
