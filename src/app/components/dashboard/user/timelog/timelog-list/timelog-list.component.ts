@@ -21,9 +21,9 @@ export class TimelogListComponent implements OnInit {
   getSelfLogs() {
     this.timelogService.getSelfTimelog().subscribe((resp) => {
       this.logs = resp.logs;
-      this.toastr.success = resp.message, "Success";
+      this.toastr.success(resp.message, "Success");
     }, (error) => {
-      this.toastr.error = error.error.message, "Failed";
+      this.toastr.error(error.error.message, "Failed");
     })
   }
 
