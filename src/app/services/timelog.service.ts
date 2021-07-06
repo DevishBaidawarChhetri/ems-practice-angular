@@ -16,6 +16,13 @@ export class TimelogService {
     return this.http.post<any>(url, data)
       .pipe(catchError(this.errorHandler))
   }
+
+  // Get Self Time log
+  getSelfTimelog(): Observable<any> {
+    const url: string = `${this.baseUrl}/timelog/mylog`;
+    return this.http.get(url).pipe(catchError(this.errorHandler));
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error)
   }

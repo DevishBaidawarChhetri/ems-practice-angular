@@ -79,7 +79,13 @@
     </mat-form-field>
     <hr />
     <div class="button-div float-end pb-3">
-      <button mat-raised-button class="me-3" color="accent" type="submit">
+      <button
+        mat-raised-button
+        class="me-3"
+        color="accent"
+        type="submit"
+        [disabled]="form.invalid"
+      >
         Submit
       </button>
     </div>

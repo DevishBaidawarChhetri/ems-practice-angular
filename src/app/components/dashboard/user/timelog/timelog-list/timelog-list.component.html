@@ -1,0 +1,39 @@
+<div class="container">
+  <table class="table table-striped text-center align-middle">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Project Name</th>
+        <th scope="col">Hours worked</th>
+        <th scope="col">Task Summary</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs; let i = index">
+        <td scope="row">{{ log.date | date }}</td>
+        <td>{{ log.projectName }}</td>
+        <td>
+          {{ log.durationInHours + "h" + " " + log.durationInMinutes + "m" }}
+        </td>
+        <td>
+          {{ log.taskSummary }}
+        </td>
+        <td>
+          <button mat-icon-button aria-label="edit icon button" color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            mwlConfirmationPopover
+            [popoverTitle]="'Are you sure you want to delete this log?'"
+            placement="left"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
