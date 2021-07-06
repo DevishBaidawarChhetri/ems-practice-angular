@@ -3,10 +3,12 @@ const timelogSchema = new mongoose.Schema(
   {
     date: {
       type: String,
+      required: true,
     },
     projectName: {
       type: String,
       trim: true,
+      required: true,
     },
     durationInHours: {
       type: Number,
@@ -19,6 +21,11 @@ const timelogSchema = new mongoose.Schema(
     taskSummary: {
       type: String,
       trim: true,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "USER",
     },
   },
   { timestamps: true }

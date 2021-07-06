@@ -3,6 +3,7 @@ const userRouter = require("./router/user");
 const departmentRouter = require("./router/department");
 const employeeRouter = require("./router/employee");
 const projectRouter = require("./router/project");
+const timelogRouter = require("./router/timelog");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -20,6 +21,7 @@ app.use("/", userRouter);
 app.use("/", departmentRouter);
 app.use("/", employeeRouter);
 app.use("/", projectRouter);
+app.use("/", timelogRouter);
 
 // Server Port
 app.listen(port || 3000, () => {
