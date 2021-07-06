@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/services/project.service';
+import { TimelogService } from 'src/app/services/timelog.service';
 
 @Component({
   selector: 'app-timelog',
@@ -19,6 +21,8 @@ export class TimelogComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private fb: FormBuilder,
+    private timelogService: TimelogService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +75,10 @@ export class TimelogComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
+    this.timelogService.postTimelog(this.form.value).subscribe((resp) => {
+      this.toastr.success(resp.message, "Success");
+    }, (error) => {
+      this.toastr.error(error.error.message, "Failed");
+    })
   }
 }
