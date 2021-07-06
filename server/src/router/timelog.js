@@ -121,4 +121,106 @@ router.get(
   }
 );
 
+/**
+ * @route GET /api/timelog/mylog/:id
+ * @desc Get one self logged timelog
+ * @access Private (User)
+ */
+
+router.get(
+  "/api/timelog/mylog/:id",
+  auth.checkAuth,
+  auth.verifyUser,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const getOneDetailedLog = await TimelogProvider.find({
+        _id: id,
+        userId: req.userData.userId,
+      });
+      if (getOneDetailedLog) {
+        return res.status(200).json({
+          message: "Fetched successfully!",
+          log: getOneDetailedLog,
+        });
+      } else {
+        return res.status(400).json({ message: "Something went wrong." });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        message: "Server Error!",
+      });
+    }
+  }
+);
+
+/**
+ * @route DELETE /api/timelog/:id
+ * @desc Delete timelog
+ * @access Private (Admin)
+ */
+
+router.delete(
+  "/api/timelog/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleteTimelog = await TimelogProvider.deleteOne({ _id: id });
+      if (deleteTimelog.n > 0) {
+        return res.status(200).json({ message: "Delete Successful" });
+      } else {
+        return res.status(400).json({ message: "Something went wrong." });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        message: "Server Error!",
+      });
+    }
+  }
+);
+
+/**
+ * @route PATCH /api/timelog/:id
+ * @desc PATCH timelog
+ * @access Private (User)
+ */
+
+router.patch(
+  "/api/timelog/:id",
+  auth.checkAuth,
+  auth.verifyUser,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+      const {
+        date,
+        projectName,
+        durationInHours,
+        durationInMinutes,
+        taskSummary,
+      } = req.body;
+      const patchTimelog = await TimelogProvider.updateOne(
+        { _id: id },
+        { date, projectName, durationInHours, durationInMinutes, taskSummary }
+      );
+      if (patchTimelog.n > 0) {
+        return res
+          .status(200)
+          .json({ message: "Timelog updated successfully." });
+      } else {
+        return res.status(401).json({ message: "Something went wrong." });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        message: "Server Error!",
+      });
+    }
+  }
+);
+
 module.exports = router;

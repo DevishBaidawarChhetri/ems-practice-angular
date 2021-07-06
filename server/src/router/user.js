@@ -351,7 +351,7 @@ router.patch(
 
 /**
  * @route Patch /api/user/password
- * @desc Update user password
+ * @desc Patch user password
  * @access Private
  */
 
