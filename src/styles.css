@@ -81,3 +81,8 @@ a {
 .toast-container .ngx-toastr {
   box-shadow: 0 0 12px #000 !important;
 }
+
+/* displaying mat options while modal is open */
+.cdk-overlay-container {
+  z-index: 9999;
+}

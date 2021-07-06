@@ -55,6 +55,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     components.ProjectListComponent,
     components.UpdateProjectComponent,
     components.TimelogComponent,
+    components.AddTimelogComponent,
   ],
   imports: [
     BrowserModule,
