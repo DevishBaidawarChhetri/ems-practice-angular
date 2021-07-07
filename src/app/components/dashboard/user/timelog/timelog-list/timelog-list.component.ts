@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TimelogService } from 'src/app/services/timelog.service';
 
@@ -7,19 +7,28 @@ import { TimelogService } from 'src/app/services/timelog.service';
   templateUrl: './timelog-list.component.html',
   styleUrls: ['./timelog-list.component.css']
 })
-export class TimelogListComponent implements OnInit {
+export class TimelogListComponent implements OnInit, OnChanges {
   logs = [];
+  @Input('todayDate') todayDateProps;
+  @Input('differentDateLogs') differentDateLogsProps;
+  @Output('dateSubmit') dateSubmitEvent = new EventEmitter<any>();
+
   constructor(
     private timelogService: TimelogService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
     this.getSelfLogs();
   }
 
+  ngOnChanges() {
+    this.logs = this.differentDateLogsProps;
+    this.dateSubmitEvent.emit(this.logs[0]?.date);
+  }
+
   getSelfLogs() {
-    this.timelogService.getSelfTimelog().subscribe((resp) => {
+    this.timelogService.getSelfTimelog(this.todayDateProps).subscribe((resp) => {
       this.logs = resp.logs;
       this.toastr.success(resp.message, "Success");
     }, (error) => {

@@ -18,8 +18,8 @@ export class TimelogService {
   }
 
   // Get Self Time log
-  getSelfTimelog(): Observable<any> {
-    const url: string = `${this.baseUrl}/timelog/mylog`;
+  getSelfTimelog(date): Observable<any> {
+    const url: string = `${this.baseUrl}/timelog/mylog?date=${date}`;
     return this.http.get(url).pipe(catchError(this.errorHandler));
   }
 

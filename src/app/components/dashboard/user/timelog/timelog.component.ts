@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AddTimelogComponent } from './addTimelog/addTimelog.component';
 import * as moment from 'moment';
+import { TimelogService } from 'src/app/services/timelog.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timelog',
@@ -11,12 +13,16 @@ import * as moment from 'moment';
 export class TimelogComponent implements OnInit {
 
   bsModalRef: BsModalRef;
-  todayDate;
+  todayDate: string;
   weekDays = [];
+  logs = [];
   currentMonth: string;
   currentYear: string;
 
-  constructor(private modalService: BsModalService) { }
+  constructor(
+    private modalService: BsModalService,
+    private timelogService: TimelogService,
+  ) { }
 
   ngOnInit(): void {
     this.getCurrentWeek();
@@ -37,10 +43,16 @@ export class TimelogComponent implements OnInit {
     for (let i = 0; i <= 6; i++) {
       this.weekDays.push(moment(weekStart).add(i, 'days').format().split("T")[0]);
     }
-
   }
 
-  onDateClick(weekDay) {
-    console.log(weekDay);
+  onDateClick(date) {
+    this.timelogService.getSelfTimelog(date)
+      .subscribe(async (resp) => {
+        this.logs = await resp.logs
+      })
+  }
+
+  async getNewDate(date) {
+    this.todayDate = await date;
   }
 }

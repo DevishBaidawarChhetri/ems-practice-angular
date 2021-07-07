@@ -19,5 +19,9 @@
       <mat-icon>task_alt</mat-icon> Add Log
     </button>
   </div>
-  <app-timelog-list></app-timelog-list>
+  <app-timelog-list
+    [todayDate]="todayDate"
+    [differentDateLogs]="logs"
+    (dateSubmit)="getNewDate($event)"
+  ></app-timelog-list>
 </div>

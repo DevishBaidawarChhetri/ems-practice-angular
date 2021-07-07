@@ -5,7 +5,6 @@ const { validationResult } = require("express-validator");
 const TimelogProvider = require("../model/timelogSchema");
 const auth = require("../middleware/auth");
 const validateTimelogSchema = require("../validationSchema/validateTimelogSchema");
-const moment = require("moment");
 
 /**
  * @route POST /api/timelog
@@ -92,7 +91,7 @@ router.get(
 
 /**
  * @route GET /api/timelog/mylog
- * @desc Get all self logged timelog
+ * @desc Get all self logged timelog as per date
  * @access Private (User)
  */
 
@@ -103,10 +102,10 @@ router.get(
   auth.verifyUser,
   async (req, res) => {
     try {
-      const todayDate = moment().format().split("T")[0];
+      const selectedDate = req.query.date;
       const getTimelog = await TimelogProvider.find({
         userId: req.userData.userId,
-        date: todayDate,
+        date: selectedDate,
       });
       if (getTimelog) {
         return res.status(200).json({
