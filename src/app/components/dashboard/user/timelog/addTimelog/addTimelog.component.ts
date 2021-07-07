@@ -82,8 +82,6 @@ export class AddTimelogComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) { return; }
-    console.log(this.form.value);
-
     this.timelogService.postTimelog(this.form.value).subscribe((resp) => {
       this.toastr.success(resp.message, "Success");
       this.bsModalRef.hide();

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TimelogService } from 'src/app/services/timelog.service';
 
@@ -9,9 +9,13 @@ import { TimelogService } from 'src/app/services/timelog.service';
 })
 export class TimelogListComponent implements OnInit, OnChanges {
   logs = [];
+
+
   @Input('todayDate') todayDateProps;
   @Input('differentDateLogs') differentDateLogsProps;
   @Output('dateSubmit') dateSubmitEvent = new EventEmitter<any>();
+  @Output('removeTimelog') removeTimelogEvent = new EventEmitter<any>();
+
 
   constructor(
     private timelogService: TimelogService,
@@ -36,4 +40,7 @@ export class TimelogListComponent implements OnInit, OnChanges {
     })
   }
 
+  deleteTimelog(id) {
+    this.removeTimelogEvent.emit(id);
+  }
 }

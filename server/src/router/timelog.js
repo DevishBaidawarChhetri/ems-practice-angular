@@ -159,17 +159,20 @@ router.get(
 /**
  * @route DELETE /api/timelog/:id
  * @desc Delete timelog
- * @access Private (Admin)
+ * @access Private (User)
  */
 
 router.delete(
   "/api/timelog/:id",
   auth.checkAuth,
-  auth.verifyAdmin,
+  auth.verifyUser,
   async (req, res) => {
     try {
       const { id } = req.params;
-      const deleteTimelog = await TimelogProvider.deleteOne({ _id: id });
+      const deleteTimelog = await TimelogProvider.deleteOne({
+        _id: id,
+        userId: req.userData.userId,
+      });
       if (deleteTimelog.n > 0) {
         return res.status(200).json({ message: "Delete Successful" });
       } else {

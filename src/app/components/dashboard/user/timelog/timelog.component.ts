@@ -4,6 +4,7 @@ import { AddTimelogComponent } from './addTimelog/addTimelog.component';
 import * as moment from 'moment';
 import { TimelogService } from 'src/app/services/timelog.service';
 import { delay } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-timelog',
@@ -22,6 +23,7 @@ export class TimelogComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private timelogService: TimelogService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -54,5 +56,13 @@ export class TimelogComponent implements OnInit {
 
   async getNewDate(date) {
     this.todayDate = await date;
+  }
+
+  removeTimelog(id) {
+    this.timelogService.deleteTimeLog(id).subscribe((resp) => {
+      this.toastr.success(resp.message, "Success")
+    }, (error) => {
+      this.toastr.error(error.error.message, "Error")
+    })
   }
 }

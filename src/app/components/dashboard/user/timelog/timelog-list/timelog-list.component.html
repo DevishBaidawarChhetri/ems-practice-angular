@@ -29,6 +29,8 @@
             mwlConfirmationPopover
             [popoverTitle]="'Are you sure you want to delete this log?'"
             placement="left"
+            (confirm)="deleteTimelog(log._id)"
+            (cancel)="cancelClicked = true"
           >
             <mat-icon>delete</mat-icon>
           </button>
