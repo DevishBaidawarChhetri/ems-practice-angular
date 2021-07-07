@@ -1,5 +1,19 @@
 <div class="container">
   <h1 class="text-center mt-3">Time Log</h1>
+  <div class="weekly-calendar my-4 d-flex justify-content-center">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="ms-3 pb-3"
+      *ngFor="let weekDay of weekDays"
+      (click)="onDateClick(weekDay)"
+    >
+      <p class="days text-uppercase">{{ weekDay | date: "EE" }}</p>
+      <p [ngClass]="weekDay === todayDate ? 'active-date dates' : 'dates'">
+        {{ weekDay | date: "d" }}
+      </p>
+    </button>
+  </div>
   <div class="my-2 text-end">
     <button mat-raised-button (click)="openModalWithComponent()">
       <mat-icon>task_alt</mat-icon> Add Log
