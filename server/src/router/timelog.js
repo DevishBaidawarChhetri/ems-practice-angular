@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 const TimelogProvider = require("../model/timelogSchema");
 const auth = require("../middleware/auth");
 const validateTimelogSchema = require("../validationSchema/validateTimelogSchema");
+const moment = require("moment");
 
 /**
  * @route POST /api/timelog
@@ -102,8 +103,10 @@ router.get(
   auth.verifyUser,
   async (req, res) => {
     try {
+      const todayDate = moment().format().split("T")[0];
       const getTimelog = await TimelogProvider.find({
         userId: req.userData.userId,
+        date: todayDate,
       });
       if (getTimelog) {
         return res.status(200).json({

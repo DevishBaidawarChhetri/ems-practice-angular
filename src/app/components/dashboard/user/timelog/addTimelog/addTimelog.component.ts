@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/services/project.service';
 import { TimelogService } from 'src/app/services/timelog.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-addTimelog',
@@ -12,7 +13,8 @@ import { TimelogService } from 'src/app/services/timelog.service';
   styleUrls: ['./addTimelog.component.css']
 })
 export class AddTimelogComponent implements OnInit {
-  todayDate = new FormControl(new Date());
+  // todayDate = new FormControl(new Date());
+  todayDate = moment().format().split("T")[0];
   projects = [];
   hours: number[] = [];
   minutes: number[] = [];
@@ -35,7 +37,10 @@ export class AddTimelogComponent implements OnInit {
   }
 
   onDateChange(e: MatDatepickerInputEvent<Date>) {
-    // console.log(e.value);
+    // console.log(moment(e.value).format().split("T")[0]);
+    this.form.patchValue({
+      date: moment(e.value).format().split("T")[0]
+    })
   }
 
   initializeValue() {
@@ -58,7 +63,7 @@ export class AddTimelogComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      date: [this.todayDate.value, [Validators.required]],
+      date: [this.todayDate, [Validators.required]],
       projectName: ['', [Validators.required]],
       durationInHours: [1, [Validators.required]],
       durationInMinutes: [{ value: 0, disabled: false }, [Validators.required]],
@@ -77,6 +82,8 @@ export class AddTimelogComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) { return; }
+    console.log(this.form.value);
+
     this.timelogService.postTimelog(this.form.value).subscribe((resp) => {
       this.toastr.success(resp.message, "Success");
       this.bsModalRef.hide();
