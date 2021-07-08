@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 
-
-
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
 import { ProjectService } from 'src/app/services/project.service';
@@ -57,6 +55,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
       resp => {
         this.getProjectsWithPagination();
         this.toastr.success(resp.message, "Success");
+      }, (error) => {
+        this.toastr.error(error.error.message, "Failed");
       }
     )
   }
