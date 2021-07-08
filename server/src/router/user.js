@@ -552,7 +552,10 @@ router.patch(
       const { id } = req.params;
       const result = await User.updateOne({ _id: id }, req.body);
       if (result.n > 0) {
-        return res.status(200).json({ message: "Admin created successfully." });
+        return res.status(200).json({
+          message: "Admin created successfully.",
+          admin: req.body.admin,
+        });
       } else {
         return res.status(401).json({ message: "Not authorized!" });
       }

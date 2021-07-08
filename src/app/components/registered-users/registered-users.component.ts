@@ -42,7 +42,9 @@ export class RegisteredUsersComponent implements OnInit {
 
   toggleAdmin(event: MatSlideToggleChange, id: string) {
     this.authService.toggleIsAdmin(event.checked, id).subscribe((resp) => {
-      this.toastr.success(resp.message, "Success");
+      resp.admin
+        ? this.toastr.success("Added as ADMIN.", "Success")
+        : this.toastr.success("Removed as ADMIN.", "Success")
     }, (error) => {
       this.toastr.error(error.error.message, "Failed");
     })

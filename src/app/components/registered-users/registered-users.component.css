@@ -12,6 +12,12 @@
   border-radius: 10px 10px 0 0;
 }
 
+.top .admin-toggler {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+}
+
 .top img {
   height: 120px;
   width: 120px;

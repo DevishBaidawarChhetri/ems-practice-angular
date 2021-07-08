@@ -17,3 +17,14 @@ h3 {
 h3 {
   font-weight: 500;
 }
+
+.user-status {
+  margin-top: -20px;
+}
+
+.user-status small {
+  color: #fff;
+  background-color: #ff4081;
+  font-size: 1rem;
+  border-radius: 50px;
+}
