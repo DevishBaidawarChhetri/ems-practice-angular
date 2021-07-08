@@ -40,6 +40,19 @@ export class TimelogService {
     return this.http.delete(url).pipe(catchError(this.errorHandler));
   }
 
+  // Update time log
+  updateTimeLog(id, data): Observable<any> {
+    const url: string = `${this.baseUrl}/timelog/${id}`;
+    return this.http.patch(url, data)
+      .pipe(
+        map((resp: any) => {
+          this.postAddStatusListener.next(true);
+          return resp;
+        }),
+        catchError(this.errorHandler)
+      )
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error)
   }

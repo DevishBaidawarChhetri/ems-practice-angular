@@ -20,6 +20,8 @@ export class AddTimelogComponent implements OnInit {
   minutes: number[] = [];
   form: FormGroup;
   minutesDisabled: boolean = false;
+  selectedLog: any = null;
+  update: boolean = false;
 
   constructor(
     private projectService: ProjectService,
@@ -34,6 +36,8 @@ export class AddTimelogComponent implements OnInit {
     this.createWorkingHours();
     this.createWorkingMinutes();
     this.initializeForm();
+    this.isUpdate();
+    this.initializeUpdateForm();
   }
 
   onDateChange(e: MatDatepickerInputEvent<Date>) {
@@ -63,7 +67,7 @@ export class AddTimelogComponent implements OnInit {
 
   initializeForm(): void {
     this.form = this.fb.group({
-      date: [this.todayDate, [Validators.required]],
+      date: [this.selectedLog !== null ? '' : this.todayDate, [Validators.required]],
       projectName: ['', [Validators.required]],
       durationInHours: [1, [Validators.required]],
       durationInMinutes: [{ value: 0, disabled: false }, [Validators.required]],
@@ -80,14 +84,48 @@ export class AddTimelogComponent implements OnInit {
     }
   }
 
+  initializeUpdateForm() {
+    if (this.selectedLog !== null) {
+      const { date, projectName, durationInHours, durationInMinutes, taskSummary } = this.selectedLog;
+      this.form.setValue({
+        date: date,
+        projectName: projectName,
+        durationInHours: durationInHours,
+        durationInMinutes: durationInMinutes || 0,
+        taskSummary: taskSummary,
+      })
+    }
+  }
+
+  // Check if it is update or post
+  isUpdate() {
+    if (this.selectedLog === null) {
+      this.update = false;
+    } else {
+      this.update = true;
+    }
+  }
+
   onSubmit() {
     if (this.form.invalid) { return; }
-    this.timelogService.postTimelog(this.form.value).subscribe((resp) => {
-      this.toastr.success(resp.message, "Success");
-      this.bsModalRef.hide();
-      this.form.reset();
-    }, (error) => {
-      this.toastr.error(error.error.message, "Failed");
-    })
+    if (this.update) {
+      // For Update
+      this.timelogService.updateTimeLog(this.selectedLog._id, this.form.value).subscribe((resp) => {
+        this.toastr.success(resp.message, "Success");
+        this.bsModalRef.hide();
+        this.form.reset();
+      }, (error) => {
+        this.toastr.error(error.error.message, "Failed");
+      })
+    } else {
+      // For new timelog
+      this.timelogService.postTimelog(this.form.value).subscribe((resp) => {
+        this.toastr.success(resp.message, "Success");
+        this.bsModalRef.hide();
+        this.form.reset();
+      }, (error) => {
+        this.toastr.error(error.error.message, "Failed");
+      })
+    }
   }
 }

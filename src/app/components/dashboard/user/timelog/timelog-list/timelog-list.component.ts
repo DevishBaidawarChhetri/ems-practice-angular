@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { TimelogService } from 'src/app/services/timelog.service';
+import { AddTimelogComponent } from '../addTimelog/addTimelog.component';
 
 @Component({
   selector: 'app-timelog-list',
@@ -15,10 +17,12 @@ export class TimelogListComponent implements OnInit, OnChanges {
   @Output('dateSubmit') dateSubmitEvent = new EventEmitter<any>();
   @Output('removeTimelog') removeTimelogEvent = new EventEmitter<any>();
 
+  modalRef: BsModalRef;
 
   constructor(
     private timelogService: TimelogService,
     private toastr: ToastrService,
+    private modalService: BsModalService,
   ) { }
 
   ngOnInit(): void {
@@ -32,5 +36,11 @@ export class TimelogListComponent implements OnInit, OnChanges {
   deleteTimelog(id) {
     this.removeTimelogEvent.emit(id);
     // this.getSelfLogs();
+  }
+  openModalComponent(selectedTimelog) {
+    const initialState = {
+      selectedLog: selectedTimelog
+    };
+    this.modalRef = this.modalService.show(AddTimelogComponent, { initialState });
   }
 }
