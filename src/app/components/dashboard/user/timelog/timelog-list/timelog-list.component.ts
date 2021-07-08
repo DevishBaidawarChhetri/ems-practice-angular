@@ -10,7 +10,6 @@ import { TimelogService } from 'src/app/services/timelog.service';
 export class TimelogListComponent implements OnInit, OnChanges {
   logs = [];
 
-
   @Input('todayDate') todayDateProps;
   @Input('differentDateLogs') differentDateLogsProps;
   @Output('dateSubmit') dateSubmitEvent = new EventEmitter<any>();
@@ -23,7 +22,6 @@ export class TimelogListComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.getSelfLogs();
   }
 
   ngOnChanges() {
@@ -31,16 +29,17 @@ export class TimelogListComponent implements OnInit, OnChanges {
     this.dateSubmitEvent.emit(this.logs[0]?.date);
   }
 
-  getSelfLogs() {
-    this.timelogService.getSelfTimelog(this.todayDateProps).subscribe((resp) => {
-      this.logs = resp.logs;
-      this.toastr.success(resp.message, "Success");
-    }, (error) => {
-      this.toastr.error(error.error.message, "Failed");
-    })
-  }
+  // getSelfLogs() {
+  //   this.timelogService.getSelfTimelog(this.todayDateProps).subscribe((resp) => {
+  //     this.logs = resp.logs;
+  //     this.toastr.success(resp.message, "Success");
+  //   }, (error) => {
+  //     this.toastr.error(error.error.message, "Failed");
+  //   })
+  // }
 
   deleteTimelog(id) {
     this.removeTimelogEvent.emit(id);
+    // this.getSelfLogs();
   }
 }

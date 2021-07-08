@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { TimelogService } from 'src/app/services/timelog.service';
 import { delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-timelog',
@@ -14,11 +15,12 @@ import { ToastrService } from 'ngx-toastr';
 export class TimelogComponent implements OnInit {
 
   bsModalRef: BsModalRef;
-  todayDate: string;
+  todayDate = moment().format().split("T")[0];
   weekDays = [];
   logs = [];
   currentMonth: string;
   currentYear: string;
+  private timelogAddListenerSubs: Subscription;
 
   constructor(
     private modalService: BsModalService,
@@ -28,17 +30,35 @@ export class TimelogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentWeek();
+    this.getTodaysLog();
+    this.isNewTimelogAdded();
   }
 
   openModalWithComponent() {
     this.bsModalRef = this.modalService.show(AddTimelogComponent, {});
   }
 
+  async getTodaysLog() {
+    await this.timelogService.getSelfTimelog(this.todayDate).subscribe((resp) => {
+      this.logs = resp.logs;
+    })
+  }
+
+  isNewTimelogAdded() {
+    this.timelogAddListenerSubs = this.timelogService.getPostAddStatusListener().subscribe(
+      () => {
+        let date = moment().format().split("T")[0];
+        this.timelogService.getSelfTimelog(date).subscribe((resp) => {
+          this.logs = resp.logs;
+        })
+      }
+    )
+  }
+
   getCurrentWeek() {
     let currentDate = moment();
     let weekStart = currentDate.clone().startOf('week');
 
-    this.todayDate = currentDate.format().split("T")[0];
     this.currentMonth = currentDate.format("MMMM");
     this.currentYear = currentDate.format("YYYY");
 
@@ -60,7 +80,8 @@ export class TimelogComponent implements OnInit {
 
   removeTimelog(id) {
     this.timelogService.deleteTimeLog(id).subscribe((resp) => {
-      this.toastr.success(resp.message, "Success")
+      this.toastr.success(resp.message, "Success");
+      this.getTodaysLog();
     }, (error) => {
       this.toastr.error(error.error.message, "Error")
     })
