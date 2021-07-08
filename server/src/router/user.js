@@ -255,6 +255,7 @@ router.get("/api/users", auth.checkAuth, auth.verifyAdmin, async (req, res) => {
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
           image: user.image,
+          isAdmin: user.admin,
         });
       });
       res.status(200).json({
@@ -535,5 +536,32 @@ router.put("/api/user/reset-password", async (req, res) => {
     });
   }
 });
+
+/**
+ * @route PATCH /api/user/admin
+ * @desc Patch admin
+ * @access Private (Admin)
+ */
+
+router.patch(
+  "/api/patch-admin/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await User.updateOne({ _id: id }, req.body);
+      if (result.n > 0) {
+        return res.status(200).json({ message: "Admin created successfully." });
+      } else {
+        return res.status(401).json({ message: "Not authorized!" });
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: "Server Error!",
+      });
+    }
+  }
+);
 
 module.exports = router;

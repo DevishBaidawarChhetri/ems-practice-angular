@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 
   onForgotPassword() {
     if (this.forgotPasswordForm.invalid) { return; }
-    console.log(this.forgotPasswordForm.value)
+    // console.log(this.forgotPasswordForm.value)
     this.authService.forgotPassword(this.forgotPasswordForm.value).subscribe(
       (resp) => {
         this.toastr.success(resp.message, "Success");

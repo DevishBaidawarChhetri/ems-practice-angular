@@ -19,7 +19,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import * as components from './components/index';
 import { GenderPipe } from './pipes/gender.pipe';
@@ -87,7 +87,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatPaginatorModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSlideToggleModule
   ],
   providers: [
     {

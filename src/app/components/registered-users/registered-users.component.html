@@ -12,9 +12,17 @@
             [alt]="user.fullName"
           />
         </div>
-        <div class="bottom">
-          <h2 class="text-center">{{ user.fullName }}</h2>
-          <h3 class="text-center">{{ user.email }}</h3>
+        <div class="bottom px-3">
+          <h2 class="text-center m-0">
+            {{ user.fullName }}
+            &nbsp;&nbsp;
+            <mat-slide-toggle
+              [checked]="user.isAdmin"
+              (change)="toggleAdmin($event, user._id)"
+            >
+            </mat-slide-toggle>
+          </h2>
+          <h3 class="text-center text-truncate">{{ user.email }}</h3>
           <p class="text-center">{{ user.phone }}</p>
           <p class="text-center text-capitalize">{{ user.gender }}</p>
         </div>

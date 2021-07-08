@@ -154,6 +154,16 @@ export class AuthService {
     )
   }
 
+  // Update user status to admin
+  toggleIsAdmin(isAdmin: boolean, userId: string): Observable<any> {
+    const url = `${environment.apiUrl}/patch-admin/${userId}`;
+    return this.http.patch(url, { admin: isAdmin }).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    )
+  }
+
   // Logout
   logoutUser() {
     this.token = null;

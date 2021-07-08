@@ -29,15 +29,6 @@ export class TimelogListComponent implements OnInit, OnChanges {
     this.dateSubmitEvent.emit(this.logs[0]?.date);
   }
 
-  // getSelfLogs() {
-  //   this.timelogService.getSelfTimelog(this.todayDateProps).subscribe((resp) => {
-  //     this.logs = resp.logs;
-  //     this.toastr.success(resp.message, "Success");
-  //   }, (error) => {
-  //     this.toastr.error(error.error.message, "Failed");
-  //   })
-  // }
-
   deleteTimelog(id) {
     this.removeTimelogEvent.emit(id);
     // this.getSelfLogs();
