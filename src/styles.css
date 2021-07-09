@@ -102,3 +102,7 @@ a {
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
   background-color: #01da12;
 }
+
+.history .worked-hours {
+  color: #3f51b5;
+}

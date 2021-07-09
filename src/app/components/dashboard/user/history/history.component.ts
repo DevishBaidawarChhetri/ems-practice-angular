@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { delay } from 'rxjs/operators';
 import { TimelogService } from 'src/app/services/timelog.service';
 
 @Component({
@@ -13,6 +12,8 @@ export class HistoryComponent implements OnInit {
   userId: string = localStorage.getItem('userId');
   logs = [];
   totalWorkedHours: number;
+  totalWorkedHoursCount: number = 0;
+  totalHoursWorkedTodayCount: number = 0;
 
   constructor(
     private timelogService: TimelogService,
@@ -22,8 +23,9 @@ export class HistoryComponent implements OnInit {
     this.getCurrentWeek();
     this.initializeValues();
     setTimeout(() => {
-      this.getTotalHoursWorked();
-    }, 500)
+      this.getTotalHoursWorkedToday();
+      this.getTotalHoursWorkedInWeek();
+    }, 500);
   }
 
   getCurrentWeek() {
@@ -46,11 +48,42 @@ export class HistoryComponent implements OnInit {
       })
   }
 
-  getTotalHoursWorked() {
+  getTotalHoursWorkedInWeek() {
     const totalHoursWorkedInMinutes = this.logs.reduce((acc, cur) => acc + cur.durationInHours, 0) * 60;
     const totalMinutesWorked = this.logs.reduce((acc, cur) => acc + cur.durationInMinutes, 0);
     const totalMinutesWorkedIncludingHours = totalHoursWorkedInMinutes + totalMinutesWorked;
     const hoursSpent = Number((totalMinutesWorkedIncludingHours / 60).toFixed(1));
     this.totalWorkedHours = hoursSpent;
+
+    const roundOffNumber = Math.round(hoursSpent);
+
+    const totalWorkedHoursCountStop: any = setInterval(() => {
+      this.totalWorkedHoursCount++;
+      if (this.totalWorkedHoursCount === roundOffNumber) {
+        clearInterval(totalWorkedHoursCountStop);
+      }
+    }, 25);
+  }
+
+  getTotalHoursWorkedToday() {
+    const todayDate = moment().format().split("T")[0];
+    const todayLog = this.logs.filter((log) => {
+      return log.date === todayDate;
+    }).map((filteredLog) => {
+      return filteredLog;
+    })
+
+    const totalHoursWorkedInMinutes = todayLog.reduce((acc, cur) => acc + cur.durationInHours, 0) * 60;
+    const totalMinutesWorked = todayLog.reduce((acc, cur) => acc + cur.durationInMinutes, 0);
+    const totalMinutesWorkedIncludingHours = totalHoursWorkedInMinutes + totalMinutesWorked;
+    const hoursSpent = Number((totalMinutesWorkedIncludingHours / 60).toFixed(1));
+
+    const roundOffNumber = Math.round(hoursSpent);
+    const totalWorkedHoursCountStop: any = setInterval(() => {
+      this.totalHoursWorkedTodayCount++;
+      if (this.totalHoursWorkedTodayCount === roundOffNumber) {
+        clearInterval(totalWorkedHoursCountStop);
+      }
+    }, 25);
   }
 }

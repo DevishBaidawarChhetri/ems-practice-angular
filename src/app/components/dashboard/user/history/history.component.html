@@ -1,8 +1,12 @@
-<div class="container mb-7">
-  <p>Start date {{ startdate }}</p>
-  <p>End date {{ enddate }}</p>
-  <p>{{ totalWorkedHours || 0 }} / 40</p>
-  <pre>
-    {{ logs | json }}
-  </pre>
+<div class="history container mb-7 d-flex text-center align-item-center">
+  <div class="left w-50 py-5">
+    <p class="worked-hours fs-2">{{ totalHoursWorkedTodayCount }} / 8</p>
+    <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
+    <p class="this-week fs-6 text-secondary"><small>Today</small></p>
+  </div>
+  <div class="right w-50 py-5">
+    <p class="worked-hours fs-2">{{ totalWorkedHoursCount }} / 40</p>
+    <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
+    <p class="this-week fs-6 text-secondary"><small>This Week</small></p>
+  </div>
 </div>
