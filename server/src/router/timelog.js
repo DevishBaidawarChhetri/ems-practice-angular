@@ -231,6 +231,8 @@ router.patch(
 /**
  * @route GET /api/weekly-log/:id
  * @desc GET week's timelog of user
+ * @params id
+ * @query startdate, enddate
  * @access Private (Admin / User)
  */
 

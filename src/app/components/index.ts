@@ -43,3 +43,6 @@ export * from './dashboard/admin/project/update-project/update-project.component
 export * from './dashboard/user/timelog/timelog.component';
 export * from './dashboard/user/timelog/timelog-list/timelog-list.component';
 export * from './dashboard/user/timelog/addTimelog/addTimelog.component';
+
+// History
+export * from './dashboard/user/history/history.component';

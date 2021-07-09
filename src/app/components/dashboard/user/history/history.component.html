@@ -1,0 +1,8 @@
+<div class="container mb-7">
+  <p>Start date {{ startdate }}</p>
+  <p>End date {{ enddate }}</p>
+  <p>{{ totalWorkedHours || 0 }} / 40</p>
+  <pre>
+    {{ logs | json }}
+  </pre>
+</div>
