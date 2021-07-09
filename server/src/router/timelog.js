@@ -228,4 +228,36 @@ router.patch(
   }
 );
 
+/**
+ * @route GET /api/weekly-log/:id
+ * @desc GET week's timelog of user
+ * @access Private (Admin / User)
+ */
+
+router.get("/api/weekly-log/:id", auth.checkAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { startdate, enddate } = req.query;
+    const getWeeklyLog = await TimelogProvider.find({
+      userId: id,
+      date: {
+        $gte: startdate,
+        $lte: enddate,
+      },
+    }).sort({ date: "asc" });
+    if (getWeeklyLog) {
+      return res.status(200).json({
+        message: "Successfully fetched!",
+        weeklyLogs: getWeeklyLog,
+      });
+    } else {
+      return res.status(401).json({ message: "Something went wrong." });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+});
+
 module.exports = router;
