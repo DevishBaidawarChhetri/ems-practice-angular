@@ -57,6 +57,7 @@ export class HistoryComponent implements OnInit {
 
     const roundOffNumber = Math.round(hoursSpent);
 
+    // For Counter Animation
     const totalWorkedHoursCountStop: any = setInterval(() => {
       this.totalWorkedHoursCount++;
       if (this.totalWorkedHoursCount === roundOffNumber) {
@@ -79,6 +80,8 @@ export class HistoryComponent implements OnInit {
     const hoursSpent = Number((totalMinutesWorkedIncludingHours / 60).toFixed(1));
 
     const roundOffNumber = Math.round(hoursSpent);
+
+    // For Counter Animation
     const totalWorkedHoursCountStop: any = setInterval(() => {
       this.totalHoursWorkedTodayCount++;
       if (this.totalHoursWorkedTodayCount === roundOffNumber) {
