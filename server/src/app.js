@@ -20,7 +20,7 @@ app.use(cors());
 app.use("/", userRouter);
 app.use("/api/v1/department", departmentRouter);
 app.use("/api/v1/employee", employeeRouter);
-app.use("/", projectRouter);
+app.use("/api/v1/project", projectRouter);
 app.use("/", timelogRouter);
 
 // Server Port

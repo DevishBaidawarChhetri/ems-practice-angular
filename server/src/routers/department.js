@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const DepartmentController = require("../controllers/departmentController");
 
+/* ------------- Add Department Begins ------------ */
 /**
  * @route POST /api/v1/department
  * @desc Add Department
@@ -15,7 +16,9 @@ router.post(
   auth.verifyAdmin,
   DepartmentController.addDepartment
 );
+/* ------------- Add Department Ends ------------ */
 
+/* ------------- Get Department Begins ------------ */
 /**
  * @route GET /api/v1/department
  * @desc GET all department
@@ -28,7 +31,9 @@ router.get(
   auth.verifyAdmin,
   DepartmentController.getAllDepartment
 );
+/* ------------- Get Department Ends ------------ */
 
+/* ------------- Delete Department Begins ------------ */
 /**
  * @route Delete /api/v1/department/:id
  * @desc Delete department
@@ -41,7 +46,9 @@ router.delete(
   auth.verifyAdmin,
   DepartmentController.deleteOneDepartment
 );
+/* ------------- Delete Department Ends ------------ */
 
+/* ------------- Update Department Begins ------------ */
 /**
  * @route PUT /api/v1/department/:id
  * @desc Update department
@@ -54,5 +61,6 @@ router.put(
   auth.verifyAdmin,
   DepartmentController.putDepartment
 );
+/* ------------- Update Department Ends ------------ */
 
 module.exports = router;

@@ -4,6 +4,7 @@ const router = express.Router();
 
 const auth = require("../middleware/auth");
 
+/* ------------- Add Employee Begins ------------ */
 /**
  * @route POST /api/v1/employee
  * @desc Add Employee
@@ -16,7 +17,9 @@ router.post(
   auth.verifyAdmin,
   EmployeeController.addEmployee
 );
+/* ------------- Add Employee Ends ------------ */
 
+/* ------------- Get Employee Begins ------------ */
 /**
  * @route GET /api/v1/employee
  * @desc Get all employee
@@ -29,7 +32,9 @@ router.get(
   auth.verifyAdmin,
   EmployeeController.getAllEmployee
 );
+/* ------------- Get Employee Ends ------------ */
 
+/* ------------- Delete Employee Begins ------------ */
 /**
  * @route Delete /api/v1/employee/:id
  * @desc Delete Employee
@@ -42,7 +47,9 @@ router.delete(
   auth.verifyAdmin,
   EmployeeController.deleteEmployee
 );
+/* ------------- Delete Employee Ends ------------ */
 
+/* ------------- Update Employee Begins ------------ */
 /**
  * @route PUT /api/employee/:id
  * @desc Update employee details
@@ -55,5 +62,6 @@ router.put(
   auth.verifyAdmin,
   EmployeeController.updateEmployee
 );
+/* ------------- Update Employee Ends ------------ */
 
 module.exports = router;
