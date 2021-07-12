@@ -39,7 +39,7 @@ export class AuthService {
 
   registerUser(data: SignupRequestInterface): Observable<any> {
     return this.http
-      .post<SignupRequestInterface>(this.baseUrl + '/signup', data)
+      .post<SignupRequestInterface>(this.baseUrl + '/user/signup', data)
       .pipe(
         map((response: any) => {
           return response;
@@ -49,7 +49,7 @@ export class AuthService {
 
   confirmAccount(token: string): Observable<any> {
     return this.http
-      .post<any>(this.baseUrl + '/account-activate', { token })
+      .post<any>(this.baseUrl + '/user/account-activate', { token })
       .pipe(
         map((resp) => {
           return resp;
@@ -59,7 +59,7 @@ export class AuthService {
 
   loginUser(data: LoginRequestInterface): Observable<any> {
     return this.http
-      .post<LoginRequestInterface>(this.baseUrl + '/login', data)
+      .post<LoginRequestInterface>(this.baseUrl + '/user/login', data)
       .pipe(
         map((response: any) => {
           if (response.isAdmin === true) {
@@ -102,7 +102,7 @@ export class AuthService {
   // Getting all users
   getAllRegisteredUsers(): Observable<any> {
     return this.http
-      .get(environment.apiUrl + "/users").pipe(
+      .get(environment.apiUrl + "/user").pipe(
         map((resp: any) => {
           return resp;
         })
@@ -111,7 +111,7 @@ export class AuthService {
 
   // get all registered users with pagination
   getEmployeesWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
-    const usersUrl: string = `${environment.apiUrl}/users`;
+    const usersUrl: string = `${environment.apiUrl}/user`;
     const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
     return this.http
       .get<any>(usersUrl + queryParams).pipe(
@@ -156,7 +156,7 @@ export class AuthService {
 
   // Update user status to admin
   toggleIsAdmin(isAdmin: boolean, userId: string): Observable<any> {
-    const url = `${environment.apiUrl}/patch-admin/${userId}`;
+    const url = `${environment.apiUrl}/user/patch-admin/${userId}`;
     return this.http.patch(url, { admin: isAdmin }).pipe(
       map((resp: any) => {
         return resp;
@@ -227,5 +227,4 @@ export class AuthService {
       isAdmin: isAdmin
     }
   }
-
 }

@@ -17,11 +17,12 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/", userRouter);
-app.use("/api/v1/department", departmentRouter);
-app.use("/api/v1/employee", employeeRouter);
-app.use("/api/v1/project", projectRouter);
-app.use("/api/v1/timelog", timelogRouter);
+const basePath = "/api/v1";
+app.use(`${basePath}/user`, userRouter);
+app.use(`${basePath}/department`, departmentRouter);
+app.use(`${basePath}/employee`, employeeRouter);
+app.use(`${basePath}/project`, projectRouter);
+app.use(`${basePath}/timelog`, timelogRouter);
 
 // Server Port
 app.listen(port || 3000, () => {
