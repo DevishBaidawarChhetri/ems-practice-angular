@@ -55,7 +55,7 @@ export class TimelogService {
 
   // GET week's timelog of user
   getWeeksLog(id: string, startdate: string, enddate: string): Observable<any> {
-    const url: string = `${this.baseUrl}/weekly-log/${id}`;
+    const url: string = `${this.baseUrl}/timelog/weekly-log/${id}`;
     const params: string = `?startdate=${startdate}&enddate=${enddate}`;
     return this.http.get(url + params)
       .pipe(

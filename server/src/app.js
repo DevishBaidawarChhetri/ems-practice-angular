@@ -21,7 +21,7 @@ app.use("/", userRouter);
 app.use("/api/v1/department", departmentRouter);
 app.use("/api/v1/employee", employeeRouter);
 app.use("/api/v1/project", projectRouter);
-app.use("/", timelogRouter);
+app.use("/api/v1/timelog", timelogRouter);
 
 // Server Port
 app.listen(port || 3000, () => {
