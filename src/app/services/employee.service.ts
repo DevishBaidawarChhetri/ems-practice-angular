@@ -17,7 +17,7 @@ export class EmployeeService {
   getEmpUpdateStatusListener() { return this.empUpdateStatusListener.asObservable(); }
 
   getEmployees(): Observable<any> {
-    const employeeUrl: string = `${this.baseURL}/employees`;
+    const employeeUrl: string = `${this.baseURL}/employee`;
     return this.http
       .get<Employee[]>(employeeUrl)
       .pipe(catchError(this.errorHandler));
@@ -25,7 +25,7 @@ export class EmployeeService {
 
   // get employees with pagination
   getEmployeesWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
-    const employeesUrl: string = `${this.baseURL}/employees`;
+    const employeesUrl: string = `${this.baseURL}/employee`;
     const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
     return this.http
       .get<any>(employeesUrl + queryParams)

@@ -17,7 +17,7 @@ export class DepartmentService {
   getDeptUpdateStatusListener() { return this.deptUpdateStatusListener.asObservable(); }
 
   getDepartments(): Observable<any> {
-    const departmentUrl: string = `${this.baseURL}/departments`;
+    const departmentUrl: string = `${this.baseURL}/department`;
     return this.http
       .get<Department[]>(departmentUrl)
       .pipe(catchError(this.errorHandler));
@@ -25,7 +25,7 @@ export class DepartmentService {
 
   // get department with pagination
   getDepartmentWithPagination(currentPage: number, postsPerPage: number): Observable<any> {
-    const departmentUrl: string = `${this.baseURL}/departments`;
+    const departmentUrl: string = `${this.baseURL}/department`;
     const queryParams = `?currentPage=${currentPage}&pageSize=${postsPerPage}`;
     return this.http
       .get<any>(departmentUrl + queryParams)

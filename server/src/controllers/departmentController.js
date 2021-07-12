@@ -1,6 +1,6 @@
 const DepartmentProvider = require("../models/departmentSchema");
 
-// Adding New Department
+/* Adding New Department */
 exports.addDepartment = async (req, res) => {
   const { name } = req.body;
   if (!name) {
@@ -25,7 +25,7 @@ exports.addDepartment = async (req, res) => {
   }
 };
 
-// Get All departments
+/* Get All departments */
 exports.getAllDepartment = async (req, res) => {
   const currentPage = +req.query.currentPage;
   const pageSize = +req.query.pageSize;
@@ -45,7 +45,7 @@ exports.getAllDepartment = async (req, res) => {
   }
 };
 
-// Delete individual department
+/* Delete individual department */
 exports.deleteOneDepartment = async (req, res) => {
   try {
     const depId = await DepartmentProvider.findOneAndDelete({
@@ -63,7 +63,7 @@ exports.deleteOneDepartment = async (req, res) => {
   }
 };
 
-// Update Department (PUT)
+/* Update Department (PUT) */
 exports.putDepartment = async (req, res) => {
   try {
     const depId = await DepartmentProvider.findByIdAndUpdate(

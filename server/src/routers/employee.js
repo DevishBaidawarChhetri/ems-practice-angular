@@ -1,99 +1,47 @@
 const express = require("express");
+const EmployeeController = require("../controllers/employeeController");
 const router = express.Router();
 
-const EmployeeProvider = require("../models/employeeSchema");
 const auth = require("../middleware/auth");
 
 /**
- * @route POST /api/employee
+ * @route POST /api/v1/employee
  * @desc Add Employee
  * @access Private
  */
 
-router.post("/api/employee", auth.checkAuth, async (req, res) => {
-  const { fullName, email, department, gender } = req.body;
-  if (!fullName || !email || !department || !gender) {
-    return res.status(422).json({ message: `Don't leave fields empty.` });
-  }
-
-  try {
-    const employeeExists = await EmployeeProvider.findOne({ email });
-    if (employeeExists) {
-      return res
-        .status(422)
-        .json({ message: `Employee's email already exist.` });
-    } else {
-      const employee = new EmployeeProvider({
-        fullName,
-        email,
-        department,
-        gender,
-      });
-      await employee.save();
-      res.status(201).json({
-        message: "Inserted Successfully.",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.post(
+  "/",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  EmployeeController.addEmployee
+);
 
 /**
- * @route GET /api/employees
- * @desc Get all employees
+ * @route GET /api/v1/employee
+ * @desc Get all employee
  * @access Private
  */
 
-router.get("/api/employees", auth.checkAuth, async (req, res) => {
-  try {
-    const currentPage = +req.query.currentPage;
-    const pageSize = +req.query.pageSize;
-    if (currentPage && pageSize) {
-      const fetchedEmployees = await EmployeeProvider.find()
-        .skip(pageSize * (currentPage - 1))
-        .limit(pageSize);
-      const count = await EmployeeProvider.countDocuments();
-      res.status(200).json({
-        employees: fetchedEmployees,
-        maxPosts: count,
-        message: "Fetched Successfully",
-      });
-    } else {
-      const employees = await EmployeeProvider.find({});
-      res.status(200).json(employees);
-    }
-  } catch (err) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.get(
+  "/",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  EmployeeController.getAllEmployee
+);
 
 /**
- * @route Delete /api/employee/:id
+ * @route Delete /api/v1/employee/:id
  * @desc Delete Employee
  * @access Private
  */
 
-router.delete("/api/employee/:id", auth.checkAuth, async (req, res) => {
-  try {
-    const empId = await EmployeeProvider.findOneAndDelete({
-      _id: req.params.id,
-    });
-    if (empId) {
-      return res.status(201).json({ message: `Employee deleted.` });
-    } else {
-      return res.status(422).json({ message: `Employee id not found.` });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.delete(
+  "/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  EmployeeController.deleteEmployee
+);
 
 /**
  * @route PUT /api/employee/:id
@@ -101,22 +49,11 @@ router.delete("/api/employee/:id", auth.checkAuth, async (req, res) => {
  * @access Private
  */
 
-router.put("/api/employee/:id", async (req, res) => {
-  try {
-    const empId = await EmployeeProvider.findByIdAndUpdate(
-      { _id: req.params.id },
-      req.body
-    );
-    if (empId) {
-      return res.status(201).json({ message: `Employee updated.` });
-    } else {
-      return res.status(422).json({ message: `Employee id not found.` });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.put(
+  "/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  EmployeeController.updateEmployee
+);
 
 module.exports = router;
