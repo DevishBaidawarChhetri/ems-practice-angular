@@ -13,6 +13,7 @@ export class HistoryComponent implements OnInit {
   logs = [];
   totalWorkedHoursCount: number = 0;
   totalHoursWorkedTodayCount: number = 0;
+  totalTimeSpentOnProject = [];
 
   constructor(
     private timelogService: TimelogService,
@@ -24,6 +25,7 @@ export class HistoryComponent implements OnInit {
     setTimeout(() => {
       this.getTotalHoursWorkedToday();
       this.getTotalHoursWorkedInWeek();
+      this.getProjectsYouWorkedInAweek();
     }, 500);
   }
 
@@ -90,5 +92,53 @@ export class HistoryComponent implements OnInit {
         }
       }, 120);
     }
+  }
+
+
+  getProjectsYouWorkedInAweek() {
+    let arr2 = [];
+    this.logs.forEach((element) => {
+      // removing duplicates
+      let match = arr2.find((r) => r.projectName == element.projectName);
+      if (match) {
+        return;
+      } else {
+        arr2.push({
+          projectName: element.projectName,
+          durationInHours: [],
+          durationInMinutes: [],
+        });
+      }
+    });
+
+    // Mapping and adding values for same project name
+    arr2.map((item) => {
+      this.logs.map((e) => {
+        if (e.projectName == item.projectName) {
+          if (typeof e.projectName == "object") {
+            e.value.map((z) => {
+              item.durationInHours.push(z);
+              item.durationInMinutes.push(z);
+            });
+          } else {
+            item.durationInHours.push(e.durationInHours);
+            item.durationInMinutes.push(e.durationInMinutes);
+          }
+        }
+      });
+    });
+
+    const totalTimeSpentOnProjectArray = [];
+    arr2.map((object) => {
+      const totalHours = (object.durationInHours.reduce((a, b) => a + b, 0) * 60)
+        + (object.durationInMinutes.reduce((a, b) => a + b, 0));
+      const obj = {
+        projectName: object.projectName,
+        totalHours: Math.round(totalHours / 60)
+      };
+      totalTimeSpentOnProjectArray.push(obj);
+    });
+
+    this.totalTimeSpentOnProject = totalTimeSpentOnProjectArray;
   }
 }

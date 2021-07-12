@@ -11,7 +11,28 @@
   </div>
 </div>
 <div class="container mb-7">
-  <pre>
-    {{ logs | json }}
-  </pre>
+  <h1 class="text-center">This week's log</h1>
+  <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
+    <div class="alert alert-light alert-light-custom clearfix" role="alert">
+      <p class="float-start m-0 ls-1">
+        <strong>Project Name</strong>
+      </p>
+      <p class="float-end m-0"><strong>Total hours worked</strong></p>
+    </div>
+    <div
+      class="alert alert-primary alert-secondary-custom clearfix"
+      role="alert"
+      *ngFor="let projectLog of totalTimeSpentOnProject"
+    >
+      <p class="float-start m-0 text-uppercase ls-1">
+        <strong>{{ projectLog.projectName }}</strong>
+      </p>
+      <p class="float-end m-0">{{ projectLog.totalHours }} hours</p>
+    </div>
+  </div>
+  <ng-template #noLogsBlock>
+    <div class="alert alert-danger text-center" role="alert">
+      You don't have logs yet. 😊
+    </div>
+  </ng-template>
 </div>

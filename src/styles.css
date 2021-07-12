@@ -106,3 +106,19 @@ a {
 .history .worked-hours {
   color: #3f51b5;
 }
+
+.alert-light-custom {
+  background-color: transparent;
+  border: none;
+}
+
+.alert-secondary-custom {
+  background-color: rgba(207, 226, 255, 0.45);
+}
+
+.ls-1 {
+  letter-spacing: 1px;
+}
+.alert-secondary-custom p:nth-child(even) {
+  color: #6f6f6f;
+}
