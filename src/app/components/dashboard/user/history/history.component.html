@@ -1,4 +1,4 @@
-<div class="history container mb-7 d-flex text-center align-item-center">
+<div class="history container d-flex text-center align-item-center">
   <div class="left w-50 py-5">
     <p class="worked-hours fs-2">{{ totalHoursWorkedTodayCount }} / 8</p>
     <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
@@ -9,4 +9,9 @@
     <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
     <p class="this-week fs-6 text-secondary"><small>This Week</small></p>
   </div>
+</div>
+<div class="container mb-7">
+  <pre>
+    {{ logs | json }}
+  </pre>
 </div>

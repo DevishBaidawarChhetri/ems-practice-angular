@@ -11,7 +11,6 @@ export class HistoryComponent implements OnInit {
   enddate: string;
   userId: string = localStorage.getItem('userId');
   logs = [];
-  totalWorkedHours: number;
   totalWorkedHoursCount: number = 0;
   totalHoursWorkedTodayCount: number = 0;
 
@@ -53,17 +52,18 @@ export class HistoryComponent implements OnInit {
     const totalMinutesWorked = this.logs.reduce((acc, cur) => acc + cur.durationInMinutes, 0);
     const totalMinutesWorkedIncludingHours = totalHoursWorkedInMinutes + totalMinutesWorked;
     const hoursSpent = Number((totalMinutesWorkedIncludingHours / 60).toFixed(1));
-    this.totalWorkedHours = hoursSpent;
 
     const roundOffNumber = Math.round(hoursSpent);
 
     // For Counter Animation
-    const totalWorkedHoursCountStop: any = setInterval(() => {
-      this.totalWorkedHoursCount++;
-      if (this.totalWorkedHoursCount === roundOffNumber) {
-        clearInterval(totalWorkedHoursCountStop);
-      }
-    }, 25);
+    if (roundOffNumber !== 0) {
+      const totalWorkedHoursCountStop: any = setInterval(() => {
+        this.totalWorkedHoursCount++;
+        if (this.totalWorkedHoursCount === roundOffNumber) {
+          clearInterval(totalWorkedHoursCountStop);
+        }
+      }, 25);
+    }
   }
 
   getTotalHoursWorkedToday() {
@@ -82,11 +82,13 @@ export class HistoryComponent implements OnInit {
     const roundOffNumber = Math.round(hoursSpent);
 
     // For Counter Animation
-    const totalWorkedHoursCountStop: any = setInterval(() => {
-      this.totalHoursWorkedTodayCount++;
-      if (this.totalHoursWorkedTodayCount === roundOffNumber) {
-        clearInterval(totalWorkedHoursCountStop);
-      }
-    }, 25);
+    if (roundOffNumber !== 0) {
+      const totalWorkedHoursCountStop: any = setInterval(() => {
+        this.totalHoursWorkedTodayCount++;
+        if (this.totalHoursWorkedTodayCount === roundOffNumber) {
+          clearInterval(totalWorkedHoursCountStop);
+        }
+      }, 120);
+    }
   }
 }
