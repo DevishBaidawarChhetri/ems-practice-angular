@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const ProjectProvider = require("../model/projectSchema");
+const ProjectProvider = require("../models/projectSchema");
 const auth = require("../middleware/auth");
 
 /**

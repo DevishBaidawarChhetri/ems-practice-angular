@@ -1,9 +1,9 @@
 const express = require("express");
-const userRouter = require("./router/user");
-const departmentRouter = require("./router/department");
-const employeeRouter = require("./router/employee");
-const projectRouter = require("./router/project");
-const timelogRouter = require("./router/timelog");
+const userRouter = require("./routers/user");
+const departmentRouter = require("./routers/department");
+const employeeRouter = require("./routers/employee");
+const projectRouter = require("./routers/project");
+const timelogRouter = require("./routers/timelog");
 const cors = require("cors");
 
 require("dotenv").config();

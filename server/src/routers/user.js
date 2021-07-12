@@ -12,7 +12,7 @@ const mg = mailgun({
   domain: DOMAIN,
 });
 
-const User = require("../model/userSchema");
+const User = require("../models/userSchema");
 const validateRegisterSchema = require("../validationSchema/validateRegisterSchema");
 const validateLoginSchema = require("../validationSchema/validateLoginSchema");
 const validateProfileUpdateSchema = require("../validationSchema/validateProfileUpdateSchema");

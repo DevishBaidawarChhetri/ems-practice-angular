@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { validationResult } = require("express-validator");
 
-const TimelogProvider = require("../model/timelogSchema");
+const TimelogProvider = require("../models/timelogSchema");
 const auth = require("../middleware/auth");
 const validateTimelogSchema = require("../validationSchema/validateTimelogSchema");
 

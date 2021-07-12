@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const EmployeeProvider = require("../model/employeeSchema");
+const EmployeeProvider = require("../models/employeeSchema");
 const auth = require("../middleware/auth");
 
 /**

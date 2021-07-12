@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const DepartmentProvider = require("../model/departmentSchema");
+const DepartmentProvider = require("../models/departmentSchema");
 const auth = require("../middleware/auth");
 
 /**
