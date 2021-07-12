@@ -1,109 +1,58 @@
 const express = require("express");
 const router = express.Router();
-
-const DepartmentProvider = require("../models/departmentSchema");
 const auth = require("../middleware/auth");
+const DepartmentController = require("../controllers/departmentController");
 
 /**
- * @route POST /api/department
+ * @route POST /api/v1/department
  * @desc Add Department
  * @access Private
  */
 
-router.post("/api/department", auth.checkAuth, async (req, res) => {
-  const { name } = req.body;
-  if (!name) {
-    return res.status(422).json({ message: `Don't leave fields empty.` });
-  }
-
-  try {
-    const departmentExists = await DepartmentProvider.findOne({ name });
-    if (departmentExists) {
-      return res.status(422).json({ message: "Department already exist." });
-    } else {
-      const departmentName = new DepartmentProvider({ name });
-      await departmentName.save();
-      res.status(201).json({
-        message: "Inserted Successfully.",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.post(
+  "/",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  DepartmentController.addDepartment
+);
 
 /**
- * @route GET /api/departments
+ * @route GET /api/v1/department
  * @desc GET all department
  * @access Private
  */
 
-router.get("/api/departments", auth.checkAuth, async (req, res) => {
-  const currentPage = +req.query.currentPage;
-  const pageSize = +req.query.pageSize;
-  if (currentPage && pageSize) {
-    const fetchedDepartments = await DepartmentProvider.find()
-      .skip(pageSize * (currentPage - 1))
-      .limit(pageSize);
-    const count = await DepartmentProvider.countDocuments();
-    res.status(200).json({
-      departments: fetchedDepartments,
-      maxPosts: count,
-      message: "Fetched Successfully.",
-    });
-  } else {
-    const departments = await DepartmentProvider.find({});
-    res.status(200).json(departments);
-  }
-});
+router.get(
+  "/",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  DepartmentController.getAllDepartment
+);
 
 /**
- * @route Delete /api/department/:id
+ * @route Delete /api/v1/department/:id
  * @desc Delete department
  * @access Private
  */
 
-router.delete("/api/department/:id", auth.checkAuth, async (req, res) => {
-  try {
-    const depId = await DepartmentProvider.findOneAndDelete({
-      _id: req.params.id,
-    });
-    if (depId) {
-      return res.status(201).json({ message: `Department deleted.` });
-    } else {
-      return res.status(422).json({ message: `Department id not found.` });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.delete(
+  "/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  DepartmentController.deleteOneDepartment
+);
 
 /**
- * @route PUT /api/department/:id
+ * @route PUT /api/v1/department/:id
  * @desc Update department
  * @access Private
  */
 
-router.put("/api/department/:id", auth.checkAuth, async (req, res) => {
-  try {
-    const depId = await DepartmentProvider.findByIdAndUpdate(
-      { _id: req.params.id },
-      req.body
-    );
-    if (depId) {
-      return res.status(201).json({ message: `Department updated.` });
-    } else {
-      return res.status(422).json({ message: `Department id not found.` });
-    }
-  } catch (error) {
-    res.status(500).json({
-      message: "Server Error!",
-    });
-  }
-});
+router.put(
+  "/:id",
+  auth.checkAuth,
+  auth.verifyAdmin,
+  DepartmentController.putDepartment
+);
 
 module.exports = router;

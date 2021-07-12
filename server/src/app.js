@@ -18,7 +18,7 @@ app.use(cors());
 
 // Routes
 app.use("/", userRouter);
-app.use("/", departmentRouter);
+app.use("/api/v1/department", departmentRouter);
 app.use("/", employeeRouter);
 app.use("/", projectRouter);
 app.use("/", timelogRouter);
