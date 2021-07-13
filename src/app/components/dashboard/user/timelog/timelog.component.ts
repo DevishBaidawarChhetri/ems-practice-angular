@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { TimelogService } from 'src/app/services/timelog.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-timelog',
@@ -67,10 +68,7 @@ export class TimelogComponent implements OnInit {
   }
 
   onDateClick(date) {
-    this.timelogService.getSelfTimelog(date)
-      .subscribe(async (resp) => {
-        this.logs = await resp.logs
-      })
+    this.getLogsAccordintToDate(date);
   }
 
   async getNewDate(date) {
@@ -84,5 +82,18 @@ export class TimelogComponent implements OnInit {
     }, (error) => {
       this.toastr.error(error.error.message, "Error")
     })
+  }
+
+  onDateChange(e: MatDatepickerInputEvent<Date>) {
+    // console.log(moment(e.value).format().split("T")[0]);
+    const selectedDate = moment(e.value).format().split("T")[0];
+    this.getLogsAccordintToDate(selectedDate);
+  }
+
+  getLogsAccordintToDate(date) {
+    this.timelogService.getSelfTimelog(date)
+      .subscribe(async (resp) => {
+        this.logs = await resp.logs
+      })
   }
 }

@@ -16,3 +16,7 @@ button {
   background-color: #d2d7f7;
   border-radius: 50%;
 }
+mat-form-field {
+  width: 0px;
+  visibility: hidden;
+}

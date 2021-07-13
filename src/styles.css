@@ -61,7 +61,7 @@ a {
 }
 
 .mb-7 {
-  margin-bottom: 7rem;
+  margin-bottom: 7rem !important;
 }
 
 .button-icon-size {

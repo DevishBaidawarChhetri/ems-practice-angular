@@ -1,6 +1,17 @@
 <div class="container">
   <h1 class="text-center mt-3">Time Log</h1>
   <div class="weekly-calendar my-4 d-flex justify-content-center">
+    <mat-form-field>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        (dateChange)="onDateChange($event)"
+      />
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="picker.open()">
+      <mat-icon>event</mat-icon>
+    </button>
     <button
       mat-stroked-button
       color="primary"
