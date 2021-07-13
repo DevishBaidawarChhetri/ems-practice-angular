@@ -17,6 +17,7 @@ export class HistoryComponent implements OnInit {
   totalHoursWorkedTodayCount: number = 0;
   totalTimeSpentOnProject = [];
   weekDays = [];
+  workedHoursArrayForChart = [];
   myChart: any;
 
   @ViewChild('lineChart') chartRef;
@@ -32,6 +33,7 @@ export class HistoryComponent implements OnInit {
       this.getTotalHoursWorkedToday();
       this.getTotalHoursWorkedInWeek();
       this.getProjectsYouWorkedInAweek();
+      this.getWorkingHoursOfWeek();
       this.getDataInChart();
     }, 500);
   }
@@ -149,6 +151,69 @@ export class HistoryComponent implements OnInit {
     this.totalTimeSpentOnProject = totalTimeSpentOnProjectArray;
   }
 
+  getWorkingHoursOfWeek() {
+    let array = this.logs;
+    let arr2 = [];
+
+    array.forEach((element) => {
+      let match = arr2.find((r) => r.date == element.date);
+      if (match) {
+        return;
+      } else {
+        arr2.push({
+          date: element.date,
+          durationInHours: [],
+          durationInMinutes: [],
+        });
+      }
+    });
+
+    arr2.map((item) => {
+      array.map((e) => {
+        if (e.date == item.date) {
+          if (typeof e.date == "object") {
+            e.value.map((z) => {
+              item.durationInHours.push(z);
+              item.durationInMinutes.push(z);
+            });
+          } else {
+            item.durationInHours.push(e.durationInHours);
+            item.durationInMinutes.push(e.durationInMinutes);
+          }
+        }
+      });
+    });
+
+    let workedHoursCombinedArray = [];
+    arr2.map((object) => {
+      const obj = {
+        date: object.date,
+        totalHours: object.durationInHours.reduce((a, b) => a + b, 0),
+        totalMinutes: object.durationInMinutes.reduce((a, b) => a + b, 0),
+      };
+      workedHoursCombinedArray.push(obj);
+    });
+    console.log(workedHoursCombinedArray);
+
+    let workedHoursArray = [];
+    let workedHoursArrayFinal = [0, 0, 0, 0, 0, 0, 0];
+
+    workedHoursCombinedArray.map((a) => {
+      let hours = a.totalHours * 60 + a.totalMinutes;
+      hours = Math.round(hours / 60);
+      workedHoursArray.unshift(hours);
+    });
+
+    workedHoursArray = workedHoursArray.reverse();
+
+    for (let i = 0; i < workedHoursArray.length; i++) {
+      workedHoursArrayFinal[i] = workedHoursArray[i];
+    }
+
+    this.workedHoursArrayForChart = workedHoursArrayFinal;
+
+  }
+
   getDataInChart() {
     this.myChart = new Chart(this.chartRef.nativeElement, {
       type: 'line',
@@ -157,7 +222,7 @@ export class HistoryComponent implements OnInit {
         datasets: [
           {
             label: "My Time",
-            data: [8, 7, 8, 0, 0, 0, 10],
+            data: this.workedHoursArrayForChart,
             borderColor: '#3f51b5',
             fill: false,
             cubicInterpolationMode: 'monotone',
