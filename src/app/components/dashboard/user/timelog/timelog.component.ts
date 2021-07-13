@@ -6,7 +6,6 @@ import { TimelogService } from 'src/app/services/timelog.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-
 @Component({
   selector: 'app-timelog',
   templateUrl: './timelog.component.html',

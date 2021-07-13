@@ -10,7 +10,7 @@
     <p class="this-week fs-6 text-secondary"><small>This Week</small></p>
   </div>
 </div>
-<div class="container mb-7">
+<div class="container">
   <h1 class="text-center">This week's log</h1>
   <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
     <div class="alert alert-light alert-light-custom clearfix" role="alert">
@@ -35,4 +35,9 @@
       You don't have logs yet. 😊
     </div>
   </ng-template>
+</div>
+<div class="container">
+  <div class="mb-7 mt-5">
+    <canvas #lineChart>{{ myChart }}</canvas>
+  </div>
 </div>

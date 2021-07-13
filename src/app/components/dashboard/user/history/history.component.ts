@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { TimelogService } from 'src/app/services/timelog.service';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-history',
@@ -14,6 +16,10 @@ export class HistoryComponent implements OnInit {
   totalWorkedHoursCount: number = 0;
   totalHoursWorkedTodayCount: number = 0;
   totalTimeSpentOnProject = [];
+  weekDays = [];
+  myChart: any;
+
+  @ViewChild('lineChart') chartRef;
 
   constructor(
     private timelogService: TimelogService,
@@ -26,12 +32,14 @@ export class HistoryComponent implements OnInit {
       this.getTotalHoursWorkedToday();
       this.getTotalHoursWorkedInWeek();
       this.getProjectsYouWorkedInAweek();
+      this.getDataInChart();
     }, 500);
   }
 
   getCurrentWeek() {
     let weekStart = moment().clone().startOf('week');
     for (let i = 0; i <= 6; i++) {
+      this.weekDays.push(moment(weekStart).add(i, 'days').format().split("T")[0]);
       const weekDay = moment(weekStart).add(i, 'days').format().split("T")[0];
       i === 0
         ? this.startdate = weekDay
@@ -94,7 +102,6 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-
   getProjectsYouWorkedInAweek() {
     let arr2 = [];
     this.logs.forEach((element) => {
@@ -140,5 +147,59 @@ export class HistoryComponent implements OnInit {
     });
 
     this.totalTimeSpentOnProject = totalTimeSpentOnProjectArray;
+  }
+
+  getDataInChart() {
+    this.myChart = new Chart(this.chartRef.nativeElement, {
+      type: 'line',
+      data: {
+        labels: this.weekDays,
+        datasets: [
+          {
+            label: "My Time",
+            data: [8, 7, 8, 0, 0, 0, 10],
+            borderColor: '#3f51b5',
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+          },
+          {
+            label: "Base Time",
+            data: [8, 8, 8, 8, 8, 8, 8],
+            borderColor: '#a7a7a7',
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+          },
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+          },
+          title: {
+            display: true,
+            text: "This week's timelog"
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Week Date'
+            },
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: 'Hours'
+            },
+          }
+        }
+      }
+    })
   }
 }
