@@ -18,6 +18,7 @@ export class HistoryComponent implements OnInit {
   totalTimeSpentOnProject = [];
   weekDays = [];
   workedHoursArrayForChart = [];
+  logsByDate = [];
   myChart: any;
 
   @ViewChild('lineChart') chartRef;
@@ -35,6 +36,7 @@ export class HistoryComponent implements OnInit {
       this.getProjectsYouWorkedInAweek();
       this.getWorkingHoursOfWeek();
       this.getDataInChart();
+      this.getLogsByDate();
     }, 500);
   }
 
@@ -149,6 +151,7 @@ export class HistoryComponent implements OnInit {
     });
 
     this.totalTimeSpentOnProject = totalTimeSpentOnProjectArray;
+
   }
 
   getWorkingHoursOfWeek() {
@@ -287,5 +290,51 @@ export class HistoryComponent implements OnInit {
         }
       }
     })
+  }
+
+  getLogsByDate(){
+    let arr2 = [];
+    this.logs.forEach((element) => {
+      // removing duplicates
+      let match = arr2.find((r) => r.date == element.date);
+      if (match) {
+        return;
+      } else {
+        arr2.push({
+          date: element.date,
+          durationInHours: [],
+          durationInMinutes: [],
+        });
+      }
+    });
+
+    // Mapping and adding values for same project name
+    arr2.map((item) => {
+      this.logs.map((e) => {
+        if (e.date == item.date) {
+          if (typeof e.projectName == "object") {
+            e.value.map((z) => {
+              item.durationInHours.push(z);
+              item.durationInMinutes.push(z);
+            });
+          } else {
+            item.durationInHours.push(e.durationInHours);
+            item.durationInMinutes.push(e.durationInMinutes);
+          }
+        }
+      });
+    });
+
+    const totalTimeSpentOnProjectArray = [];
+    arr2.map((object) => {
+      const totalHours = (object.durationInHours.reduce((a, b) => a + b, 0) * 60)
+        + (object.durationInMinutes.reduce((a, b) => a + b, 0));
+      const obj = {
+        date: object.date,
+        totalHours: Math.round(totalHours / 60)
+      };
+      totalTimeSpentOnProjectArray.push(obj);
+    });
+    this.logsByDate = totalTimeSpentOnProjectArray;
   }
 }
