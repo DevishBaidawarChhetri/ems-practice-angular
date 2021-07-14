@@ -193,24 +193,45 @@ export class HistoryComponent implements OnInit {
       };
       workedHoursCombinedArray.push(obj);
     });
-    console.log(workedHoursCombinedArray);
 
-    let workedHoursArray = [];
-    let workedHoursArrayFinal = [0, 0, 0, 0, 0, 0, 0];
 
-    workedHoursCombinedArray.map((a) => {
-      let hours = a.totalHours * 60 + a.totalMinutes;
-      hours = Math.round(hours / 60);
-      workedHoursArray.unshift(hours);
+    const hours = [];
+    this.weekDays.forEach((date) => {
+      let match = hours.find((r) => r.date == date);
+      if (match) {
+        return;
+      } else {
+        hours.push({
+          date,
+          totalHours: 0,
+        });
+      }
     });
 
-    workedHoursArray = workedHoursArray.reverse();
+    // Convert to key value dictionary or object
+    const convertToKeyValueDict = (arrayObj) => {
+      const val = {};
+      arrayObj.forEach((ob) => {
+        val[ob.date] = ob.totalHours;
+      });
+      return val;
+    };
 
-    for (let i = 0; i < workedHoursArray.length; i++) {
-      workedHoursArrayFinal[i] = workedHoursArray[i];
-    }
+    // update or merge array
+    const updateOrMerge = (a1, a2) => {
+      const ob1 = convertToKeyValueDict(a1);
+      const ob2 = convertToKeyValueDict(a2);
 
-    this.workedHoursArrayForChart = workedHoursArrayFinal;
+      const merged_obj = { ...ob1, ...ob2 };
+
+      const val = Object.entries(merged_obj);
+      return val.map((obj) => ({ date: obj[0], totalHours: obj[1] }));
+    };
+
+    const loggedDateWithHours = updateOrMerge(hours, workedHoursCombinedArray);
+    loggedDateWithHours.map((log) => {
+      this.workedHoursArrayForChart.push(log.totalHours);
+    })
 
   }
 
