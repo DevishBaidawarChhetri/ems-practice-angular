@@ -11,6 +11,10 @@
   </div>
 </div>
 <div class="container">
+  <div class="buttons d-flex m-3 justify-content-center">
+    <button mat-raised-button color="primary" class="me-3">Get Logs By Project</button>
+    <button mat-raised-button color="primary">Get Logs By Date</button>
+  </div>
   <h1 class="text-center">This week's log</h1>
   <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
     <div class="alert alert-light alert-light-custom clearfix" role="alert">
