@@ -18,18 +18,18 @@ router.post(
 );
 /* ------------- Post Leave Request Ends ------------ */
 
-/* ------------- Post Leave Request Begins ------------ */
+/* ------------- GET Leave Request Begins ------------ */
 /**
- * @route POST /api/v1/leave
- * @desc Request leave
- * @access Private (User)
+ * @route GET /api/v1/leave
+ * @desc get all leave
+ * @access Private (Admin & User)
  */
 router.get(
   '/',
-  auth.checkAuth,
+  // auth.checkAuth,
   LeaveController.getAllLeaveRequest
 );
-/* ------------- Post Leave Request Ends ------------ */
+/* ------------- GET Leave Request Ends ------------ */
 
 /* ------------- Post Leave Request Begins ------------ */
 /**
@@ -47,7 +47,7 @@ router.get(
 
 /* ------------- Approve Leave Request Begins ------------ */
 /**
- * @route POST /api/v1/approve/:id
+ * @route PATCH /api/v1/leave/approve/:id
  * @desc approve leave request
  * @access Private (Admin)
  */
@@ -58,5 +58,19 @@ router.patch(
   LeaveController.approveLeaveRequest
 );
 /* ------------- Approve Leave Request Ends ------------ */
+
+/* ------------- Delete Leave Request Begins ------------ */
+/**
+ * @route Delete /api/v1/leave/delete/:id
+ * @desc delete leave request
+ * @access Private (User)
+ */
+router.delete(
+  '/delete/:id',
+  auth.checkAuth,
+  auth.verifyUser,
+  LeaveController.deleteLeaveRequest
+);
+/* ------------- Delete Leave Request Ends ------------ */
 
 module.exports = router;

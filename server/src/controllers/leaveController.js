@@ -81,3 +81,23 @@ exports.approveLeaveRequest = async(req, res) => {
     });
   }
 }
+
+/* Delete leave request */
+exports.deleteLeaveRequest = async(req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteLeave = await LeaveProvider.deleteOne({
+      _id: id,
+      userId: req.userData.userId,
+    });
+    if (deleteLeave.n > 0) {
+      return res.status(200).json({ message: "Deleted Successful" });
+    } else {
+      return res.status(400).json({ message: "Something went wrong." });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+}
