@@ -40,3 +40,44 @@ exports.getAllLeaveRequest = async (req, res) => {
     });
   }
 }
+
+/* Get self requested leave logs */
+exports.getSelfLeaveRequest = async (req, res) => {
+  try {
+    const getSelfLeave = await LeaveProvider.find({
+      userId: req.userData.userId,
+    });
+    if (getSelfLeave) {
+      return res.status(200).json({
+        message: "Fetched successfully!",
+        leaves: getSelfLeave,
+      });
+    } else {
+      return res.status(400).json({ message: "Something went wrong." });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+}
+
+/* Approve user leave request (Admin) */
+exports.approveLeaveRequest = async(req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await LeaveProvider.updateOne({ _id: id }, req.body);
+    if (result.n > 0) {
+      return res.status(200).json({
+        message: "Leave approved!",
+        leaveStatus: req.body.leaveStatus,
+      });
+    } else {
+      return res.status(401).json({ message: "Not authorized!" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Server Error!",
+    });
+  }
+}
