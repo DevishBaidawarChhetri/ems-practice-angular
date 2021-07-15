@@ -22,6 +22,7 @@ const timelogSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      maxLength: 200
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

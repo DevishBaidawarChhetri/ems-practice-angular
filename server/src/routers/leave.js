@@ -26,7 +26,7 @@ router.post(
  */
 router.get(
   '/',
-  // auth.checkAuth,
+  auth.checkAuth,
   LeaveController.getAllLeaveRequest
 );
 /* ------------- GET Leave Request Ends ------------ */

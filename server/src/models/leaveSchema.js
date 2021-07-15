@@ -16,7 +16,8 @@ const leaveSchema = mongoose.Schema(
     note:{
       type: String,
       trim: true,
-      required: true
+      required: true,
+      maxLength: 200,
     },
     leaveStatus: {
       type: Boolean,

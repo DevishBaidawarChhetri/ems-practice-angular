@@ -22,6 +22,7 @@ export class AddTimelogComponent implements OnInit {
   minutesDisabled: boolean = false;
   selectedLog: any = null;
   update: boolean = false;
+  maxChars: number = 200;
 
   constructor(
     private projectService: ProjectService,
