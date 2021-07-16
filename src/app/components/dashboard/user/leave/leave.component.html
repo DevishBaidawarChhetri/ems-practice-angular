@@ -1,0 +1,83 @@
+<div class="container mb-7">
+  <h1 class="text-center mt-3">Leave Request Leave</h1>
+  <div class="my-2 text-end">
+    <button mat-raised-button (click)="openModal(requestLeaveModal)">
+      <mat-icon>update</mat-icon>
+      Request Leave
+    </button>
+  </div>
+  <div class="div">
+    <ul *ngFor="let leave of requestedLeaves">
+      <li>{{leave.note}}</li>
+      <li>{{leave.leaveStatus ? "Leave Approved" : "Pending"}}</li>
+    </ul>
+  </div>
+</div>
+<ng-template #requestLeaveModal>
+  <div class="modal-header">
+    <h2 class="modal-title pull-left margin-zero">Request Leave</h2>
+    <button
+      class="close pull-right corner-button"
+      mat-icon-button
+      color="warn"
+      (click)="modalRef.hide()"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="example-form" [formGroup]="requestLeaveForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Select Date</mat-label>
+        <mat-date-range-input
+          [rangePicker]="leaveDatePicker"
+        >
+          <input
+            matStartDate
+            placeholder="Start date"
+            formControlName="startDate"
+          >
+          <input
+            matEndDate
+            placeholder="End date"
+            formControlName="endDate"
+            >
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="leaveDatePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #leaveDatePicker></mat-date-range-picker>
+        <mat-error>Please select date.</mat-error>
+      </mat-form-field>
+
+      <label class="example-margin mb-3">Leave Type: </label>
+      <mat-radio-group aria-label="Select an option" formControlName="leaveType">
+        &nbsp;<mat-radio-button value="paid time off">Paid Time Off</mat-radio-button>
+        &nbsp;<mat-radio-button value="floating day">Floating Day</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Note</mat-label>
+        <textarea
+          matInput
+          #note
+          placeholder="Write a short note about your leave..."
+          formControlName="note"
+          rows="12"
+          [maxlength]="maxChars"
+        ></textarea>
+        <small class="text-secondary">{{note.value.length}}/{{maxChars}}</small>
+        <mat-error>Please write note in about 200 characters.</mat-error>
+      </mat-form-field>
+
+      <div class="example-button-row float-end">
+        <button
+          mat-raised-button
+          color="primary"
+        >
+          Add
+          <mat-icon class="button-icon-size">add</mat-icon>
+        </button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

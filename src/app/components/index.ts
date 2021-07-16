@@ -46,3 +46,6 @@ export * from './dashboard/user/timelog/addTimelog/addTimelog.component';
 
 // History
 export * from './dashboard/user/history/history.component';
+
+// Leave
+export * from './dashboard/user/leave/leave.component';
