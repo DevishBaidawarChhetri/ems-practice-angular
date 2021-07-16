@@ -19,6 +19,10 @@ const leaveSchema = mongoose.Schema(
       required: true,
       maxLength: 200,
     },
+    leaveDay: {
+      type: Number,
+      trim: true,
+    },
     leaveStatus: {
       type: Boolean,
       default: false

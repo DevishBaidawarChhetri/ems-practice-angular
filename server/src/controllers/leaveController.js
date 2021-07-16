@@ -4,8 +4,14 @@ const LeaveProvider = require("../models/leaveSchema");
 exports.requestLeave = async (req, res) => {
   try {
     const {startDate, endDate, leaveType, note} = req.body;
+
+    const oneDay = 24 * 60 * 60 * 1000;
+    const firstDate = new Date(startDate);
+    const secondDate = new Date(endDate);
+    const leaveDay = Math.round(Math.abs((firstDate - secondDate) / oneDay) +1);
+
     const leave = new LeaveProvider({
-      startDate, endDate, leaveType, note, userId: req.userData.userId
+      startDate, endDate, leaveType, note, leaveDay, userId: req.userData.userId
     })
     const requestLeave = await leave.save();
     if(requestLeave){
