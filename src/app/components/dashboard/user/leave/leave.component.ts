@@ -54,8 +54,18 @@ export class LeaveComponent implements OnInit {
       this.toastr.success(resp.message, "Success");
       this.modalRef.hide();
       this.requestLeaveForm.reset();
+      this.getSelfRequestedLeaves();
     }, (error) => {
-      this.toastr.success(error.error.message);
+      this.toastr.error(error.error.message, "Failed!");
+    })
+  }
+
+  deleteLeave(id: string) {
+    this.leaveService.deleteSelfLeaveRequest(id).subscribe((resp: any) => {
+      this.toastr.success(resp.message, "Success!");
+      this.getSelfRequestedLeaves();
+    }, (error) => {
+      this.toastr.error(error.error.message, "Failed!")
     })
   }
 }

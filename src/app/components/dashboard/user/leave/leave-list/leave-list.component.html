@@ -12,9 +12,21 @@
         <span class="text-capitalize text-decoration-underline">{{leave.leaveType}}</span>
       </div>
       <div class="float-end d-flex align-content-center align-items-center m-0">
-        <span class="text-success" *ngIf="leave.leaveStatus == true"><mat-icon style="transform: scale(1);">check_circle</mat-icon></span>
-        <span class="text-secondary" *ngIf="leave.leaveStatus == false"><mat-icon style="transform: scale(1);">remove_circle</mat-icon></span>
+        <span class="text-success" *ngIf="leave.leaveStatus == true"><mat-icon style="transform: scale(0.8); margin:5px 1px;">check_circle</mat-icon></span>
+        <span class="text-secondary" *ngIf="leave.leaveStatus == false"><mat-icon style="transform: scale(0.8); margin:5px 1px;">remove_circle</mat-icon></span>
         <span>{{leave.leaveStatus ? "Approved" : "Pending"}}</span>
+        <button
+          *ngIf="leave.leaveStatus === false"
+          mat-icon-button
+          color="warn"
+          mwlConfirmationPopover
+          [popoverTitle]="'Are you sure you want to delete this leave request?'"
+          placement="left"
+          (confirm)="deleteLeaveRequest(leave._id)"
+          (cancel)="cancelClicked = true"
+        >
+          <mat-icon style="transform: scale(1); margin-top: -5px;">delete</mat-icon>
+        </button>
       </div>
     </div>
   </div>

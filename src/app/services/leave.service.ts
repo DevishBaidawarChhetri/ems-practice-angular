@@ -20,7 +20,7 @@ export class LeaveService {
     const url: string = `${this.baseUrl}/leave`;
     return this.http.post<any>(url, body)
       .pipe(
-        map((resp:any)=>{
+        map((resp: any)=>{
           return resp;
         })
       )
@@ -31,7 +31,18 @@ export class LeaveService {
     const url: string = `${this.baseUrl}/leave/myrequest`;
     return this.http.get<any>(url)
       .pipe(
-        map((resp:any)=>{
+        map((resp: any)=>{
+          return resp;
+        })
+      )
+  }
+
+  // Delete leave request
+  deleteSelfLeaveRequest(id): Observable<any> {
+    const url: string = `${this.baseUrl}/leave/delete/${id}`;
+    return this.http.delete<any>(url)
+      .pipe(
+        map((resp: any) => {
           return resp;
         })
       )

@@ -92,6 +92,10 @@ exports.approveLeaveRequest = async(req, res) => {
 exports.deleteLeaveRequest = async(req, res) => {
   try {
     const { id } = req.params;
+    const { leaveStatus } = await LeaveProvider.findOne({_id: id});
+    if(leaveStatus === true){
+      return res.status(403).json({ message: "Forbidden, Your request is already approved by admin!" });
+    }
     const deleteLeave = await LeaveProvider.deleteOne({
       _id: id,
       userId: req.userData.userId,

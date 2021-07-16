@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
@@ -10,11 +10,16 @@ export class LeaveListComponent implements OnInit {
   modalRef: BsModalRef;
 
   @Input('leaveList') leaveListProps: [];
+  @Output('deleteLeaveRequest') deleteLeaveRequestEvent = new EventEmitter<any>();
 
   constructor(
     private modalService: BsModalService,
   ) {}
+
   ngOnInit(): void{
-    console.log(this.leaveListProps);
+  }
+
+  deleteLeaveRequest(id) {
+    this.deleteLeaveRequestEvent.emit(id);
   }
 }
