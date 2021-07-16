@@ -1,17 +1,14 @@
 <div class="container mb-7">
-  <h1 class="text-center mt-3">Leave Request Leave</h1>
   <div class="my-2 text-end">
     <button mat-raised-button (click)="openModal(requestLeaveModal)">
       <mat-icon>update</mat-icon>
       Request Leave
     </button>
   </div>
-  <div class="div">
-    <ul *ngFor="let leave of requestedLeaves">
-      <li>{{leave.note}}</li>
-      <li>{{leave.leaveStatus ? "Leave Approved" : "Pending"}}</li>
-    </ul>
-  </div>
+  <app-leave-list
+    [leaveList]="requestedLeaves"
+  >
+</app-leave-list>
 </div>
 <ng-template #requestLeaveModal>
   <div class="modal-header">

@@ -49,3 +49,4 @@ export * from './dashboard/user/history/history.component';
 
 // Leave
 export * from './dashboard/user/leave/leave.component';
+export * from './dashboard/user/leave/leave-list/leave-list.component';

@@ -1,0 +1,21 @@
+<div class="container">
+  <h2 class="text-center mt-3">Leave Request</h2>
+  <div *ngFor="let leave of leaveListProps">
+    <div role="alert" class="alert alert-primary alert-secondary-custom clearfix">
+      <div class="float-start d-flex flex-column m-0 ls-1">
+        <strong>
+          {{leave.startDate | date}} - {{leave.endDate | date}}
+          <small style="font-weight: normal;">
+            ({{leave.leaveDay}} {{leave.leaveDay == 1 ? "day" : "days"}})
+          </small>
+        </strong>
+        <span class="text-capitalize text-decoration-underline">{{leave.leaveType}}</span>
+      </div>
+      <div class="float-end d-flex align-content-center align-items-center m-0">
+        <span class="text-success" *ngIf="leave.leaveStatus == true"><mat-icon style="transform: scale(1);">check_circle</mat-icon></span>
+        <span class="text-secondary" *ngIf="leave.leaveStatus == false"><mat-icon style="transform: scale(1);">remove_circle</mat-icon></span>
+        <span>{{leave.leaveStatus ? "Approved" : "Pending"}}</span>
+      </div>
+    </div>
+  </div>
+</div>
