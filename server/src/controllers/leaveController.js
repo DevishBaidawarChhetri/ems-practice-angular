@@ -11,7 +11,7 @@ exports.requestLeave = async (req, res) => {
     const leaveDay = Math.round(Math.abs((firstDate - secondDate) / oneDay) +1);
 
     const leave = new LeaveProvider({
-      startDate, endDate, leaveType, note, leaveDay, userId: req.userData.userId
+      startDate, endDate, leaveType, note, leaveDay, userId: req.userData.userId, name: req.userData.fullName
     })
     const requestLeave = await leave.save();
     if(requestLeave){

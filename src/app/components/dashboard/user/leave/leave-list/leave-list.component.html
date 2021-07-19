@@ -1,16 +1,16 @@
 <div class="container">
-  <h2 class="text-center mt-3">Leave Request</h2>
+  <h2 class="text-center mt-3">{{isAdminProps == 'true' ? "Leave Request" : "Request Leave"}}</h2>
   <div *ngFor="let leave of leaveListProps">
     <div role="alert" class="alert alert-primary alert-secondary-custom clearfix">
       <div class="float-start d-flex flex-column m-0 ls-1">
-        <!-- <pre>{{leave | json}}</pre> -->
+        <span>{{leave?.name}}</span>
         <strong>
           {{leave.startDate | date}} - {{leave.endDate | date}}
           <small style="font-weight: normal;">
-            ({{leave.leaveDay}} {{leave.leaveDay == 1 ? "day" : "days"}})
+            ({{leave.leaveDay}} {{leave.leaveDay === 1 ? "day" : "days"}})
           </small>
         </strong>
-        <span class="text-capitalize text-decoration-underline">{{leave.leaveType}}</span>
+        <span  class="text-secondary text-capitalize">{{leave.leaveType}}</span>
       </div>
       <div class="float-end d-flex align-content-center align-items-center m-0">
         <span class="text-success" *ngIf="leave.leaveStatus == true"><mat-icon style="transform: scale(0.8); margin:5px 1px;">check_circle</mat-icon></span>
@@ -29,6 +29,7 @@
           <mat-icon style="transform: scale(1); margin-top: -5px;">delete</mat-icon>
         </button>
         <mat-slide-toggle
+          *ngIf="isAdminProps === 'true'"
           class="ms-2"
           [checked]="leave.leaveStatus"
           (change)="approveLeave($event, leave._id)"
