@@ -3,6 +3,7 @@
   <div *ngFor="let leave of leaveListProps">
     <div role="alert" class="alert alert-primary alert-secondary-custom clearfix">
       <div class="float-start d-flex flex-column m-0 ls-1">
+        <!-- <pre>{{leave | json}}</pre> -->
         <strong>
           {{leave.startDate | date}} - {{leave.endDate | date}}
           <small style="font-weight: normal;">
@@ -16,7 +17,7 @@
         <span class="text-secondary" *ngIf="leave.leaveStatus == false"><mat-icon style="transform: scale(0.8); margin:5px 1px;">remove_circle</mat-icon></span>
         <span>{{leave.leaveStatus ? "Approved" : "Pending"}}</span>
         <button
-          *ngIf="leave.leaveStatus === false"
+          *ngIf="leave.leaveStatus === false && userId == leave.userId"
           mat-icon-button
           color="warn"
           mwlConfirmationPopover
@@ -27,6 +28,12 @@
         >
           <mat-icon style="transform: scale(1); margin-top: -5px;">delete</mat-icon>
         </button>
+        <mat-slide-toggle
+          class="ms-2"
+          [checked]="leave.leaveStatus"
+          (change)="approveLeave($event, leave._id)"
+        >
+        </mat-slide-toggle>
       </div>
     </div>
   </div>

@@ -47,4 +47,38 @@ export class LeaveService {
         })
       )
   }
+
+  // Get all leave request
+  getAllLeaveRequest(): Observable<any> {
+    const url: string = `${this.baseUrl}/leave`;
+    return this.http.get<any>(url)
+      .pipe(
+        map((resp: any)=>{
+          return resp;
+        })
+      )
+  }
+
+/**
+ * // Update user status to admin
+  toggleIsAdmin(isAdmin: boolean, userId: string): Observable<any> {
+    const url = `${environment.apiUrl}/user/patch-admin/${userId}`;
+    return this.http.patch(url, { admin: isAdmin }).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    )
+  }
+ */
+
+
+  // Approve Leave
+  approveLeave(isApproved: boolean, userId: string): Observable<any> {
+    const url = `${this.baseUrl}/leave/approve/${userId}`;
+    return this.http.patch(url, {leaveStatus: isApproved}).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    )
+  }
 }

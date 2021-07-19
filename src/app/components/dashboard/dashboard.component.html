@@ -1,5 +1,8 @@
 <div class="container">
   <mat-tab-group *ngIf="isAdmin">
+    <mat-tab label="Leave Request">
+      <app-leave></app-leave>
+    </mat-tab>
     <mat-tab label="Registered Users">
       <app-registered-users></app-registered-users>
     </mat-tab>
@@ -14,14 +17,14 @@
     </mat-tab>
   </mat-tab-group>
   <mat-tab-group *ngIf="!isAdmin">
-    <mat-tab label="Request Leave">
-      <app-leave></app-leave>
-    </mat-tab>
     <mat-tab label="History">
       <app-history></app-history>
     </mat-tab>
     <mat-tab label="Time Log">
       <app-timelog></app-timelog>
+    </mat-tab>
+    <mat-tab label="Request Leave">
+      <app-leave></app-leave>
     </mat-tab>
   </mat-tab-group>
 </div>

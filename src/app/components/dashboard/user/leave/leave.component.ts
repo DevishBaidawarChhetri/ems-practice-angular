@@ -18,6 +18,7 @@ export class LeaveComponent implements OnInit {
   maxChars: number = 200;
   requestedLeaves = [];
   requestLeaveForm: FormGroup;
+  isAdmin = localStorage.getItem('isAdmin');
 
   constructor(
     private modalService: BsModalService,
@@ -25,8 +26,12 @@ export class LeaveComponent implements OnInit {
     private toastr: ToastrService,
   ) {}
   ngOnInit(): void{
+    if(this.isAdmin === "true"){
+      this.getAllLeaveRequest();
+    }else{
+      this.getSelfRequestedLeaves();
+    }
     this.initializeForm();
-    this.getSelfRequestedLeaves();
   }
 
   openModal(template: TemplateRef<any>) {
@@ -44,6 +49,12 @@ export class LeaveComponent implements OnInit {
 
   getSelfRequestedLeaves() {
     this.leaveService.getSelfLeaveRequest().subscribe((resp) => {
+      this.requestedLeaves = resp.leaves;
+    })
+  }
+
+  getAllLeaveRequest(){
+    this.leaveService.getAllLeaveRequest().subscribe((resp) => {
       this.requestedLeaves = resp.leaves;
     })
   }
@@ -66,6 +77,21 @@ export class LeaveComponent implements OnInit {
       this.getSelfRequestedLeaves();
     }, (error) => {
       this.toastr.error(error.error.message, "Failed!")
+    })
+  }
+
+  approveLeave(eventObject){
+    const {event, id} = eventObject;
+    this.leaveService.approveLeave(event.checked, id).subscribe((resp) => {
+      if(resp.leaveStatus){
+        this.toastr.success(resp.message, "Success");
+        this.getAllLeaveRequest();
+      }else{
+        this.toastr.warning("Leave approve cancelled!", "Warning");
+        this.getAllLeaveRequest();
+      }
+    }, (error) => {
+      this.toastr.error(error.error.message, "Failed");
     })
   }
 }

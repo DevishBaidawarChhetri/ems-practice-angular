@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
@@ -8,9 +9,12 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 export class LeaveListComponent implements OnInit {
   modalRef: BsModalRef;
+  userId: string = localStorage.getItem('userId');
 
   @Input('leaveList') leaveListProps: [];
+  @Input('isAdmin') isAdminProps;
   @Output('deleteLeaveRequest') deleteLeaveRequestEvent = new EventEmitter<any>();
+  @Output('approveLeaveRequest') approveLeaveRequestEvent = new EventEmitter<any>();
 
   constructor(
     private modalService: BsModalService,
@@ -21,5 +25,11 @@ export class LeaveListComponent implements OnInit {
 
   deleteLeaveRequest(id) {
     this.deleteLeaveRequestEvent.emit(id);
+  }
+
+  approveLeave(event: MatSlideToggleChange, id: string){
+    // we can only pass one parameter in event emitter...
+    // for multiple value pass, we can pass through object 😃
+    this.approveLeaveRequestEvent.emit({event, id});
   }
 }

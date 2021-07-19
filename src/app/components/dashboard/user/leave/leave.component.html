@@ -7,7 +7,9 @@
   </div>
   <app-leave-list
     [leaveList]="requestedLeaves"
+    [isAdmin]="isAdmin"
     (deleteLeaveRequest)="deleteLeave($event)"
+    (approveLeaveRequest)="approveLeave($event)"
   >
 </app-leave-list>
 </div>
