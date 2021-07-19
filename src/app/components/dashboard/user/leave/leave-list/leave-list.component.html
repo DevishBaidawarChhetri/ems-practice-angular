@@ -1,5 +1,11 @@
 <div class="container">
   <h2 class="text-center mt-3">{{isAdminProps == 'true' ? "Leave Request" : "Request Leave"}}</h2>
+  <mat-spinner class="mx-auto mb-3" diameter="30" strokeWidth="3" *ngIf="leaveRequestLoading"></mat-spinner>
+  <div *ngIf="leaveListProps.length == 0 && !leaveRequestLoading">
+    <div class="alert alert-secondary text-center" role="alert">
+      {{isAdminProps == "true" ? "You don't have leave request." : "You have not requested any leave."}}
+    </div>
+  </div>
   <div *ngFor="let leave of leaveListProps">
     <div role="alert" class="alert alert-primary alert-secondary-custom clearfix">
       <div class="float-start d-flex flex-column m-0 ls-1">

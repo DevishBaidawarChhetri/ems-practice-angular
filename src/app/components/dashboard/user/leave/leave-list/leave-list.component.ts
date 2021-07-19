@@ -13,6 +13,7 @@ export class LeaveListComponent implements OnInit {
 
   @Input('leaveList') leaveListProps: [];
   @Input('isAdmin') isAdminProps;
+  @Input('leaveRequestLoading') leaveRequestLoading;
   @Output('deleteLeaveRequest') deleteLeaveRequestEvent = new EventEmitter<any>();
   @Output('approveLeaveRequest') approveLeaveRequestEvent = new EventEmitter<any>();
 

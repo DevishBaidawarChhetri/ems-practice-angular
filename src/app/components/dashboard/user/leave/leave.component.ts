@@ -19,6 +19,7 @@ export class LeaveComponent implements OnInit {
   requestedLeaves = [];
   requestLeaveForm: FormGroup;
   isAdmin = localStorage.getItem('isAdmin');
+  leaveRequestLoading: boolean = false;
 
   constructor(
     private modalService: BsModalService,
@@ -48,14 +49,18 @@ export class LeaveComponent implements OnInit {
   };
 
   getSelfRequestedLeaves() {
+    this.leaveRequestLoading = true;
     this.leaveService.getSelfLeaveRequest().subscribe((resp) => {
       this.requestedLeaves = resp.leaves;
+      this.leaveRequestLoading = false;
     })
   }
 
   getAllLeaveRequest(){
+    this.leaveRequestLoading = true;
     this.leaveService.getAllLeaveRequest().subscribe((resp) => {
       this.requestedLeaves = resp.leaves;
+      this.leaveRequestLoading = false;
     })
   }
 
