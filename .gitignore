@@ -48,3 +48,6 @@ Thumbs.db
 
 #environment files
 /server/.env
+
+#prod
+/dist
