@@ -15,6 +15,7 @@ export class RegisteredUsersComponent implements OnInit {
   postsPerPage: number = 5;
   totalUsers: number = 0;
   pageSizeOptions = [2, 5, 10];
+  registeredUserLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -26,10 +27,12 @@ export class RegisteredUsersComponent implements OnInit {
   }
 
   getAllRegisteredUsers() {
+    this.registeredUserLoading = true;
     this.authService.getEmployeesWithPagination(this.currentPage, this.postsPerPage).subscribe(
       (resp) => {
         this.users = resp.users;
         this.totalUsers = resp.count;
+        this.registeredUserLoading = false;
       }
     )
   }
