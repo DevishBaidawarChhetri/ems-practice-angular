@@ -10,6 +10,16 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="timeLogLoading">
+        <td colspan="5">
+          <mat-spinner class="mx-auto" diameter="30" strokeWidth="3"></mat-spinner>
+        </td>
+      </tr>
+      <tr *ngIf="logs.length == 0 && !timeLogLoading">
+        <td colspan="5">
+          Timelog Log found.
+        </td>
+      </tr>
       <tr *ngFor="let log of logs; let i = index">
         <td scope="row">{{ log.date | date }}</td>
         <td>{{ log.projectName }}</td>

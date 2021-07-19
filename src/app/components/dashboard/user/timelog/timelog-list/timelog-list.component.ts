@@ -14,6 +14,7 @@ export class TimelogListComponent implements OnInit, OnChanges {
 
   @Input('todayDate') todayDateProps;
   @Input('differentDateLogs') differentDateLogsProps;
+  @Input('timeLogLoading') timeLogLoading;
   @Output('dateSubmit') dateSubmitEvent = new EventEmitter<any>();
   @Output('removeTimelog') removeTimelogEvent = new EventEmitter<any>();
 

@@ -20,6 +20,7 @@ export class TimelogComponent implements OnInit {
   currentMonth: string;
   currentYear: string;
   private timelogAddListenerSubs: Subscription;
+  timeLogLoading: boolean = false;
 
   constructor(
     private modalService: BsModalService,
@@ -38,8 +39,10 @@ export class TimelogComponent implements OnInit {
   }
 
   async getTodaysLog() {
+    this.timeLogLoading = true;
     await this.timelogService.getSelfTimelog(this.todayDate).subscribe((resp) => {
       this.logs = resp.logs;
+      this.timeLogLoading = false;
     })
   }
 
@@ -90,9 +93,11 @@ export class TimelogComponent implements OnInit {
   }
 
   getLogsAccordintToDate(date) {
+    this.timeLogLoading = true;
     this.timelogService.getSelfTimelog(date)
       .subscribe(async (resp) => {
-        this.logs = await resp.logs
+        this.logs = await resp.logs;
+        this.timeLogLoading = false;
       })
   }
 }
