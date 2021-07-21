@@ -21,6 +21,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   postsPerPage: number = 10;
   totalPosts: number = 0;
   pageSizeOptions = [2, 5, 10, 25];
+  projectLoading: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -44,9 +45,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   getProjectsWithPagination() {
+    this.projectLoading = true;
     this.projectService.getProjectsWithPagination(this.currentPage, this.postsPerPage).subscribe((resp) => {
       this.projects = resp.projects;
       this.totalPosts = resp.totalProjects;
+      this.projectLoading = false;
     });
   }
 

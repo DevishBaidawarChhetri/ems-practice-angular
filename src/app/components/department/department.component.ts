@@ -22,6 +22,7 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   postsPerPage: number = 10;
   totalPosts: number = 0;
   pageSizeOptions = [2, 5, 10, 25];
+  departmentLoading: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -45,9 +46,11 @@ export class DepartmentComponent implements OnInit, OnDestroy {
   }
 
   getDepartments() {
+    this.departmentLoading = true;
     this.departmentService.getDepartmentWithPagination(this.currentPage, this.postsPerPage).subscribe((dept) => {
       this.departments = dept.departments;
       this.totalPosts = dept.maxPosts;
+      this.departmentLoading = false;
     });
   }
 

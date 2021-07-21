@@ -27,6 +27,7 @@ export class EmployeeComponent implements OnInit {
   postsPerPage: number = 10;
   totalPosts: number = 0;
   pageSizeOptions = [2, 5, 10, 25];
+  employeeLoading: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -48,9 +49,11 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployees() {
+    this.employeeLoading = true;
     this.employeeService.getEmployeesWithPagination(this.currentPage, this.postsPerPage).subscribe((emp) => {
       this.employees$ = emp.employees;
       this.totalPosts = emp.maxPosts;
+      this.employeeLoading = false;
     });
   }
 

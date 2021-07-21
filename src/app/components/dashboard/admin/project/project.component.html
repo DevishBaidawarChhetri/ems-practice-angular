@@ -8,6 +8,7 @@
   <app-project-list
     [projectLists]="projects"
     (removeProject)="removeProject($event)"
+    [projectLoading]="projectLoading"
   ></app-project-list>
   <mat-paginator
     [length]="totalPosts"

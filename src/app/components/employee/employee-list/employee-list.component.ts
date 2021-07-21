@@ -11,6 +11,7 @@ export class EmployeeListComponent implements OnInit {
   modalRef: BsModalRef;
 
   @Input('employeeList') employeesListProps: [];
+  @Input('employeeLoading') employeeLoading: boolean;
   @Output('removeEmployee') removeEmployeeEvent = new EventEmitter<any>();
 
   constructor(

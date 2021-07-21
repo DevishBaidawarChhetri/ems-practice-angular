@@ -7,6 +7,16 @@
     </tr>
   </thead>
   <tbody>
+    <tr *ngIf="projectLoading">
+      <td colspan="3">
+        <mat-spinner class="mx-auto" diameter="30" strokeWidth="3"></mat-spinner>
+      </td>
+    </tr>
+    <tr *ngIf="!projectLoading && projectListsProps.length === 0">
+      <td colspan="3">
+        <span>No project found</span>
+      </td>
+    </tr>
     <tr *ngFor="let project of projectListsProps; let i = index">
       <th scope="row">{{ i + 1 }}</th>
       <td>{{ project.projectName }}</td>

@@ -10,6 +10,16 @@
       </tr>
     </thead>
     <tbody>
+      <tr *ngIf="employeeLoading">
+        <td colspan="5">
+          <mat-spinner class="mx-auto" diameter="30" strokeWidth="3"></mat-spinner>
+        </td>
+      </tr>
+      <tr *ngIf="!employeeLoading && employeesListProps.length === 0">
+        <td colspan="3">
+          <span>No employee found</span>
+        </td>
+      </tr>
       <tr *ngFor="let employee of employeesListProps; let i = index">
         <th scope="row">{{ i + 1 }}</th>
         <td>{{ employee.fullName }}</td>

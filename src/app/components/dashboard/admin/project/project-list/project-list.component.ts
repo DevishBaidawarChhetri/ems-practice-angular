@@ -10,6 +10,7 @@ export class ProjectListComponent implements OnInit {
   modalRef: BsModalRef;
 
   @Input('projectLists') projectListsProps;
+  @Input('projectLoading') projectLoading: boolean;
   @Output('removeProject') removeProjectEvent = new EventEmitter<any>();
 
   constructor(

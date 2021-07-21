@@ -8,6 +8,7 @@
   <app-department-list
     [departmentLists]="departments"
     (removeDepartment)="removeDepartment($event)"
+    [departmentLoading]="departmentLoading"
   ></app-department-list>
   <mat-paginator
     [length]="totalPosts"

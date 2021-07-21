@@ -10,6 +10,7 @@ export class DepartmentListComponent implements OnInit {
   modalRef: BsModalRef;
 
   @Input('departmentLists') departmentListsProps;
+  @Input('departmentLoading') departmentLoading: boolean;
   @Output('removeDepartment') removeDepartmentEvent = new EventEmitter<any>();
 
   constructor(

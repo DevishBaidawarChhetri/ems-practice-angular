@@ -8,6 +8,7 @@
   <app-employee-list
     [employeeList]="employees$"
     (removeEmployee)="employeeDelete($event)"
+    [employeeLoading]="employeeLoading"
   ></app-employee-list>
   <mat-paginator
     [length]="totalPosts"
