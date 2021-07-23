@@ -4,7 +4,7 @@
     <p class="text-center">Loading...</p>
   </div>
   <div class="row mt-4 d-flex justify-content-center">
-    <div *ngIf="users.length == 0 && !registeredUserLoading">
+    <div *ngIf="!registeredUserLoading && users.length === 0">
       <div class="alert alert-secondary text-center" role="alert">
         No any user registered!
       </div>

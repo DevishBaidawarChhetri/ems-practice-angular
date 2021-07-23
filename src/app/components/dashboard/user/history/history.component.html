@@ -1,73 +1,81 @@
-<div class="history container d-flex text-center align-item-center">
-  <div class="left w-50 py-5">
-    <p class="worked-hours fs-2">{{ totalHoursWorkedTodayCount }} / 8</p>
-    <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
-    <p class="this-week fs-6 text-secondary"><small>Today</small></p>
-  </div>
-  <div class="right w-50 py-5">
-    <p class="worked-hours fs-2">{{ totalWorkedHoursCount }} / 40</p>
-    <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
-    <p class="this-week fs-6 text-secondary"><small>This Week</small></p>
-  </div>
+<div>
+  <button class="float-end mt-3" mat-raised-button (click)="exportPDF()">
+    <mat-icon>picture_as_pdf</mat-icon>&nbsp;
+    <span>Export PDF</span>
+  </button>
 </div>
-
-<div class="d-flex justify-content-center">
-  <div class="container mb-5 me-3">
-    <h1 class="text-center">Timelog as per Project.</h1>
-    <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
-      <div class="alert alert-light alert-light-custom clearfix" role="alert">
-        <p class="float-start m-0 ls-1">
-          <strong>Project Name</strong>
-        </p>
-        <p class="float-end m-0"><strong>Hours Worked</strong></p>
-      </div>
-      <div
-        class="alert alert-primary alert-secondary-custom clearfix"
-        role="alert"
-        *ngFor="let projectLog of totalTimeSpentOnProject"
-      >
-        <p class="float-start m-0 text-uppercase ls-1">
-          <strong>{{ projectLog.projectName }}</strong>
-        </p>
-        <p class="float-end m-0">{{ projectLog.totalHours }} hours</p>
-      </div>
+<div id="history-component">
+  <div class="history container d-flex text-center align-item-center">
+    <div class="left w-50 py-5">
+      <p class="worked-hours fs-2">{{ totalHoursWorkedTodayCount }} / 8</p>
+      <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
+      <p class="this-week fs-6 text-secondary"><small>Today</small></p>
     </div>
-    <ng-template #noLogsBlock>
-      <div class="alert alert-danger text-center" role="alert">
-        You don't have logs yet. 😊
-      </div>
-    </ng-template>
+    <div class="right w-50 py-5">
+      <p class="worked-hours fs-2">{{ totalWorkedHoursCount }} / 40</p>
+      <p class="hours fs-4 mt-4 mb-2"><small>Hours</small></p>
+      <p class="this-week fs-6 text-secondary"><small>This Week</small></p>
+    </div>
   </div>
+
+  <div class="d-flex justify-content-center">
+    <div class="container mb-5 me-3">
+      <h1 class="text-center">Timelog as per Project.</h1>
+      <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
+        <div class="alert alert-light alert-light-custom clearfix" role="alert">
+          <p class="float-start m-0 ls-1">
+            <strong>Project Name</strong>
+          </p>
+          <p class="float-end m-0"><strong>Hours Worked</strong></p>
+        </div>
+        <div
+          class="alert alert-primary alert-secondary-custom clearfix"
+          role="alert"
+          *ngFor="let projectLog of totalTimeSpentOnProject"
+        >
+          <p class="float-start m-0 text-uppercase ls-1">
+            <strong>{{ projectLog.projectName }}</strong>
+          </p>
+          <p class="float-end m-0">{{ projectLog.totalHours }} hours</p>
+        </div>
+      </div>
+      <ng-template #noLogsBlock>
+        <div class="alert alert-danger text-center" role="alert">
+          You don't have logs yet. 😊
+        </div>
+      </ng-template>
+    </div>
+    <div class="container">
+      <h1 class="text-center">Timelog as per Date</h1>
+      <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
+        <div class="alert alert-light alert-light-custom clearfix" role="alert">
+          <p class="float-start m-0 ls-1">
+            <strong>Date</strong>
+          </p>
+          <p class="float-end m-0"><strong>Hours Worked</strong></p>
+        </div>
+        <div
+          class="alert alert-primary alert-secondary-custom clearfix"
+          role="alert"
+          *ngFor="let dateLog of logsByDate"
+        >
+          <p class="float-start m-0 text-uppercase ls-1">
+            <strong>{{ dateLog.date }}</strong>
+          </p>
+          <p class="float-end m-0">{{ dateLog.totalHours }} hours</p>
+        </div>
+      </div>
+      <ng-template #noLogsBlock>
+        <div class="alert alert-danger text-center" role="alert">
+          You don't have logs yet. 😊
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
   <div class="container">
-    <h1 class="text-center">Timelog as per Date</h1>
-    <div *ngIf="totalTimeSpentOnProject.length !== 0; else noLogsBlock">
-      <div class="alert alert-light alert-light-custom clearfix" role="alert">
-        <p class="float-start m-0 ls-1">
-          <strong>Date</strong>
-        </p>
-        <p class="float-end m-0"><strong>Hours Worked</strong></p>
-      </div>
-      <div
-        class="alert alert-primary alert-secondary-custom clearfix"
-        role="alert"
-        *ngFor="let dateLog of logsByDate"
-      >
-        <p class="float-start m-0 text-uppercase ls-1">
-          <strong>{{ dateLog.date }}</strong>
-        </p>
-        <p class="float-end m-0">{{ dateLog.totalHours }} hours</p>
-      </div>
+    <div class="mb-7 mt-5">
+      <canvas #lineChart>{{ myChart }}</canvas>
     </div>
-    <ng-template #noLogsBlock>
-      <div class="alert alert-danger text-center" role="alert">
-        You don't have logs yet. 😊
-      </div>
-    </ng-template>
-  </div>
-</div>
-
-<div class="container">
-  <div class="mb-7 mt-5">
-    <canvas #lineChart>{{ myChart }}</canvas>
   </div>
 </div>

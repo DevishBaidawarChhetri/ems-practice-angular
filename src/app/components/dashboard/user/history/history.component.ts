@@ -4,6 +4,10 @@ import { TimelogService } from 'src/app/services/timelog.service';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
+// for pdf
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -37,7 +41,7 @@ export class HistoryComponent implements OnInit {
       this.getWorkingHoursOfWeek();
       this.getDataInChart();
       this.getLogsByDate();
-    }, 500);
+    }, 1000);
   }
 
   getCurrentWeek() {
@@ -336,5 +340,16 @@ export class HistoryComponent implements OnInit {
       totalTimeSpentOnProjectArray.push(obj);
     });
     this.logsByDate = totalTimeSpentOnProjectArray;
+  }
+
+  exportPDF() {
+    var element = document.getElementById('history-component');
+    html2canvas(element).then((canvas) => {
+      var img = canvas.toDataURL("image/png");
+      var doc = new jspdf.jsPDF('p', 'mm', 'a4');
+      var imgHeight = canvas.height * 208 / canvas.width;
+      doc.addImage(img, 0, 0, 208, imgHeight);
+      doc.save('log-history.pdf');
+    })
   }
 }

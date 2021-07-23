@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
 import { ProjectService } from 'src/app/services/project.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-project',
@@ -22,6 +23,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   totalPosts: number = 0;
   pageSizeOptions = [2, 5, 10, 25];
   projectLoading: boolean = false;
+  tableId: string;
+  fileName = `projects-from-page-${this.currentPage}.xlsx`;
 
   constructor(
     public dialog: MatDialog,
@@ -94,4 +97,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.postsPerPage = pageData.pageSize;
     this.getProjectsWithPagination();
   }
+
+  // Get Table Id from child
+  projectTableId(id){
+    this.tableId = id
+  }
+
+  exportExcel() {
+    let element = document.getElementById(this.tableId);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Projects');
+
+    XLSX.writeFile(wb, this.fileName);
+  }
+
 }

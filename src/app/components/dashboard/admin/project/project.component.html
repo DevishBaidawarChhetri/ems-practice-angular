@@ -4,11 +4,15 @@
     <button mat-raised-button (click)="openModal(addProjectModal)">
       <mat-icon>business</mat-icon> Add Project
     </button>
+    <button class="ms-3" mat-raised-button (click)="exportExcel()">
+      <mat-icon>exit_to_app</mat-icon> Export Excel
+    </button>
   </div>
   <app-project-list
     [projectLists]="projects"
     (removeProject)="removeProject($event)"
     [projectLoading]="projectLoading"
+    (projectTableId)="projectTableId($event)"
   ></app-project-list>
   <mat-paginator
     [length]="totalPosts"
