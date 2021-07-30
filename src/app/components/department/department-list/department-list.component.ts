@@ -8,6 +8,7 @@ import { UpdateDepartmentComponent } from '../update-department/update-departmen
 })
 export class DepartmentListComponent implements OnInit {
   modalRef: BsModalRef;
+  cancelClicked = false;
 
   @Input('departmentLists') departmentListsProps;
   @Input('departmentLoading') departmentLoading: boolean;

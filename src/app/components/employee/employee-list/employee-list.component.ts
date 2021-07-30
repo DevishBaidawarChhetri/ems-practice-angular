@@ -9,6 +9,7 @@ import { UpdateEmployeeComponent } from '../update-employee/update-employee.comp
 })
 export class EmployeeListComponent implements OnInit {
   modalRef: BsModalRef;
+  cancelClicked = false;
 
   @Input('employeeList') employeesListProps: [];
   @Input('employeeLoading') employeeLoading: boolean;

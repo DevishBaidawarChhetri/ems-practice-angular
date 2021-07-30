@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.form.invalid) { return; }
-    this.authService.loginUser(this.form.value).subscribe(
+    this.authService.loginUser(this.form.value)
+    .subscribe(
       (resp) => {
         this.toastr.success(resp.message, 'Success');
       }, (error) => {

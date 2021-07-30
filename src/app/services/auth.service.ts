@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-import { environment } from "src/environments/environment";
+import { environment } from "../../environments/environment";
 import { LoginRequestInterface } from "../interfaces/loginRequest.interface";
 import { SignupRequestInterface } from "../interfaces/signupRequest.interface";
 
