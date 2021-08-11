@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { LoginComponent } from "./login.component";
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule } from "@angular/forms";
@@ -102,5 +102,55 @@ describe('LoginComponent', () => {
     component.onLogin();
     expect(authService.loginUser).toHaveBeenCalled();
   });
+
+  describe('Forgot Password', () => {
+    it('should open modal on clicking "Forgot Password?"', () => {
+      const btn = fixture.debugElement.query(By.css('.me-3'));
+      btn.triggerEventHandler('click', {});
+      fixture.detectChanges();
+      const modalTitle = document.querySelector('.modal-title').innerHTML;
+      expect(modalTitle).toEqual('Forgot Password');
+    });
+
+    it('should check invalid user email address (Forgot Password)', () => {
+      const btn = fixture.debugElement.query(By.css('.me-3'));
+      btn.triggerEventHandler('click', {});
+      fixture.detectChanges();
+
+      let email = component.forgotPasswordForm.controls['email'];
+      email.setValue('devish');
+      expect(email.errors).toBeTruthy();
+    });
+
+    it('should check valid user email address (Forgot Password)', () => {
+      const btn = fixture.debugElement.query(By.css('.me-3'));
+      btn.triggerEventHandler('click', {});
+      fixture.detectChanges();
+
+      let email = component.forgotPasswordForm.controls['email'];
+      email.setValue('devish@gmail.com');
+      expect(email.errors).toBeNull();
+    });
+
+    it('should check if form is submitted', () => {
+      const btn = fixture.debugElement.query(By.css('.me-3'));
+      btn.triggerEventHandler('click', {});
+      fixture.detectChanges();
+
+      let email = component.forgotPasswordForm.controls['email'];
+      email.setValue('devish@gmail.com');
+      expect(email.errors).toBeNull();
+
+      fixture.detectChanges();
+      expect(btn.nativeElement.disabled).toBeFalsy();
+
+      authService.forgotPassword = jest.fn().mockReturnValue(of({}));
+      component.onForgotPassword();
+      expect(authService.forgotPassword).toHaveBeenCalled();
+      expect(component.forgotPasswordForm.invalid).toBeTruthy();
+    });
+  });
+
+
 
 })
