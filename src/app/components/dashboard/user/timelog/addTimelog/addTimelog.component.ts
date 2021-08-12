@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { ProjectService } from 'src/app/services/project.service';
-import { TimelogService } from 'src/app/services/timelog.service';
+import { ProjectService } from '../../../../../services/project.service';
+import { TimelogService } from '../../../../../services/timelog.service';
 import * as moment from 'moment';
 
 @Component({

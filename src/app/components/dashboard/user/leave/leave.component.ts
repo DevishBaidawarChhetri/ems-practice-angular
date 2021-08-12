@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import * as moment from "moment";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
-import { LeaveService } from "src/app/services/leave.service";
+import { LeaveService } from "../../../../services/leave.service";
 
 @Component({
   selector: 'app-leave',

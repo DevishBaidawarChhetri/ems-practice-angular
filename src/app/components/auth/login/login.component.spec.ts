@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { LoginComponent } from "./login.component";
 import { AuthService } from '../../../services/auth.service';
 import { ReactiveFormsModule } from "@angular/forms";
@@ -11,7 +11,6 @@ import { ToastrModule } from "ngx-toastr";
 import { BsModalService, ModalModule } from "ngx-bootstrap/modal";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { By } from "@angular/platform-browser";
-import { getMaxListeners } from "process";
 import { of } from "rxjs";
 
 describe('LoginComponent', () => {
@@ -92,7 +91,7 @@ describe('LoginComponent', () => {
     let btn = fixture.debugElement.query(By.css('button[type="submit"]'));
     expect(btn.nativeElement.disabled).toBeTruthy();
 
-    component.form.patchValue ({email: 'devish@getMaxListeners.com', password: '123456'});
+    component.form.patchValue ({email: 'devish@gmail.com', password: '123456'});
     expect(component.form.valid).toBeTruthy();
 
     fixture.detectChanges();
@@ -151,6 +150,4 @@ describe('LoginComponent', () => {
     });
   });
 
-
-
-})
+});

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
-import { ProjectService } from 'src/app/services/project.service';
+import { ProjectService } from '../../../../services/project.service';
 import * as XLSX from 'xlsx';
 
 @Component({

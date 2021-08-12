@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { PasswordValidator } from 'src/app/utils/password.validators';
+import { AuthService } from '../../services/auth.service';
+import { PasswordValidator } from '../../utils/password.validators';
 import { UpdateProfileComponent } from '../updateProfile/updateProfile.component';
 
 @Component({

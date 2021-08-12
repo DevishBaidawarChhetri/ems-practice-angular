@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { DepartmentService } from 'src/app/services/department.service';
+import { DepartmentService } from '../../../services/department.service';
 
 @Component({
   selector: 'app-update-department',

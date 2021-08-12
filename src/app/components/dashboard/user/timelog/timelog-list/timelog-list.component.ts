@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { TimelogService } from 'src/app/services/timelog.service';
+import { TimelogService } from '../../../../../services/timelog.service';
 import { AddTimelogComponent } from '../addTimelog/addTimelog.component';
 
 @Component({

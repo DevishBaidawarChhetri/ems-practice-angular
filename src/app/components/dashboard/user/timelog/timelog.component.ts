@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AddTimelogComponent } from './addTimelog/addTimelog.component';
 import * as moment from 'moment';
-import { TimelogService } from 'src/app/services/timelog.service';
+import { TimelogService } from '../../../../services/timelog.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

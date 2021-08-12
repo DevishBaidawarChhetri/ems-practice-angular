@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
-import { TimelogService } from 'src/app/services/timelog.service';
+import { TimelogService } from '../../../../services/timelog.service';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 

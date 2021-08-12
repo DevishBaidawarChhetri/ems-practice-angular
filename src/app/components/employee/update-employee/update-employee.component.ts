@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Department } from 'src/app/interfaces/department';
-import { DepartmentService } from 'src/app/services/department.service';
-import { EmployeeService } from 'src/app/services/employee.service';
+import { Department } from '../../../interfaces/department';
+import { DepartmentService } from '../../../services/department.service';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-update-employee',
