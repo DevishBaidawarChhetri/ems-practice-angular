@@ -14,6 +14,7 @@
     </button>
     <button
       mat-stroked-button
+      id="weekDay"
       color="primary"
       class="ms-3 pb-3"
       *ngFor="let weekDay of weekDays"
@@ -26,7 +27,7 @@
     </button>
   </div>
   <div class="my-2 text-end">
-    <button mat-raised-button (click)="openModalWithComponent()">
+    <button id="addLog" mat-raised-button (click)="openModalWithComponent()">
       <mat-icon>task_alt</mat-icon> Add Log
     </button>
   </div>

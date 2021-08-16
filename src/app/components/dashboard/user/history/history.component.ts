@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { TimelogService } from '../../../../services/timelog.service';
 import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
 
 // for pdf
 import * as jspdf from 'jspdf';
@@ -243,6 +242,7 @@ export class HistoryComponent implements OnInit {
   }
 
   getDataInChart() {
+    Chart.register(...registerables);
     this.myChart = new Chart(this.chartRef.nativeElement, {
       type: 'line',
       data: {
