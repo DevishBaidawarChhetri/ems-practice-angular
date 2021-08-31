@@ -7,9 +7,6 @@ const validateRegisterSchema = [
   body("projectName")
     .exists({ checkFalsy: true })
     .withMessage("Project name should not be empty"),
-  body("durationInHours")
-    .exists({ checkFalsy: true })
-    .withMessage("durationInHours should not be empty"),
   body("taskSummary")
     .exists({ checkFalsy: true })
     .withMessage("Task summary should not be empty"),

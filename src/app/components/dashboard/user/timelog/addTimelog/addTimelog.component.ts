@@ -55,7 +55,7 @@ export class AddTimelogComponent implements OnInit {
   }
 
   createWorkingHours() {
-    for (let i = 1; i <= 8; i++) {
+    for (let i = 0; i <= 8; i++) {
       this.hours.push(i);
     }
   }
@@ -70,7 +70,7 @@ export class AddTimelogComponent implements OnInit {
     this.form = this.fb.group({
       date: [this.selectedLog !== null ? '' : this.todayDate, [Validators.required]],
       projectName: ['', [Validators.required]],
-      durationInHours: [1, [Validators.required]],
+      durationInHours: [0, [Validators.required]],
       durationInMinutes: [{ value: 0, disabled: false }, [Validators.required]],
       taskSummary: ['', [Validators.required, Validators.maxLength(200)]],
     })
