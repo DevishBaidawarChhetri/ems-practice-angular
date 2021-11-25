@@ -8,6 +8,7 @@ import { UpdateProjectComponent } from '../update-project/update-project.compone
 })
 export class ProjectListComponent implements OnInit, AfterViewInit {
   modalRef: BsModalRef;
+  cancelClicked = false;
 
   @Input('projectLists') projectListsProps;
   @Input('projectLoading') projectLoading: boolean;

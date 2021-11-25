@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 export class LeaveListComponent implements OnInit {
   modalRef: BsModalRef;
+  cancelClicked = false;
   userId: string = localStorage.getItem('userId');
 
   @Input('leaveList') leaveListProps: [];

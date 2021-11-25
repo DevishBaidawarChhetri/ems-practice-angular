@@ -11,6 +11,7 @@ import { AddTimelogComponent } from '../addTimelog/addTimelog.component';
 })
 export class TimelogListComponent implements OnInit, OnChanges {
   logs = [];
+  cancelClicked = false;
 
   @Input('todayDate') todayDateProps;
   @Input('differentDateLogs') differentDateLogsProps;

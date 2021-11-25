@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { MaskConstant } from 'src/app/constants/mask.constant';
-import { AuthService } from 'src/app/services/auth.service';
-import { PasswordValidator } from 'src/app/utils/password.validators';
+import { MaskConstant } from '../../../constants/mask.constant';
+import { AuthService } from '../../../services/auth.service';
+import { PasswordValidator } from '../../../utils/password.validators';
 
 @Component({
   selector: 'app-signup',
